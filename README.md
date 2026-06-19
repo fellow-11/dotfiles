@@ -1,4 +1,4 @@
-## 🚀 My Dotfiles
+## My Dotfiles
 
 [**Screenshots**](#screenshots) • [**Components**](#components) • [**Setup**](#setup)
 
