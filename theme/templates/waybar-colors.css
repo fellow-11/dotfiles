@@ -1,0 +1,11 @@
+/* ~/.config/waybar/colors.css */
+/* AUTO-GENERATED — do not edit. Edit ~/.config/theme/colors.sh and run sync-theme. */
+
+@define-color background-dark {{BG}};
+@define-color text-light {{FG}};
+@define-color accent-color {{ACCENT}};
+@define-color muted {{MUTED}};
+@define-color border {{BORDER}};
+@define-color color-red {{COLOR1}};
+@define-color color-yellow {{COLOR2}};
+@define-color color-green {{COLOR10}};

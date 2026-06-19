@@ -1,3 +1,5 @@
+local colors = require("colors")
+
 -- Add this helper function at the top of your file
 local function run(cmd)
 return function() hl.dsp.exec_cmd(cmd) end
@@ -38,7 +40,7 @@ hl.monitor({
 ---------------------
 
 -- Set programs that you use
-local terminal    = "alacritty"
+local terminal    = "ghostty"
 local fileManager = "dolphin"
 local menu        = "walker"
 
@@ -63,6 +65,7 @@ hl.on("hyprland.start", function ()
      hl.exec_cmd("swayosd-server")
      hl.exec_once("kbuildsycoca6")
      hl.exec_cmd("discord & zen-browser & steam & cider")
+     hl.exec_cmd("dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=Hyprland && systemctl --user start hyprland-session.target")
 end)
 
 
@@ -109,8 +112,8 @@ hl.config({
         border_size = 2,
 
         col = {
-            active_border   = "rgba(e68e0dee)",
-            inactive_border = "rgba(595959aa)",
+            active_border   = "rgba(" .. colors.accent:sub(5) .. "ee)",
+            inactive_border = "rgba(" .. colors.border:sub(5) .. "aa)",
         },
 
         -- Set to true to enable resizing windows by clicking and dragging on borders and gaps
@@ -272,56 +275,55 @@ hl.device({
 local mainMod = "SUPER" -- Sets "Windows" key as main modifier
 
 -- Example binds, see https://wiki.hypr.land/Configuring/Basics/Binds/ for more
-hl.bind(mainMod .. " + RETURN", hl.dsp.exec_cmd(terminal))
-local closeWindowBind = hl.bind(mainMod .. " + W", hl.dsp.window.close())
+hl.bind("SUPER + RETURN", hl.dsp.exec_cmd(terminal))
+local closeWindowBind = hl.bind("SUPER + W", hl.dsp.window.close())
 -- closeWindowBind:set_enabled(false)
-hl.bind(mainMod .. " + M", hl.dsp.exec_cmd("command -v hyprshutdown >/dev/null 2>&1 && hyprshutdown || hyprctl dispatch 'hl.dsp.exit()'"))
-hl.bind(mainMod .. " + E", hl.dsp.exec_cmd(fileManager))
-hl.bind(mainMod .. " + T", hl.dsp.window.float({ action = "toggle" }))
-hl.bind(mainMod .. " + SPACE", hl.dsp.exec_cmd(menu))
-hl.bind(mainMod .. " + P", hl.dsp.window.pseudo())
-hl.bind(mainMod .. " + J", hl.dsp.layout("togglesplit"))    -- dwindle only
+hl.bind("SUPER + M", hl.dsp.exec_cmd("hyprlock"))
+hl.bind("SUPER + E", hl.dsp.exec_cmd(fileManager))
+hl.bind("SUPER + T", hl.dsp.window.float({ action = "toggle" }))
+hl.bind("SUPER + SPACE", hl.dsp.exec_cmd(menu))
+hl.bind("SUPER + P", hl.dsp.window.pseudo())
+hl.bind("SUPER + J", hl.dsp.layout("togglesplit"))    -- dwindle only
+hl.bind("SUPER + F", hl.dsp.window.fullscreen({ mode = "fullscreen", action = "toggle" }))
+hl.bind("SUPER + ALT + F", hl.dsp.window.fullscreen({ mode = "maximized", action = "toggle" }))
 
 -- Move focus with mainMod + arrow keys
-hl.bind(mainMod .. " + left",  hl.dsp.focus({ direction = "left" }))
-hl.bind(mainMod .. " + right", hl.dsp.focus({ direction = "right" }))
-hl.bind(mainMod .. " + up",    hl.dsp.focus({ direction = "up" }))
-hl.bind(mainMod .. " + down",  hl.dsp.focus({ direction = "down" }))
+hl.bind("SUPER + left",  hl.dsp.focus({ direction = "left" }))
+hl.bind("SUPER + right", hl.dsp.focus({ direction = "right" }))
+hl.bind("SUPER + up",    hl.dsp.focus({ direction = "up" }))
+hl.bind("SUPER + down",  hl.dsp.focus({ direction = "down" }))
 
 -- Switch workspaces with mainMod + [0-9]
 -- Move active window to a workspace with mainMod + SHIFT + [0-9]
 for i = 1, 10 do
     local key = i % 10 -- 10 maps to key 0
-    hl.bind(mainMod .. " + " .. key,             hl.dsp.focus({ workspace = i}))
-    hl.bind(mainMod .. " + SHIFT + " .. key,     hl.dsp.window.move({ workspace = i }))
+    hl.bind("SUPER + " .. key,             hl.dsp.focus({ workspace = i}))
+    hl.bind("SUPER + SHIFT + " .. key,     hl.dsp.window.move({ workspace = i }))
 end
 
 -- Example special workspace (scratchpad)
-hl.bind(mainMod .. " + K",         hl.dsp.workspace.toggle_special("magic"))
-hl.bind(mainMod .. " + SHIFT + K", hl.dsp.window.move({ workspace = "special:magic" }))
+hl.bind("SUPER + K",         hl.dsp.workspace.toggle_special("magic"))
+hl.bind("SUPER + SHIFT + K", hl.dsp.window.move({ workspace = "special:magic" }))
 
 -- Scroll through existing workspaces with mainMod + scroll
-hl.bind(mainMod .. " + mouse_down", hl.dsp.focus({ workspace = "e+1" }))
-hl.bind(mainMod .. " + mouse_up",   hl.dsp.focus({ workspace = "e-1" }))
+hl.bind("SUPER + mouse_down", hl.dsp.focus({ workspace = "e+1" }))
+hl.bind("SUPER + mouse_up",   hl.dsp.focus({ workspace = "e-1" }))
 
 -- Move/resize windows with mainMod + LMB/RMB and dragging
-hl.bind(mainMod .. " + mouse:272", hl.dsp.window.drag(),   { mouse = true })
-hl.bind(mainMod .. " + mouse:273", hl.dsp.window.resize(), { mouse = true })
+hl.bind("SUPER + mouse:272", hl.dsp.window.drag(),   { mouse = true })
+hl.bind("SUPER + mouse:273", hl.dsp.window.resize(), { mouse = true })
 
 -- Touchbar: Display brightness
 hl.bind("XF86MonBrightnessDown", hl.dsp.exec_cmd("my-touchbar-controller display 5%-"),  { locked = true, repeating = true })
 hl.bind("XF86MonBrightnessUp",   hl.dsp.exec_cmd("my-touchbar-controller display +5%"),  { locked = true, repeating = true })
-
 -- Touchbar: Keyboard backlight
 hl.bind("XF86KbdBrightnessDown", hl.dsp.exec_cmd("my-touchbar-controller keyboard 10%-"), { locked = true, repeating = true })
 hl.bind("XF86KbdBrightnessUp",   hl.dsp.exec_cmd("my-touchbar-controller keyboard +10%"), { locked = true, repeating = true })
-
 -- Touchbar: Audio
 hl.bind("XF86AudioMicMute",     hl.dsp.exec_cmd("my-touchbar-controller audio --input-volume mute-toggle"),  { locked = true })
 hl.bind("XF86AudioMute",        hl.dsp.exec_cmd("my-touchbar-controller audio --output-volume mute-toggle"), { locked = true })
 hl.bind("XF86AudioLowerVolume", hl.dsp.exec_cmd("my-touchbar-controller audio --output-volume lower"),       { locked = true, repeating = true })
 hl.bind("XF86AudioRaiseVolume", hl.dsp.exec_cmd("my-touchbar-controller audio --output-volume raise"),       { locked = true, repeating = true })
-
 -- Touchbar: Media
 hl.bind("XF86AudioPrev",  hl.dsp.exec_cmd("my-touchbar-controller media previous"),   { locked = true })
 hl.bind("XF86AudioPause", hl.dsp.exec_cmd("my-touchbar-controller media play-pause"), { locked = true })
@@ -346,14 +348,11 @@ hl.bind("SUPER + V", send_shortcut_once("SHIFT", "Insert"))
 hl.bind("SUPER + X", send_shortcut_once("CTRL", "X"))
 
 -- Screenshots
--- Super + S: Area screenshot
 hl.bind("SUPER + S", hl.dsp.exec_cmd([[
     FILE=~/Pictures/Screenshots/$(date +%Y-%m-%d_%H-%M-%S).png && \
     grimblast --freeze save area "$FILE" && \
     [ "$(notify-send 'Screenshot Captured' 'Click to edit selection' -i "$FILE" --action='default=Edit')" = "default" ] && satty -f "$FILE"
 ]]))
-
--- Super + Shift + S: Fullscreen screenshot
 hl.bind("SUPER + SHIFT + S", hl.dsp.exec_cmd([[
     FILE=~/Pictures/Screenshots/$(date +%Y-%m-%d_%H-%M-%S).png && \
     grimblast save output "$FILE" && \

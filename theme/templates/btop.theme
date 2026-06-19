@@ -1,0 +1,74 @@
+# ~/.config/btop/themes/custom.theme
+# AUTO-GENERATED — do not edit. Edit ~/.config/theme/colors.sh and run sync-theme.
+
+# Main background
+theme[main_bg]="{{BG}}"
+
+# Main text color
+theme[main_fg]="{{FG}}"
+
+# Title color for boxes
+theme[title]="{{ACCENT}}"
+
+# Highlight color for selected item
+theme[hi_fg]="{{ACCENT}}"
+
+# Background color of selected item
+theme[selected_bg]="{{SELECTION_BG}}"
+
+# Foreground color of selected item
+theme[selected_fg]="{{FG}}"
+
+# Color of inactive/disabled text
+theme[inactive_fg]="{{MUTED}}"
+
+# Color of text appearing on top of graphs
+theme[graph_text]="{{FG}}"
+
+# Misc colors for processes box
+theme[proc_misc]="{{ACCENT}}"
+
+# CPU box outline color
+theme[cpu_box]="{{BORDER}}"
+
+# Memory/disks box outline color
+theme[mem_box]="{{BORDER}}"
+
+# Net upload/download box outline color
+theme[net_box]="{{BORDER}}"
+
+# Processes box outline color
+theme[proc_box]="{{BORDER}}"
+
+# Box divider line and small box outline color
+theme[div_line]="{{MUTED}}"
+
+# Temperature color
+theme[temp_start]="{{COLOR2}}"
+theme[temp_mid]="{{COLOR3}}"
+theme[temp_end]="{{COLOR1}}"
+
+# CPU graph colors
+theme[cpu_start]="{{COLOR4}}"
+theme[cpu_mid]="{{COLOR2}}"
+theme[cpu_end]="{{COLOR1}}"
+
+# Memory/cache graph colors
+theme[free_start]="{{COLOR4}}"
+theme[free_mid]="{{COLOR2}}"
+theme[free_end]="{{COLOR1}}"
+
+# Download graph colors
+theme[download_start]="{{COLOR4}}"
+theme[download_mid]="{{COLOR2}}"
+theme[download_end]="{{COLOR1}}"
+
+# Upload graph colors
+theme[upload_start]="{{COLOR4}}"
+theme[upload_mid]="{{COLOR2}}"
+theme[upload_end]="{{COLOR1}}"
+
+# Process sorting highlight colors
+theme[process_start]="{{COLOR4}}"
+theme[process_mid]="{{COLOR2}}"
+theme[process_end]="{{COLOR1}}"

@@ -1,0 +1,34 @@
+# ~/.config/ghostty/colors.toml
+# AUTO-GENERATED — do not edit. Edit ~/.config/theme/colors.sh and run sync-theme.
+
+[colors.primary]
+background = "{{BG}}"
+foreground = "{{FG}}"
+
+[colors.cursor]
+cursor = "{{CURSOR}}"
+text   = "{{BG}}"
+
+[colors.selection]
+text       = "{{SELECTION_FG}}"
+background = "{{SELECTION_BG}}"
+
+[colors.normal]
+black   = "{{COLOR0}}"
+red     = "{{COLOR1}}"
+green   = "{{COLOR2}}"
+yellow  = "{{COLOR3}}"
+blue    = "{{COLOR4}}"
+magenta = "{{COLOR5}}"
+cyan    = "{{COLOR6}}"
+white   = "{{COLOR7}}"
+
+[colors.bright]
+black   = "{{COLOR8}}"
+red     = "{{COLOR9}}"
+green   = "{{COLOR10}}"
+yellow  = "{{COLOR11}}"
+blue    = "{{COLOR12}}"
+magenta = "{{COLOR13}}"
+cyan    = "{{COLOR14}}"
+white   = "{{COLOR15}}"

@@ -128,13 +128,13 @@ else
 
         # Learning Actions
         "Learning -> Keybindings")
-            alacritty -e sh -c "echo '=== SYSTEM KEYBINDINGS ===' && hyprctl binds | grep -E 'modmask|key|dispatcher|arg' | awk '{print \$0}' && echo '' && read -p 'Press Enter to close...'"
+            ghostty -e sh -c "echo '=== SYSTEM KEYBINDINGS ===' && hyprctl binds | grep -E 'modmask|key|dispatcher|arg' | awk '{print \$0}' && echo '' && read -p 'Press Enter to close...'"
             ;;
         "Learning -> CachyOS Wiki")    xdg-open "https://wiki.cachyos.org/" ;;
         "Learning -> Hyprland Wiki")   xdg-open "https://wiki.hyprland.org/" ;;
         "Learning -> Arch Wiki")       xdg-open "https://wiki.archlinux.org/" ;;
-        "Learning -> Neovim Docs")     alacritty -e nvim +h ;;
-        "Learning -> Bash Manuals")    alacritty -e man bash ;;
+        "Learning -> Neovim Docs")     ghostty -e nvim +h ;;
+        "Learning -> Bash Manuals")    ghostty -e man bash ;;
 
         # Capture Actions
         "Capture -> Screenshot")      grimblast copysave area ;;
@@ -153,9 +153,9 @@ else
         "Configs -> Walker Launcher")    kate ~/.config/walker/config.toml ;;
 
         # Setup Quick-Open Actions
-        "Setup -> Wi-Fi Manager")       alacritty -e nmtui ;;
-        "Setup -> Bluetooth Devices")   alacritty -e bluetuith || blueman-manager ;;
-        "Setup -> Audio TUI Configuration") alacritty -e pulsemixer || alacritty -e ncmcpp ;;
+        "Setup -> Wi-Fi Manager")       ghostty -e nmtui ;;
+        "Setup -> Bluetooth Devices")   ghostty -e bluetuith || blueman-manager ;;
+        "Setup -> Audio TUI Configuration") ghostty -e pulsemixer || ghostty -e ncmcpp ;;
         "Setup -> Keybindings Config")  kate ~/.config/hypr/hyprland.lua ;;
 
         # System Actions

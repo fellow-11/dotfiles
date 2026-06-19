@@ -1,0 +1,27 @@
+/* ~/.config/wlogout/style.css */
+/* AUTO-GENERATED — do not edit. Edit ~/.config/theme/colors.sh and run sync-theme. */
+
+window {
+    background-color: rgba({{BG_R}}, {{BG_G}}, {{BG_B}}, 0.9);
+}
+
+button {
+    background-color: {{BG}};
+    color: {{FG}};
+    border: 2px solid {{BORDER}};
+    border-radius: 0;
+    font-family: 'JetBrainsMono Nerd Font Propo';
+    font-size: 14px;
+    margin: 8px;
+}
+
+button:hover {
+    background-color: {{ACCENT}};
+    color: {{BG}};
+    border-color: {{ACCENT}};
+}
+
+button:focus {
+    background-color: {{ACCENT}};
+    color: {{BG}};
+}

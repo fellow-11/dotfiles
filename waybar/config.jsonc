@@ -61,9 +61,9 @@
 
   "custom/menu": {
     "format": "<span font='Untitled'>\uf000</span>",
-    "on-click": "walker",
-    "on-click-right": "alacritty",
-    "tooltip-format": "Application Launcher"
+    "on-click": "~/.local/bin/sys-menu",
+    "on-click-right": "ghostty",
+    "tooltip-format": "System Menu\n\nSUPER + ALT + SPACE"
   },
 
   "custom/spacer": {
@@ -123,20 +123,20 @@
     "format-critical": "{icon} {temperatureC}°",
     "format-icons": ["", "", "", "", ""],
     "tooltip-format": "Core Temperature",
-    "on-click": "alacritty -e btop"
+    "on-click": "ghostty -e btop"
   },
 
   "cpu": {
     "interval": 5,
     "format": "󰍛 {usage}%",
-    "on-click": "alacritty -e btop"
+    "on-click": "ghostty -e btop"
   },
 
   "memory": {
     "interval": 10,
     "format": " {percentage}%",
     "tooltip-format": "{used:0.1f}G / {total:0.1f}G",
-    "on-click": "alacritty -e btop"
+    "on-click": "ghostty -e btop"
   },
 
   "disk": {
@@ -144,7 +144,7 @@
     "format": "󰋊 {percentage_used}%",
     "path": "/",
     "tooltip-format": "{used} / {total}",
-    "on-click": "alacritty -e btop"
+    "on-click": "ghostty -e btop"
   },
 
   "clock": {
@@ -164,7 +164,7 @@
     "tooltip-format-disconnected": "Disconnected",
     "interval": 3,
     "spacing": 1,
-    "on-click": "alacritty -e impala"
+    "on-click": "ghostty -e impala"
   },
 
   "battery": {
@@ -193,12 +193,12 @@
     "format-connected": "󰂱",
     "format-no-controller": "",
     "tooltip-format": "Devices connected: {num_connections}",
-    "on-click": "alacritty -e bluetuith"
+    "on-click": "ghostty -e bluetuith"
   },
 
   "pulseaudio": {
     "format": "{icon}",
-    "on-click": "alacritty -e wiremix",
+    "on-click": "ghostty -e wiremix",
     "tooltip-format": "Volume: {volume}%",
     "scroll-step": 5,
     "format-muted": "",

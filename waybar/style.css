@@ -1,7 +1,4 @@
-/* Color Palette definition */
-@define-color background-dark #1e1e1e;
-@define-color text-light #dddddd;
-@define-color accent-color #d86b15;
+@import "colors.css";
 
 * {
     background-color: @background-dark;

@@ -1,3 +1,5 @@
+@import "colors.css";
+
 /* Force the launcher window to take up more vertical space */
 #window {
     min-height: 1200px; /* Adjust this number higher if you want it even taller */

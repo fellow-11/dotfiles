@@ -1,0 +1,74 @@
+# ~/.config/btop/themes/custom.theme
+# AUTO-GENERATED — do not edit. Edit ~/.config/theme/colors.sh and run sync-theme.
+
+# Main background
+theme[main_bg]="#121212"
+
+# Main text color
+theme[main_fg]="#bebebe"
+
+# Title color for boxes
+theme[title]="#e68e0d"
+
+# Highlight color for selected item
+theme[hi_fg]="#e68e0d"
+
+# Background color of selected item
+theme[selected_bg]="#515151"
+
+# Foreground color of selected item
+theme[selected_fg]="#bebebe"
+
+# Color of inactive/disabled text
+theme[inactive_fg]="#8a8a8d"
+
+# Color of text appearing on top of graphs
+theme[graph_text]="#bebebe"
+
+# Misc colors for processes box
+theme[proc_misc]="#e68e0d"
+
+# CPU box outline color
+theme[cpu_box]="#515151"
+
+# Memory/disks box outline color
+theme[mem_box]="#515151"
+
+# Net upload/download box outline color
+theme[net_box]="#515151"
+
+# Processes box outline color
+theme[proc_box]="#515151"
+
+# Box divider line and small box outline color
+theme[div_line]="#8a8a8d"
+
+# Temperature color
+theme[temp_start]="#FFC107"
+theme[temp_mid]="#b91c1c"
+theme[temp_end]="#D35F5F"
+
+# CPU graph colors
+theme[cpu_start]="#e68e0d"
+theme[cpu_mid]="#FFC107"
+theme[cpu_end]="#D35F5F"
+
+# Memory/cache graph colors
+theme[free_start]="#e68e0d"
+theme[free_mid]="#FFC107"
+theme[free_end]="#D35F5F"
+
+# Download graph colors
+theme[download_start]="#e68e0d"
+theme[download_mid]="#FFC107"
+theme[download_end]="#D35F5F"
+
+# Upload graph colors
+theme[upload_start]="#e68e0d"
+theme[upload_mid]="#FFC107"
+theme[upload_end]="#D35F5F"
+
+# Process sorting highlight colors
+theme[process_start]="#e68e0d"
+theme[process_mid]="#FFC107"
+theme[process_end]="#D35F5F"
