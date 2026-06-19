@@ -61,6 +61,7 @@ hl.on("hyprland.start", function ()
      hl.exec_cmd("waybar")
      hl.exec_cmd("elephant")
      hl.exec_cmd("swayosd-server")
+     hl.exec_once("kbuildsycoca6")
 end)
 
 
@@ -73,7 +74,7 @@ end)
 hl.env("XCURSOR_SIZE", "24")
 hl.env("HYPRCURSOR_SIZE", "24")
 hl.env("QT_QPA_PLATFORMTHEME", "qt6ct")
-
+hl.env("XDG_MENU_PREFIX", "arch-")
 
 -----------------------
 ----- PERMISSIONS -----
@@ -295,8 +296,8 @@ for i = 1, 10 do
 end
 
 -- Example special workspace (scratchpad)
-hl.bind(mainMod .. " + S",         hl.dsp.workspace.toggle_special("magic"))
-hl.bind(mainMod .. " + SHIFT + S", hl.dsp.window.move({ workspace = "special:magic" }))
+hl.bind(mainMod .. " + K",         hl.dsp.workspace.toggle_special("magic"))
+hl.bind(mainMod .. " + SHIFT + K", hl.dsp.window.move({ workspace = "special:magic" }))
 
 -- Scroll through existing workspaces with mainMod + scroll
 hl.bind(mainMod .. " + mouse_down", hl.dsp.focus({ workspace = "e+1" }))
@@ -344,7 +345,8 @@ hl.bind("SUPER + V", send_shortcut_once("SHIFT", "Insert"))
 hl.bind("SUPER + X", send_shortcut_once("CTRL", "X"))
 
 -- Screenshots
-hl.bind("SUPER + S", hl.dsp.exec_cmd("grimblast --notify copysave area ~/Pictures/Screenshots/$(date +%Y-%m-%d_%H-%M-%S).png"))
+hl.bind("SUPER + S", hl.dsp.exec_cmd("grimblast --notify --freeze copysave area ~/Pictures/Screenshots/$(date +%Y-%m-%d_%H-%M-%S).png"))
+hl.bind("SUPER + SHIFT + S", hl.dsp.exec_cmd("grimblast --notify copysave output ~/Pictures/Screenshots/$(date +%Y-%m-%d_%H-%M-%S).png"))
 
 --------------------------------
 ---- WINDOWS AND WORKSPACES ----
