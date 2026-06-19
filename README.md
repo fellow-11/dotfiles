@@ -1,3 +1,9 @@
+## 🚀 My Dotfiles
+
+[**Screenshots**](#-screenshots) • [**Components**](#-components) • [**Setup**](#-setup)
+
+---
+
 ## Preview
 
 <div align="center">
@@ -74,3 +80,5 @@ cp -r dotfiles/nvim ~/.config/nvim
 cp -r dotfiles/walker ~/.config/walker
 # ... repeat for other configs
 ```
+
+</div>
