@@ -343,6 +343,9 @@ hl.bind("SUPER + C", send_shortcut_once("CTRL", "Insert"))
 hl.bind("SUPER + V", send_shortcut_once("SHIFT", "Insert"))
 hl.bind("SUPER + X", send_shortcut_once("CTRL", "X"))
 
+-- Screenshots
+hl.bind("SUPER + S", hl.dsp.exec_cmd("grimblast --notify copysave area ~/Pictures/Screenshots/$(date +%Y-%m-%d_%H-%M-%S).png"))
+
 --------------------------------
 ---- WINDOWS AND WORKSPACES ----
 --------------------------------

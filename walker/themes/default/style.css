@@ -1,5 +1,5 @@
-@import "../../../../../../../.config/omarchy/current/theme/walker.css";
-@import "../../../../../../../.local/state/omarchy/toggles/walker.css";
+@import "/home/felix/.config/theme/current/theme/walker.css";
+@import "../../../../../../../.local/state/desktop/toggles/walker.css";
 
 * {
   all: unset;
