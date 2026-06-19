@@ -57,11 +57,12 @@ hl.on("hyprland.start", function ()
 --   hl.exec_cmd("nm-applet")
 --   hl.exec_cmd("waybar & hyprpaper & firefox")
      hl.exec_cmd("hyprpaper")
-     hl.exec_cmd("hypridle")
+     hl.exec_cmd("hypridle & hyprlock")
      hl.exec_cmd("waybar")
      hl.exec_cmd("elephant")
      hl.exec_cmd("swayosd-server")
      hl.exec_once("kbuildsycoca6")
+     hl.exec_cmd("discord & zen-browser & steam & cider")
 end)
 
 
@@ -345,8 +346,19 @@ hl.bind("SUPER + V", send_shortcut_once("SHIFT", "Insert"))
 hl.bind("SUPER + X", send_shortcut_once("CTRL", "X"))
 
 -- Screenshots
-hl.bind("SUPER + S", hl.dsp.exec_cmd("grimblast --notify --freeze copysave area ~/Pictures/Screenshots/$(date +%Y-%m-%d_%H-%M-%S).png"))
-hl.bind("SUPER + SHIFT + S", hl.dsp.exec_cmd("grimblast --notify copysave output ~/Pictures/Screenshots/$(date +%Y-%m-%d_%H-%M-%S).png"))
+-- Super + S: Area screenshot
+hl.bind("SUPER + S", hl.dsp.exec_cmd([[
+    FILE=~/Pictures/Screenshots/$(date +%Y-%m-%d_%H-%M-%S).png && \
+    grimblast --freeze save area "$FILE" && \
+    [ "$(notify-send 'Screenshot Captured' 'Click to edit selection' -i "$FILE" --action='default=Edit')" = "default" ] && satty -f "$FILE"
+]]))
+
+-- Super + Shift + S: Fullscreen screenshot
+hl.bind("SUPER + SHIFT + S", hl.dsp.exec_cmd([[
+    FILE=~/Pictures/Screenshots/$(date +%Y-%m-%d_%H-%M-%S).png && \
+    grimblast save output "$FILE" && \
+    [ "$(notify-send 'Screen Captured' 'Click to edit capture' -i "$FILE" --action='default=Edit')" = "default" ] && satty -f "$FILE"
+]]))
 
 --------------------------------
 ---- WINDOWS AND WORKSPACES ----

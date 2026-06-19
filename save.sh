@@ -48,6 +48,9 @@ sudo chown -R "$USER:$USER" "$DOTFILES/systemd/"
 # Wallpapers
 cp -r ~/.local/share/wallpapers/custom-wallpapers/* "$DOTFILES/wallpapers/" 2>/dev/null
 
+# README
+cp -r ~/dotfiles-screenshots/* "$DOTFILES/screenshots/"
+
 # Commit and push
 cd "$DOTFILES"
 git add .

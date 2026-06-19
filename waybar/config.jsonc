@@ -60,7 +60,7 @@
   },
 
   "custom/menu": {
-    "format": "<span font='cachyos-icon'>\uf000</span>",
+    "format": "<span font='Untitled'>\uf000</span>",
     "on-click": "walker",
     "on-click-right": "alacritty",
     "tooltip-format": "Application Launcher"
