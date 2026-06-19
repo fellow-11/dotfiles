@@ -1,6 +1,6 @@
 ## 🚀 My Dotfiles
 
-[**Screenshots**](#-screenshots) • [**Components**](#-components) • [**Setup**](#-setup)
+[**Screenshots**](#screenshots) • [**Components**](#components) • [**Setup**](#setup)
 
 ---
 
