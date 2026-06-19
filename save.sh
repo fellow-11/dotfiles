@@ -35,8 +35,20 @@ cp /etc/t2-suspend-fix/hardware.conf "$DOTFILES/system/"
 sudo cp /boot/limine.conf "$DOTFILES/system/"
 sudo chown "$USER:$USER" "$DOTFILES/system/limine.conf"
 
+# Systemd
+mkdir -p "$DOTFILES/systemd"
+sudo cp /etc/systemd/sleep.conf "$DOTFILES/systemd/"
+sudo cp /etc/systemd/logind.conf "$DOTFILES/systemd/"
+sudo cp /etc/systemd/timesyncd.conf "$DOTFILES/systemd/"
+sudo cp /etc/systemd/journald.conf "$DOTFILES/systemd/"
+sudo cp /etc/systemd/system/t2-suspend.service "$DOTFILES/systemd/"
+sudo cp /etc/systemd/system/t2-resume.service "$DOTFILES/systemd/"
+sudo cp /etc/systemd/system/t2-fix-kbd-backlight.service "$DOTFILES/systemd/"
+sudo chown -R "$USER:$USER" "$DOTFILES/systemd/"
+
 # Wallpapers
-cp ~/.local/share/wallpapers/* "$DOTFILES/wallpapers/"
+mkdir -p "$DOTFILES/wallpapers"
+cp -r ~/.local/share/wallpapers/custom-wallpapers/* "$DOTFILES/wallpapers/" 2>/dev/null
 
 # Commit and push
 cd "$DOTFILES"
