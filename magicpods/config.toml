@@ -1,0 +1,8 @@
+[40_B3_FA_50_1F_41]
+enc = '553c87c56c52c000e0882ac5e126b24a'
+irk = 'c0eed4c3a8dc625a15f9ccec0be49251'
+
+[magicpods]
+animation = true
+logLevel = 20
+theme_tray = 'dark'

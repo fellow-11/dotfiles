@@ -1,0 +1,14 @@
+#!/bin/bash
+step="${1:-+5%}"
+device="$(ls -1 /sys/class/backlight 2>/dev/null | head -n1)"
+for candidate in amdgpu_bl* intel_backlight acpi_video*; do
+  if [[ -e /sys/class/backlight/$candidate ]]; then
+    device="$candidate"
+    break
+  fi
+done
+brightnessctl -d "$device" set "$step" >/dev/null
+percent="$(brightnessctl -d "$device" -m | cut -d',' -f4 | tr -d '%')"
+progress="$(awk -v p="$percent" 'BEGIN{printf "%.2f", p/100}')"
+[[ $progress == "0.00" ]] && progress="0.01"
+my-swayosd-client --custom-icon display-brightness-symbolic --custom-progress "$progress" --custom-progress-text "$(printf '%3d%%' "$percent")"

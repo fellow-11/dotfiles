@@ -1,0 +1,42 @@
+window {
+    background-color: {{ background }};  
+    border: 2px solid {{ color4 }};       /* Uses ANSI Magenta as the sharp border line */
+    border-radius: 0px;                  /* Keep it completely square */
+}
+
+#container {
+    margin: 16px;
+}
+
+image {
+    color: {{ foreground }};             
+}
+
+progress, trough {
+    min-height: 8px;
+    border-radius: 0px;                  
+}
+
+trough {
+    background-color: {{ color8 }};       /* Muted track line */
+}
+
+progress {
+    background-color: {{ color5 }};       /* Filled bar matching the border accent */
+}
+
+label {
+    font-family: "JetBrains Mono", monospace;
+    font-weight: bold;
+    color: {{ foreground }};
+    margin-left: 12px;
+}
+
+/* Hide the progress indicator bar layout completely for media and mic layouts */
+image[file*="media-hidebar-"] ~ progressbar,
+image[file*="media-hidebar-"] ~ progress {
+    opacity: 0;
+    min-height: 0;
+    margin: 0;
+    padding: 0;
+}

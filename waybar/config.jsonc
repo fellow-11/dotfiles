@@ -1,0 +1,230 @@
+{
+  "reload_style_on_change": true,
+  "layer": "top",
+  "position": "top",
+  "spacing": 0,
+  "height": 26,
+  "modules-left": [
+    "custom/menu",
+    "custom/spacer",
+    "hyprland/workspaces",
+    "custom/spacer",
+    "custom/lock",
+    "custom/reboot",
+    "custom/power"
+  ],
+  "modules-center": [
+    "hyprland/window",
+    "mpris"
+  ],
+  "modules-right": [
+    "group/tray-expander",
+    "bluetooth",
+    "network",
+    "pulseaudio",
+    "custom/spacer",
+    "temperature",
+    "cpu",
+    "memory",
+    "disk",
+    "battery",
+    "custom/spacer",
+    "clock"
+  ],
+
+  "hyprland/workspaces": {
+    "on-click": "activate",
+    "format": "{icon}",
+    "format-icons": {
+      "default": "",
+      "1": "󰖟",
+      "2": "󰙯",
+      "3": "󰊗",
+      "4": "󰐌",
+      "5": "",
+      "6": "",
+      "7": "󰅗",
+      "8": "8",
+      "9": "9",
+      "10": "10"
+    },
+    "persistent-workspaces": {
+      "1": [],
+      "2": [],
+      "3": [],
+      "4": [],
+      "5": [],
+      "6": [],
+      "7": []
+    }
+  },
+
+  "custom/menu": {
+    "format": "<span font='cachyos-icon'>\uf000</span>",
+    "on-click": "walker",
+    "on-click-right": "alacritty",
+    "tooltip-format": "Application Launcher"
+  },
+
+  "custom/spacer": {
+    "format": " | ",
+    "tooltip": false
+  },
+
+  "custom/lock": {
+    "format": "",
+    "on-click": "hyprlock",
+    "tooltip": true,
+    "tooltip-format": "Lock System"
+  },
+
+  "custom/reboot": {
+    "format": "",
+    "on-click": "systemctl reboot",
+    "tooltip": true,
+    "tooltip-format": "Reboot System"
+  },
+
+  "custom/power": {
+    "format": "",
+    "on-click": "systemctl poweroff",
+    "tooltip": true,
+    "tooltip-format": "Shutdown System"
+  },
+
+  "hyprland/window": {
+    "format": "{initialTitle}",
+    "separate-outputs": true,
+    "max-length": 30,
+    "rewrite": {
+      "": "Desktop"
+    }
+  },
+
+  "mpris": {
+    "format": "<span color='#e68e0d'> | </span>{player_icon} {title}",
+    "format-paused": "<span color='#e68e0d'> | </span>{status_icon} {title}",
+    "tooltip-format": "{title}\n{artist}\n{album}",
+    "player-icons": {
+      "default": "⏸"
+    },
+    "status-icons": {
+      "paused": "▶"
+    },
+    "max-length": 30
+  },
+
+  "temperature": {
+    "thermal-zone": 2,
+    "warning-threshold": 75,
+    "critical-threshold": 90,
+    "interval": 5,
+    "format": "{icon} {temperatureC}°",
+    "format-critical": "{icon} {temperatureC}°",
+    "format-icons": ["", "", "", "", ""],
+    "tooltip-format": "Core Temperature",
+    "on-click": "alacritty -e btop"
+  },
+
+  "cpu": {
+    "interval": 5,
+    "format": "󰍛 {usage}%",
+    "on-click": "alacritty -e btop"
+  },
+
+  "memory": {
+    "interval": 10,
+    "format": " {percentage}%",
+    "tooltip-format": "{used:0.1f}G / {total:0.1f}G",
+    "on-click": "alacritty -e btop"
+  },
+
+  "disk": {
+    "interval": 30,
+    "format": "󰋊 {percentage_used}%",
+    "path": "/",
+    "tooltip-format": "{used} / {total}",
+    "on-click": "alacritty -e btop"
+  },
+
+  "clock": {
+    "format": "󰥔 {:%I:%M %p}",
+    "format-alt": "󰸗 {:L%B %e, %Y}",
+    "tooltip": false
+  },
+
+  "network": {
+    "format-icons": ["󰤯", "󰤟", "󰤢", "󰤥", "󰤨"],
+    "format": "{icon}",
+    "format-wifi": "{icon}",
+    "format-ethernet": "󰀂",
+    "format-disconnected": "󰤮",
+    "tooltip-format-wifi": "{essid} ({frequency} GHz)",
+    "tooltip-format-ethernet": "Connected via Ethernet",
+    "tooltip-format-disconnected": "Disconnected",
+    "interval": 3,
+    "spacing": 1,
+    "on-click": "alacritty -e impala"
+  },
+
+  "battery": {
+    "format": "{icon} {capacity}%",
+    "format-discharging": "{icon}{capacity}%",
+    "format-charging": "{icon}",
+    "format-plugged": "",
+    "format-icons": {
+      "charging": ["󰢜", "󰂆", "󰂇", "󰂈", "󰢝", "󰂉", "󰢞", "󰂊", "󰂋", "󰂅"],
+      "default": ["󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"]
+    },
+    "format-full": "󰂅",
+    "tooltip-format-discharging": "{power:>1.0f}W↓ {capacity}%",
+    "tooltip-format-charging": "{power:>1.0f}W↑ {capacity}%",
+    "interval": 5,
+    "states": {
+      "warning": 20,
+      "critical": 10
+    }
+  },
+
+  "bluetooth": {
+    "format": "",
+    "format-off": "󰂲",
+    "format-disabled": "󰂲",
+    "format-connected": "󰂱",
+    "format-no-controller": "",
+    "tooltip-format": "Devices connected: {num_connections}",
+    "on-click": "alacritty -e bluetuith"
+  },
+
+  "pulseaudio": {
+    "format": "{icon}",
+    "on-click": "alacritty -e wiremix",
+    "tooltip-format": "Volume: {volume}%",
+    "scroll-step": 5,
+    "format-muted": "",
+    "format-icons": {
+      "headphone": "",
+      "headset": "",
+      "default": ["", "", ""]
+    }
+  },
+
+  "group/tray-expander": {
+    "orientation": "inherit",
+    "drawer": {
+      "transition-duration": 600,
+      "children-class": "tray-group-item"
+    },
+    "modules": ["custom/expand-icon", "tray"]
+  },
+
+  "custom/expand-icon": {
+    "format": "",
+    "tooltip": false
+  },
+
+  "tray": {
+    "icon-size": 12,
+    "spacing": 17
+  }
+}

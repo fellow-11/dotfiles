@@ -1,0 +1,23 @@
+#!/bin/bash
+direction="${1:-up}"
+device=""
+for candidate in /sys/class/leds/*kbd_backlight*; do
+  [[ -e $candidate ]] && device="$(basename "$candidate")" && break
+done
+[[ -z $device ]] && exit 1
+max_brightness="$(brightnessctl -d "$device" max)"
+current_brightness="$(brightnessctl -d "$device" get)"
+step=$(( max_brightness / 10 ))
+(( step < 1 )) && step=1
+if [[ $direction == "up" ]]; then
+  new_brightness=$(( current_brightness + step ))
+  (( new_brightness > max_brightness )) && new_brightness=$max_brightness
+else
+  new_brightness=$(( current_brightness - step ))
+  (( new_brightness < 0 )) && new_brightness=0
+fi
+brightnessctl -d "$device" set "$new_brightness" >/dev/null
+percent=$((new_brightness * 100 / max_brightness))
+progress="$(awk -v p="$percent" 'BEGIN{printf "%.2f", p/100}')"
+[[ $progress == "0.00" ]] && progress="0.01"
+my-swayosd-client --custom-icon keyboard-brightness-symbolic --custom-progress "$progress" --custom-progress-text "${percent}%"

@@ -1,0 +1,413 @@
+#!/bin/bash
+
+BACK_TO_EXIT=false
+
+menu() {
+  local prompt="$1"
+  local options="$2"
+  echo -e "$options" | walker --dmenu --width 295 --minheight 1 --maxheight 630 -p "$prompt…" 2>/dev/null
+}
+
+present_terminal() {
+  alacritty -e bash -c "$1; read -p 'Press enter to close...'"
+}
+
+show_main_menu() {
+  case $(menu "Go" "󰀻  Apps\n󰧑  Learn\n󰄀  Capture\n󰔡  Toggle\n  Style\n󰒓  Setup\n  Configs\n󰉉  Install\n󰭌  Remove\n  Update\n⏻  System") in
+  *Apps*) walker -p "Launch…" ;;
+  *Learn*) show_learn_menu ;;
+  *Capture*) show_capture_menu ;;
+  *Toggle*) show_toggle_menu ;;
+  *Style*) show_style_menu ;;
+  *Setup*) show_setup_menu ;;
+  *Configs*) show_configs_menu ;;
+  *Install*) show_install_menu ;;
+  *Remove*) show_remove_menu ;;
+  *Update*) show_update_menu ;;
+  *System*) show_system_menu ;;
+  esac
+}
+
+show_learn_menu() {
+  case $(menu "Learn" "  Keybindings\n  CachyOS Wiki\n  Hyprland Wiki\n󰣇  Arch Wiki\n  Neovim Docs\n󱆃  Bash Manual") in
+  *Keybindings*) alacritty -e bash -c 'hyprctl binds | less' ;;
+  *CachyOS*) xdg-open https://wiki.cachyos.org/ ;;
+  *Hyprland*) xdg-open https://wiki.hypr.land ;;
+  *Arch*) xdg-open https://wiki.archlinux.org ;;
+  *Neovim*) xdg-open https://neovim.io/doc/ ;;
+  *Bash*) xdg-open https://www.gnu.org/software/bash/manual/ ;;
+  *) show_main_menu ;;
+  esac
+}
+
+show_capture_menu() {
+  case $(menu "Capture" "󰹑  Screenshot\n  Screen Recording\n󰈊  Color Picker\n󱄺  OCR Text") in
+  *Screenshot*) grimblast copysave area ;;
+  *Recording*) wf-recorder -f ~/Videos/recording.mp4 ;;
+  *Color*) hyprpicker -a ;;
+  *OCR*) grim -g "$(slurp)" - | tesseract stdin stdout | wl-copy ;;
+  *) show_main_menu ;;
+  esac
+}
+
+show_toggle_menu() {
+  case $(menu "Toggle" "  Waybar\n󱩫  Screen Shader\n󰔟  Idle Timeout") in
+  *Waybar*) pkill -USR1 waybar ;;
+  *Shader*) pkill wlsunset || wlsunset -t 4500 ;;
+  *Idle*) pkill hypridle || hypridle ;;
+  *) show_main_menu ;;
+  esac
+}
+
+show_style_menu() {
+  case $(menu "Style" "󰸌  Theme\n󰸌  Create Custom Theme\n󰛖  Font\n󰸉  Background\n󰍜  Waybar Position\n󰘇  Corners") in
+  *Create*) show_create_theme_menu ;;
+  *Theme*) show_theme_menu ;;
+  *Font*) show_font_menu ;;
+  *Background*) show_background_menu ;;
+  *Waybar*) show_waybar_position_menu ;;
+  *Corners*) show_corners_menu ;;
+  *) show_main_menu ;;
+  esac
+}
+
+pick_color() {
+  local prompt="$1"
+  notify-send -u low "  Pick $prompt" "Click a pixel, then adjust in the color wheel"
+  wl-color-picker 2>/dev/null
+  sleep 0.3
+  wl-paste | tr -d '\n'
+}
+
+show_create_theme_menu() {
+  local theme_name
+  theme_name=$(echo "" | walker --dmenu --width 400 --minheight 1 --maxheight 1 -p "Theme name…" 2>/dev/null)
+  [[ -z $theme_name ]] && show_style_menu && return
+
+  local theme_dir="$HOME/.config/theme/themes/$theme_name"
+  mkdir -p "$theme_dir"
+
+  notify-send -u low "Creating theme: $theme_name" "You will pick colors one by one"
+  sleep 1
+
+  local background foreground accent cursor
+  local color0 color1 color2 color3 color4 color5 color6 color7
+  local color8 color9 color10 color11 color12 color13 color14 color15
+  local selection_background selection_foreground
+
+  background=$(pick_color "Pick BACKGROUND color"); sleep 0.5
+  foreground=$(pick_color "Pick FOREGROUND / text color"); sleep 0.5
+  accent=$(pick_color "Pick ACCENT color (waybar, walker border)"); sleep 0.5
+  cursor=$(pick_color "Pick CURSOR color"); sleep 0.5
+  selection_background=$(pick_color "Pick SELECTION BACKGROUND color"); sleep 0.5
+  selection_foreground=$(pick_color "Pick SELECTION FOREGROUND color"); sleep 0.5
+
+  notify-send -u low "Now picking terminal colors" "16 colors (color0–color15)"
+  sleep 1
+
+  color0=$(pick_color "color0 — Black"); sleep 0.5
+  color1=$(pick_color "color1 — Red"); sleep 0.5
+  color2=$(pick_color "color2 — Green"); sleep 0.5
+  color3=$(pick_color "color3 — Yellow"); sleep 0.5
+  color4=$(pick_color "color4 — Blue"); sleep 0.5
+  color5=$(pick_color "color5 — Magenta"); sleep 0.5
+  color6=$(pick_color "color6 — Cyan"); sleep 0.5
+  color7=$(pick_color "color7 — White"); sleep 0.5
+  color8=$(pick_color "color8 — Bright Black"); sleep 0.5
+  color9=$(pick_color "color9 — Bright Red"); sleep 0.5
+  color10=$(pick_color "color10 — Bright Green"); sleep 0.5
+  color11=$(pick_color "color11 — Bright Yellow"); sleep 0.5
+  color12=$(pick_color "color12 — Bright Blue"); sleep 0.5
+  color13=$(pick_color "color13 — Bright Magenta"); sleep 0.5
+  color14=$(pick_color "color14 — Bright Cyan"); sleep 0.5
+  color15=$(pick_color "color15 — Bright White"); sleep 0.5
+
+  cat > "$theme_dir/colors.toml" << EOF
+accent = "$accent"
+cursor = "$cursor"
+foreground = "$foreground"
+background = "$background"
+selection_foreground = "$selection_foreground"
+selection_background = "$selection_background"
+color0 = "$color0"
+color1 = "$color1"
+color2 = "$color2"
+color3 = "$color3"
+color4 = "$color4"
+color5 = "$color5"
+color6 = "$color6"
+color7 = "$color7"
+color8 = "$color8"
+color9 = "$color9"
+color10 = "$color10"
+color11 = "$color11"
+color12 = "$color12"
+color13 = "$color13"
+color14 = "$color14"
+color15 = "$color15"
+EOF
+
+  cat > ~/.config/theme/current/theme/walker.css << EOF
+@define-color selected-text $accent;
+@define-color text $foreground;
+@define-color base $background;
+@define-color border $accent;
+@define-color foreground $foreground;
+@define-color background $background;
+EOF
+
+  sed -i "s/@define-color background-dark .*/@define-color background-dark $background;/" ~/.config/waybar/style.css
+  sed -i "s/@define-color text-light .*/@define-color text-light $foreground;/" ~/.config/waybar/style.css
+  sed -i "s/@define-color accent-color .*/@define-color accent-color $accent;/" ~/.config/waybar/style.css
+
+  cat > ~/.config/alacritty/colors.toml << EOF
+[colors.primary]
+background = "$background"
+foreground = "$foreground"
+[colors.cursor]
+text = "$background"
+cursor = "$cursor"
+[colors.selection]
+text = "$selection_foreground"
+background = "$selection_background"
+[colors.normal]
+black = "$color0"
+red = "$color1"
+green = "$color2"
+yellow = "$color3"
+blue = "$color4"
+magenta = "$color5"
+cyan = "$color6"
+white = "$color7"
+[colors.bright]
+black = "$color8"
+red = "$color9"
+green = "$color10"
+yellow = "$color11"
+blue = "$color12"
+magenta = "$color13"
+cyan = "$color14"
+white = "$color15"
+EOF
+
+  pkill walker
+  pkill waybar; waybar & disown
+  notify-send "Theme '$theme_name' applied!" "Colors saved to $theme_dir"
+}
+
+show_font_menu() {
+  local fonts current chosen
+  fonts=$(fc-list :spacing=100 -f "%{family[0]}\n" | grep -v -i -E 'emoji|signwriting' | sort -u)
+  current=$(grep 'font-family' ~/.config/waybar/style.css | head -1 | sed "s/.*'\(.*\)'.*/\1/")
+  chosen=$(echo "$fonts" | walker --dmenu --width 400 --minheight 1 --maxheight 630 -p "Font (current: $current)…" 2>/dev/null)
+  if [[ -n $chosen ]]; then
+    sed -i "s/family = \".*\"/family = \"$chosen\"/g" ~/.config/alacritty/alacritty.toml
+    sed -i "s/font-family: .*/font-family: '$chosen';/g" ~/.config/waybar/style.css
+    sed -i "s/<string>.*<\/string>/<string>$chosen<\/string>/g" ~/.config/fontconfig/fonts.conf
+    pkill waybar; waybar & disown
+    notify-send -u low "Font set to $chosen"
+  else
+    show_style_menu
+  fi
+}
+
+show_theme_menu() {
+  local themes chosen theme_name theme_path bg fg accent
+  themes=$(ls ~/omarchy-repo/themes/ 2>/dev/null | sed -E 's/(^|-)([a-z])/\1\u\2/g; s/-/ /g')
+  if [[ -z $themes ]]; then
+    notify-send -u low "No themes found in ~/omarchy-repo/themes/"
+    show_style_menu
+    return
+  fi
+  chosen=$(echo "$themes" | walker --dmenu --width 400 --minheight 1 --maxheight 630 -p "Theme…" 2>/dev/null)
+  if [[ -n $chosen ]]; then
+    theme_name=$(echo "$chosen" | tr '[:upper:]' '[:lower:]' | tr ' ' '-')
+    theme_path=~/omarchy-repo/themes/$theme_name
+    if [[ -d $theme_path ]]; then
+      bg=$(grep '^background' "$theme_path/colors.toml" 2>/dev/null | cut -d'"' -f2)
+      fg=$(grep '^foreground' "$theme_path/colors.toml" 2>/dev/null | cut -d'"' -f2)
+      accent=$(grep '^accent' "$theme_path/colors.toml" 2>/dev/null | cut -d'"' -f2)
+      if [[ -n $bg ]]; then
+        printf '@define-color base %s;\n@define-color background %s;\n@define-color text %s;\n@define-color border %s;\n@define-color selected-text #ffffff;\n@define-color accent %s;\n' \
+          "$bg" "$bg" "$fg" "$accent" "$accent" > ~/.config/theme/current/theme/walker.css
+        pkill walker
+        notify-send -u low "Theme set to $chosen"
+      fi
+    fi
+  else
+    show_style_menu
+  fi
+}
+
+show_background_menu() {
+  local chosen
+  chosen=$(find ~/Pictures/Wallpapers/ -type f 2>/dev/null | walker --dmenu --width 500 --minheight 1 --maxheight 630 -p "Wallpaper…" 2>/dev/null)
+  if [[ -n $chosen ]]; then
+    swww img "$chosen"
+  else
+    show_style_menu
+  fi
+}
+
+show_waybar_position_menu() {
+  case $(menu "Waybar Position" "󰁝  Top\n󰁅  Bottom") in
+  *Top*)
+    sed -i 's/"position": "bottom"/"position": "top"/' ~/.config/waybar/config.jsonc
+    pkill waybar; waybar & disown ;;
+  *Bottom*)
+    sed -i 's/"position": "top"/"position": "bottom"/' ~/.config/waybar/config.jsonc
+    pkill waybar; waybar & disown ;;
+  *) show_style_menu ;;
+  esac
+}
+
+show_corners_menu() {
+  case $(menu "Corners" "󰝣  Sharp\n󰘇  Round") in
+  *Sharp*)
+    sed -i 's/rounding.*=.*/rounding       = 0,/' ~/.config/hypr/hyprland.lua
+    hyprctl reload ;;
+  *Round*)
+    sed -i 's/rounding.*=.*/rounding       = 10,/' ~/.config/hypr/hyprland.lua
+    hyprctl reload ;;
+  *) show_style_menu ;;
+  esac
+}
+
+show_setup_menu() {
+  case $(menu "Setup" "  Audio\n  Wi-Fi\n󰂯  Bluetooth\n  Default Apps") in
+  *Audio*) alacritty -e pulsemixer ;;
+  *Wi-Fi*) alacritty -e nmtui ;;
+  *Bluetooth*) alacritty -e bluetui ;;
+  *Default*) alacritty -e nvim ~/.config/mimeapps.list ;;
+  *) show_main_menu ;;
+  esac
+}
+
+show_configs_menu() {
+  case $(menu "Configs" "  Hyprland\n󰍜  Walker\n󰍜  Waybar\n󰎟  Mako\n  Alacritty") in
+  *Hyprland*) alacritty -e nvim ~/.config/hypr/hyprland.lua ;;
+  *Walker*) alacritty -e nvim ~/.config/walker/config.toml ;;
+  *Waybar*) alacritty -e nvim ~/.config/waybar/config.jsonc ;;
+  *Mako*) alacritty -e nvim ~/.config/mako/config ;;
+  *Alacritty*) alacritty -e nvim ~/.config/alacritty/alacritty.toml ;;
+  *) show_main_menu ;;
+  esac
+}
+
+show_install_menu() {
+  case $(menu "Install" "󰣇  Package\n󰣇  AUR\n󰖟  Browser\n  Terminal\n󰵮  Development") in
+  *Package*) show_pkg_install ;;
+  *AUR*) show_aur_install ;;
+  *Browser*) show_install_browser_menu ;;
+  *Terminal*) show_install_terminal_menu ;;
+  *Development*) show_install_dev_menu ;;
+  *) show_main_menu ;;
+  esac
+}
+
+show_pkg_install() {
+  alacritty -e bash -c '
+    pkg_names=$(pacman -Slq | fzf \
+      --multi \
+      --preview "pacman -Sii {1}" \
+      --preview-label="alt-p: toggle, tab: multi-select" \
+      --preview-label-pos=bottom \
+      --preview-window "down:65%:wrap" \
+      --bind "alt-p:toggle-preview" \
+      --bind "alt-d:preview-half-page-down,alt-u:preview-half-page-up" \
+      --bind "alt-k:preview-up,alt-j:preview-down" \
+      --color "pointer:green,marker:green")
+    if [[ -n $pkg_names ]]; then
+      # Added the -o flag here so sudo can read your password input safely
+      echo "$pkg_names" | tr "\n" " " | xargs -o sudo pacman -S
+    fi
+  '
+}
+
+show_aur_install() {
+  alacritty -e bash -c '
+    pkg_names=$(yay -Slq | fzf \
+      --multi \
+      --preview "yay -Sii {1}" \
+      --preview-label="alt-p: toggle, tab: multi-select" \
+      --preview-label-pos=bottom \
+      --preview-window "down:65%:wrap" \
+      --bind "alt-p:toggle-preview" \
+      --bind "alt-d:preview-half-page-down,alt-u:preview-half-page-up" \
+      --bind "alt-k:preview-up,alt-j:preview-down" \
+      --color "pointer:green,marker:green")
+    if [[ -n $pkg_names ]]; then
+      # Added -o flag so yay/sudo can grab keyboard focus for passwords/diffs
+      echo "$pkg_names" | tr "\n" " " | xargs -o yay -S
+    fi
+  '
+}
+
+show_install_browser_menu() {
+  case $(menu "Install Browser" "󰖟  Zen\n  Brave\n  Firefox\n  Chrome") in
+  *Zen*) present_terminal "yay -S zen-browser-bin" ;;
+  *Brave*) present_terminal "yay -S brave-bin" ;;
+  *Firefox*) present_terminal "sudo pacman -S firefox" ;;
+  *Chrome*) present_terminal "yay -S google-chrome" ;;
+  *) show_install_menu ;;
+  esac
+}
+
+show_install_terminal_menu() {
+  case $(menu "Install Terminal" "  Ghostty\n  Kitty\n  Foot") in
+  *Ghostty*) present_terminal "yay -S ghostty" ;;
+  *Kitty*) present_terminal "sudo pacman -S kitty" ;;
+  *Foot*) present_terminal "sudo pacman -S foot" ;;
+  *) show_install_menu ;;
+  esac
+}
+
+show_install_dev_menu() {
+  case $(menu "Install Dev" "  Node.js\n  Python\n  Rust\n  Go\n  Docker") in
+  *Node*) present_terminal "sudo pacman -S nodejs npm" ;;
+  # Changed python-pip to python-pipx to prevent environment blocking errors
+  *Python*) present_terminal "sudo pacman -S python python-pipx" ;;
+  *Rust*) present_terminal "sudo pacman -S rustup && rustup default stable" ;;
+  *Go*) present_terminal "sudo pacman -S go" ;;
+  *Docker*) present_terminal "sudo pacman -S docker docker-compose && sudo systemctl enable --now docker" ;;
+  *) show_install_menu ;;
+  esac
+}
+
+show_remove_menu() {
+  alacritty -e bash -c '
+    pkg_names=$(yay -Qqe | fzf \
+      --multi \
+      --preview "yay -Qi {1}" \
+      --preview-label="alt-p: toggle, tab: multi-select" \
+      --preview-label-pos=bottom \
+      --preview-window "down:65%:wrap" \
+      --bind "alt-p:toggle-preview" \
+      --bind "alt-d:preview-half-page-down,alt-u:preview-half-page-up" \
+      --bind "alt-k:preview-up,alt-j:preview-down" \
+      --color "pointer:red,marker:red")
+    if [[ -n $pkg_names ]]; then
+      echo "$pkg_names" | tr "\n" " " | xargs -o sudo pacman -Rns
+    fi
+  '
+}
+
+show_update_menu() {
+  case $(menu "Update" "  System Packages") in
+  *System*) present_terminal "yay -Syu" ;;
+  *) show_main_menu ;;
+  esac
+}
+
+show_system_menu() {
+  case $(menu "System" "  Lock\n󰍃  Logout\n󰒲  Suspend\n  Reboot\n󰐥  Shutdown") in
+  *Lock*) hyprlock ;;
+  *Logout*) hyprctl dispatch exit ;;
+  *Suspend*) systemctl suspend ;;
+  *Reboot*) systemctl reboot ;;
+  *Shutdown*) systemctl poweroff ;;
+  *) show_main_menu ;;
+  esac
+}
+
+show_main_menu

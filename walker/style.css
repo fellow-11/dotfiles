@@ -1,0 +1,10 @@
+/* Force the launcher window to take up more vertical space */
+#window {
+    min-height: 1200px; /* Adjust this number higher if you want it even taller */
+}
+
+/* Increase vertical padding on individual items to stretch the list out */
+#item {
+    padding-top: 18px;
+    padding-bottom: 18px;
+}
