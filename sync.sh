@@ -1,3 +1,4 @@
 #!/bin/bash
-cd ~/dotfiles || exit
-git pull --rebase
+cd ~/dotfiles
+git pull
+echo "Dotfiles synced."

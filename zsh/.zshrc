@@ -22,3 +22,5 @@ zstyle ':completion:*' menu select
 # Tell the autosuggest plugin to look at history first, then fallback to tab-completion
 export ZSH_AUTOSUGGEST_STRATEGY=(history completion)
 export PATH="$HOME/.local/bin:$PATH"
+alias dotfiles-sync='~/dotfiles/sync.sh'
+alias dotfiles-sync='~/dotfiles/sync.sh'
