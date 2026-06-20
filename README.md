@@ -1,10 +1,10 @@
-# My Dotfiles
+# 🏠 My Dotfiles
 
 [**Screenshots**](#screenshots) • [**Components**](#components) • [**Theming**](#theming) • [**T2 MacBook Notes**](#t2-macbook-notes) • [**Setup**](#setup)
 
 ---
 
-## Preview
+## 🖼️ Preview
 
 <div align="center">
 <img src="screenshots/desktop.png" alt="Desktop" width="800"/>
@@ -13,7 +13,7 @@
 
 ---
 
-## Screenshots
+## 📸 Screenshots
 
 ### Desktop
 <img src="screenshots/desktop.png" alt="Desktop" width="600"/>
@@ -37,9 +37,9 @@
 
 ---
 
-## Components
+## 🧩 Components
 
-### Window Manager & Desktop
+### 🪟 Window Manager & Desktop
 
 | Component | Description | Config |
 |-----------|-------------|--------|
@@ -52,14 +52,14 @@
 | **[Mako](https://github.com/emersion/mako)** | Notification daemon | [`mako/`](./mako) |
 | **[Wlogout](https://github.com/ArtsyMacaw/wlogout)** | Logout menu | [`wlogout/`](./wlogout) |
 
-### Editor & Terminal
+### ⌨️ Editor & Terminal
 
 | Component | Description | Config |
 |-----------|-------------|--------|
 | **[Neovim](https://github.com/neovim/neovim)** | Hyperextensible Vim-based text editor | [`nvim/`](./nvim) |
 | **[Ghostty](https://github.com/ghostty-org/ghostty)** | Fast, feature-rich terminal emulator | [`ghostty/`](./ghostty) |
 
-### System Tools
+### 🔧 System Tools
 
 | Component | Description | Config |
 |-----------|-------------|--------|
@@ -70,7 +70,7 @@
 
 ---
 
-## Theming
+## 🎨 Theming
 
 All colors are controlled from a single source of truth:
 
@@ -100,7 +100,7 @@ Templates live in `~/.config/theme/templates/`. To add a new app, create a templ
 
 ---
 
-## T2 MacBook Notes
+## 🍎 T2 MacBook Notes
 
 These dotfiles are built for a **MacBook Pro (16-inch, 2019)** running CachyOS. Several T2-specific workarounds are included:
 
@@ -122,11 +122,11 @@ Requires T2 WiFi firmware. See [t2linux.org](https://t2linux.org) for setup.
 
 ---
 
-## Setup
+## 🚀 Setup
 
 > **Note:** These dotfiles are personal and built around specific hardware. Manual setup is recommended — don't blindly copy everything.
 
-### Dependencies
+### 📦 Dependencies
 
 ```bash
 yay -S hyprland waybar-git walker-bin ghostty neovim \
@@ -136,7 +136,7 @@ yay -S hyprland waybar-git walker-bin ghostty neovim \
         ttf-jetbrains-mono-nerd
 ```
 
-### Manual Setup (recommended)
+### 📋 Manual Setup (recommended)
 
 ```bash
 # Clone the repo
@@ -159,7 +159,7 @@ chmod +x ~/.local/bin/sync-theme
 sync-theme
 ```
 
-### Dotfiles Management
+### 💾 Dotfiles Management
 
 ```bash
 # Save local changes to repo
