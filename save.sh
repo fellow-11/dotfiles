@@ -36,6 +36,8 @@ cp /usr/local/bin/t2-resume.sh       "$DOTFILES/system/"
 cp /etc/t2-suspend-fix/hardware.conf "$DOTFILES/system/"
 sudo cp /boot/limine.conf            "$DOTFILES/system/"
 sudo chown "$USER:$USER"             "$DOTFILES/system/limine.conf"
+mkdir "$DOTFILES/pipewire"
+cp -r ~/felix/.config/pipewire/*          "$DOTFILES/pipewire/"
 
 # Systemd
 sudo cp /etc/systemd/sleep.conf                                "$DOTFILES/systemd/"

@@ -64,8 +64,9 @@ hl.on("hyprland.start", function ()
      hl.exec_cmd("elephant")
      hl.exec_cmd("swayosd-server")
      hl.exec_once("kbuildsycoca6")
-     hl.exec_cmd("discord & zen-browser & steam & cider")
+     hl.exec_once("discord & zen-browser & steam & cider")
      hl.exec_cmd("dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=Hyprland && systemctl --user start hyprland-session.target")
+     hl.dsp.exec_cmd("pactl set-source-volume alsa_input.pci-0000_04_00.3.BuiltinMic 300%")()
 end)
 
 
