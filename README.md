@@ -1,6 +1,6 @@
 # 🏠 My Dotfiles
 
-[**Screenshots**](#screenshots) • [**Components**](#components) • [**Theming**](#theming) • [**T2 MacBook Notes**](#t2-macbook-notes) • [**Setup**](#setup)
+[**Screenshots**](#-screenshots) • [**Components**](#-components) • [**Theming**](#-theming) • [**T2 MacBook Notes**](#-t2-macbook-notes) • [**Setup**](#-setup)
 
 ---
 
