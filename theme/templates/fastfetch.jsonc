@@ -3,15 +3,8 @@
   "display": {
     "separator": " → ",
     "color": {
-      "keys": "{{ACCENT_HEX}}",
-      "title": "{{ACCENT_HEX}}"
-    }
-  },
-  "logo": {
-    "type": "auto",
-    "color": {
-      "1": "{{ACCENT_HEX}}",
-      "2": "{{FG_HEX}}"
+      "keys": "#{{ACCENT_HEX}}",
+      "title": "#{{ACCENT_HEX}}"
     }
   },
   "modules": [
