@@ -72,7 +72,7 @@
 
 ## 🎨 Theming
 
-All colors are controlled from a single source of truth:
+All colors are controlled from a single source:
 
 ```
 ~/.config/theme/colors.sh
