@@ -48,27 +48,34 @@ local menu        = "walker"
 
 -- Autostart necessary processes (like notifications daemons, status bars, etc.)
 -- Or execute your favorite apps at launch like this:
---
-hl.on("hyprland.start", function () 
+
+hl.on("hyprland.start", function ()
 --   hl.exec_cmd(terminal)
 --   hl.exec_cmd("nm-applet")
 --   hl.exec_cmd("waybar & hyprpaper & firefox")
-     hl.exec_cmd("hyprpaper")
-     hl.exec_cmd("hypridle")
-     hl.exec_cmd("hyprlock")
-     hl.exec_cmd("waybar")
-     hl.exec_cmd("elephant")
-     hl.exec_cmd("sleep 2 && walker --gapplication-service")
-     hl.exec_cmd("swayosd-server")
-     hl.exec_once("kbuildsycoca6")
-     hl.exec_once("discord")
-     hl.exec_once("zen-browser")
-     hl.exec_once("steam")
-     hl.exec_once("cider")
-     hl.exec_cmd("dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=Hyprland && systemctl --user start hyprland-session.target")
-     hl.dsp.exec_cmd("pactl set-source-volume alsa_input.pci-0000_04_00.3.BuiltinMic 300%")()
-end)
 
+    -- System services
+    hl.exec_cmd("dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=Hyprland && systemctl --user start hyprland-session.target")
+    hl.exec_cmd("kbuildsycoca6")
+
+    -- Desktop environment
+    hl.exec_cmd("hyprpaper")
+    hl.exec_cmd("waybar")
+    hl.exec_cmd("swayosd-server")
+    hl.exec_cmd("hypridle")
+    hl.exec_cmd("hyprlock")
+
+    -- Launcher backend
+    hl.exec_cmd("elephant")
+    hl.exec_cmd("sleep 2 && walker --gapplication-service")
+
+    -- Apps
+    hl.exec_cmd("discord")
+    hl.exec_cmd("zen-browser")
+    hl.exec_cmd("steam")
+    hl.exec_cmd("cider")
+
+end)
 
 -------------------------------
 ---- ENVIRONMENT VARIABLES ----
@@ -279,7 +286,7 @@ local mainMod = "SUPER" -- Sets "Windows" key as main modifier
 hl.bind("SUPER + RETURN",      hl.dsp.exec_cmd(terminal),                    { description = "Terminal" })
 hl.bind("SUPER + E",           hl.dsp.exec_cmd(fileManager),                 { description = "File manager" })
 hl.bind("SUPER + SPACE",       hl.dsp.exec_cmd(menu),                        { description = "Launcher" })
-hl.bind("SUPER + ALT + SPACE", hl.dsp.exec_cmd("~/.local/bin/sys-menu"),     { description = "System menu" })
+hl.bind("SUPER + ALT + SPACE", hl.dsp.exec_cmd("/home/felix/.local/bin/sys-menu"),     { description = "System menu" })
  
 -- Windows
 local closeWindowBind = hl.bind("SUPER + W", hl.dsp.window.close(),          { description = "Close window" })
@@ -357,7 +364,7 @@ hl.bind("SUPER + X",      send_shortcut_once("CTRL", "X"),       { description =
 hl.bind("SUPER + CTRL + V", hl.dsp.exec_cmd("walker -m clipboard"),    { description = "Clipboard history" })
  
 -- Keybindings viewer
-hl.bind("SUPER + K", hl.dsp.exec_cmd("~/.local/bin/keybindings"),     { description = "Show keybindings" })
+hl.bind("SUPER + K", hl.dsp.exec_cmd("/home/felix/.local/bin/keybindings"),     { description = "Show keybindings" })
  
 -- Screenshots
 hl.bind("SUPER + S", hl.dsp.exec_cmd([[
