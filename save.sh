@@ -27,8 +27,9 @@ cp -r ~/.config/wlogout/*    "$DOTFILES/wlogout/"      2>/dev/null
 # Shell
 cp ~/.zshrc "$DOTFILES/zsh/"
 
-# Scripts
+# ~/.local/
 cp -r ~/.local/bin/* "$DOTFILES/scripts/" 2>/dev/null
+cp -r ~/.local/share/fonts/* "$DOTFILES/fonts/" 2>/dev/null
 
 # System
 cp /usr/local/bin/t2-suspend.sh      "$DOTFILES/system/"

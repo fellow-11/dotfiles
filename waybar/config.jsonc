@@ -60,7 +60,7 @@
   },
 
   "custom/menu": {
-    "format": "<span font='Untitled'>\uf000</span>",
+    "format": "<span font='CachyOS-Logo'>\uf000</span>",
     "on-click": "~/.local/bin/sys-menu",
     "on-click-right": "ghostty",
     "tooltip-format": "System Menu\n\nSUPER + ALT + SPACE"

@@ -9,7 +9,7 @@ menu() {
 }
 
 present_terminal() {
-  alacritty -e bash -c "$1; read -p 'Press enter to close...'"
+  ghostty -e bash -c "$1; read -p 'Press enter to close...'"
 }
 
 show_main_menu() {
@@ -30,7 +30,7 @@ show_main_menu() {
 
 show_learn_menu() {
   case $(menu "Learn" "  Keybindings\n  CachyOS Wiki\n  Hyprland Wiki\n󰣇  Arch Wiki\n  Neovim Docs\n󱆃  Bash Manual") in
-  *Keybindings*) alacritty -e bash -c 'hyprctl binds | less' ;;
+  *Keybindings*) ghostty -e bash -c 'hyprctl binds | less' ;;
   *CachyOS*) xdg-open https://wiki.cachyos.org/ ;;
   *Hyprland*) xdg-open https://wiki.hypr.land ;;
   *Arch*) xdg-open https://wiki.archlinux.org ;;
@@ -160,7 +160,7 @@ EOF
   sed -i "s/@define-color text-light .*/@define-color text-light $foreground;/" ~/.config/waybar/style.css
   sed -i "s/@define-color accent-color .*/@define-color accent-color $accent;/" ~/.config/waybar/style.css
 
-  cat > ~/.config/alacritty/colors.toml << EOF
+  cat > ~/.config/ghostty/colors.toml << EOF
 [colors.primary]
 background = "$background"
 foreground = "$foreground"
@@ -201,7 +201,7 @@ show_font_menu() {
   current=$(grep 'font-family' ~/.config/waybar/style.css | head -1 | sed "s/.*'\(.*\)'.*/\1/")
   chosen=$(echo "$fonts" | walker --dmenu --width 400 --minheight 1 --maxheight 630 -p "Font (current: $current)…" 2>/dev/null)
   if [[ -n $chosen ]]; then
-    sed -i "s/family = \".*\"/family = \"$chosen\"/g" ~/.config/alacritty/alacritty.toml
+    sed -i "s/family = \".*\"/family = \"$chosen\"/g" ~/.config/ghostty/ghostty.toml
     sed -i "s/font-family: .*/font-family: '$chosen';/g" ~/.config/waybar/style.css
     sed -i "s/<string>.*<\/string>/<string>$chosen<\/string>/g" ~/.config/fontconfig/fonts.conf
     pkill waybar; waybar & disown
@@ -275,21 +275,21 @@ show_corners_menu() {
 
 show_setup_menu() {
   case $(menu "Setup" "  Audio\n  Wi-Fi\n󰂯  Bluetooth\n  Default Apps") in
-  *Audio*) alacritty -e pulsemixer ;;
-  *Wi-Fi*) alacritty -e nmtui ;;
-  *Bluetooth*) alacritty -e bluetui ;;
-  *Default*) alacritty -e nvim ~/.config/mimeapps.list ;;
+  *Audio*) ghostty -e pulsemixer ;;
+  *Wi-Fi*) ghostty -e nmtui ;;
+  *Bluetooth*) ghostty -e bluetui ;;
+  *Default*) ghostty -e nvim ~/.config/mimeapps.list ;;
   *) show_main_menu ;;
   esac
 }
 
 show_configs_menu() {
   case $(menu "Configs" "  Hyprland\n󰍜  Walker\n󰍜  Waybar\n󰎟  Mako\n  Alacritty") in
-  *Hyprland*) alacritty -e nvim ~/.config/hypr/hyprland.lua ;;
-  *Walker*) alacritty -e nvim ~/.config/walker/config.toml ;;
-  *Waybar*) alacritty -e nvim ~/.config/waybar/config.jsonc ;;
-  *Mako*) alacritty -e nvim ~/.config/mako/config ;;
-  *Alacritty*) alacritty -e nvim ~/.config/alacritty/alacritty.toml ;;
+  *Hyprland*) ghostty -e nvim ~/.config/hypr/hyprland.lua ;;
+  *Walker*) ghostty -e nvim ~/.config/walker/config.toml ;;
+  *Waybar*) ghostty -e nvim ~/.config/waybar/config.jsonc ;;
+  *Mako*) ghostty -e nvim ~/.config/mako/config ;;
+  *Alacritty*) ghostty -e nvim ~/.config/ghostty/ghostty.toml ;;
   *) show_main_menu ;;
   esac
 }
@@ -306,7 +306,7 @@ show_install_menu() {
 }
 
 show_pkg_install() {
-  alacritty -e bash -c '
+  ghostty -e bash -c '
     pkg_names=$(pacman -Slq | fzf \
       --multi \
       --preview "pacman -Sii {1}" \
@@ -325,7 +325,7 @@ show_pkg_install() {
 }
 
 show_aur_install() {
-  alacritty -e bash -c '
+  ghostty -e bash -c '
     pkg_names=$(yay -Slq | fzf \
       --multi \
       --preview "yay -Sii {1}" \
@@ -375,7 +375,7 @@ show_install_dev_menu() {
 }
 
 show_remove_menu() {
-  alacritty -e bash -c '
+  ghostty -e bash -c '
     pkg_names=$(yay -Qqe | fzf \
       --multi \
       --preview "yay -Qi {1}" \
