@@ -1,0 +1,57 @@
+#!/bin/bash
+
+declare -A KEYCODE_SYM_MAP
+declare -A FALLBACK_KEYCODE_SYM_MAP=(
+  [10]="1" [11]="2" [12]="3" [13]="4" [14]="5"
+  [15]="6" [16]="7" [17]="8" [18]="9" [19]="0"
+  [20]="MINUS" [21]="EQUAL" [61]="SLASH"
+)
+
+build_keymap_cache() {
+  local keymap
+  keymap="$(xkbcli compile-keymap 2>/dev/null)" || return 1
+  while IFS=, read -r code sym; do
+    [[ -z $code || -z $sym ]] && continue
+    KEYCODE_SYM_MAP["$code"]="$sym"
+  done < <(awk '
+    BEGIN { sec = "" }
+    /xkb_keycodes/ { sec = "codes"; next }
+    /xkb_symbols/  { sec = "syms";  next }
+    sec == "codes" { if (match($0, /<([A-Za-z0-9_]+)>\s*=\s*([0-9]+)\s*;/, m)) code_by_name[m[1]] = m[2] }
+    sec == "syms"  { if (match($0, /key\s*<([A-Za-z0-9_]+)>\s*\{\s*\[\s*([^, \]]+)/, m)) sym_by_name[m[1]] = m[2] }
+    END { for (k in code_by_name) { c = code_by_name[k]; s = sym_by_name[k]; if (c != "" && s != "" && s != "NoSymbol") print c "," s } }
+  ' <<<"$keymap")
+}
+
+lookup_keycode() {
+  local sym="${KEYCODE_SYM_MAP[$1]:-${FALLBACK_KEYCODE_SYM_MAP[$1]:-code:$1}}"
+  printf '%s\n' "${sym^^}"
+}
+
+modmask_to_text() {
+  case "$1" in
+    0)  printf '' ;;       1)  printf 'SHIFT' ;;
+    4)  printf 'CTRL' ;;   5)  printf 'SHIFT CTRL' ;;
+    8)  printf 'ALT' ;;    9)  printf 'SHIFT ALT' ;;
+    12) printf 'CTRL ALT' ;; 13) printf 'SHIFT CTRL ALT' ;;
+    64) printf 'SUPER' ;;  65) printf 'SUPER SHIFT' ;;
+    68) printf 'SUPER CTRL' ;; 69) printf 'SUPER SHIFT CTRL' ;;
+    72) printf 'SUPER ALT' ;; 73) printf 'SUPER SHIFT ALT' ;;
+    76) printf 'SUPER CTRL ALT' ;; 77) printf 'SUPER SHIFT CTRL ALT' ;;
+    *)  printf '%s' "$1" ;;
+  esac
+}
+
+build_keymap_cache
+
+hyprctl -j binds | jq -r '.[] |
+  select(.description != "" and .description != null) |
+  [.modmask, (.key // ""), (.keycode // 0), .description] | join("\u001f")
+' | while IFS=$'\x1f' read -r modmask key keycode description; do
+  [[ -z $key && $keycode != "0" ]] && key="code:$keycode"
+  [[ $key =~ code:([0-9]+) ]] && key=$(lookup_keycode "${BASH_REMATCH[1]}")
+  [[ $key =~ mouse:([0-9]+) ]] && key="MOUSE:${BASH_REMATCH[1]}"
+  mods=$(modmask_to_text "$modmask")
+  combo="${mods:+$mods + }${key^^}"
+  printf "%-35s → %s\n" "$combo" "$description"
+done | sort | walker --dmenu -p "Keybindings" --width 900 --minheight 1 --maxheight 630 2>/dev/null

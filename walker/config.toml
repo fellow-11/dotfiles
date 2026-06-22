@@ -20,6 +20,11 @@ default = [
   "websearch",
 ]
 
+[builtins.clipboard]
+name = "Clipboard"
+icon = ""
+hidden = false
+
 [[providers.prefixes]]
 prefix = "/"
 provider = "providerlist"
