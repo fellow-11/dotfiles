@@ -35,6 +35,9 @@
 ### Walker
 <img src="screenshots/walker.png" alt="Walker" width="600"/>
 
+### Cider (Apple Music)
+<img src="screenshots/cider.png" alt="Cider" width="600"/>
+
 ---
 
 ## 🧩 Components
@@ -95,6 +98,7 @@ This automatically regenerates and reloads color configs for:
 - btop
 - Fastfetch
 - fzf / bat
+- Cider (accent color)
 
 Templates live in `~/.config/theme/templates/`. To add a new app, create a template there and add a `render` line to `sync-theme`.
 
@@ -158,6 +162,7 @@ chmod +x ~/.local/bin/sync-theme
 # Apply theme
 sync-theme
 ```
+> **Note:** `scripts/sync-theme` contains a hardcoded Cider config path (`~/.config/sh.cider.genten/spa-config.yml`). Remove or adjust that block if you don't use Cider.
 
 ### 💾 Dotfiles Management
 
