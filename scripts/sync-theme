@@ -125,6 +125,15 @@ if command -v hyprctl &>/dev/null; then
     hyprctl reload &>/dev/null && echo "  ✓ hyprland reloaded"
 fi
 
+# Update Cider accent color
+if [[ -f "$HOME/.config/sh.cider.genten/spa-config.yml" ]]; then
+    sed -i "s/customAccentColorValue: \"#[0-9a-fA-F]*\"/customAccentColorValue: \"$ACCENT\"/" \
+        "$HOME/.config/sh.cider.genten/spa-config.yml"
+    sed -i "s/useSystemAccentColor: true/useSystemAccentColor: false/" \
+        "$HOME/.config/sh.cider.genten/spa-config.yml"
+    echo "  ✓ cider accent updated"
+fi
+
 echo "Done."
 echo ""
 echo "Manual steps (one-time):"

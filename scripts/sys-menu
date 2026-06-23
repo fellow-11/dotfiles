@@ -1,7 +1,5 @@
 #!/bin/bash
 
-BACK_TO_EXIT=false
-
 menu() {
   local prompt="$1"
   local options="$2"
@@ -13,29 +11,29 @@ present_terminal() {
 }
 
 show_main_menu() {
-  case $(menu "Go" "󰀻  Apps\n󰧑  Learn\n󰄀  Capture\n󰔡  Toggle\n  Style\n󰒓  Setup\n  Configs\n󰉉  Install\n󰭌  Remove\n  Update\n⏻  System") in
-  *Apps*) walker -p "Launch…" ;;
-  *Learn*) show_learn_menu ;;
+  case $(menu "Go" "󰀻  Apps\n󰧑  Learn\n󰄀  Capture\n󱓞  Toggle\n  Style\n󰒓  Setup\n  Configs\n󰉉  Install\n󰭌  Remove\n  Update\n⏻  System") in
+  *Apps*)    walker -p "Launch…" ;;
+  *Learn*)   show_learn_menu ;;
   *Capture*) show_capture_menu ;;
-  *Toggle*) show_toggle_menu ;;
-  *Style*) show_style_menu ;;
-  *Setup*) show_setup_menu ;;
+  *Toggle*)  show_toggle_menu ;;
+  *Style*)   show_style_menu ;;
+  *Setup*)   show_setup_menu ;;
   *Configs*) show_configs_menu ;;
   *Install*) show_install_menu ;;
-  *Remove*) show_remove_menu ;;
-  *Update*) show_update_menu ;;
-  *System*) show_system_menu ;;
+  *Remove*)  show_remove_menu ;;
+  *Update*)  show_update_menu ;;
+  *System*)  show_system_menu ;;
   esac
 }
 
 show_learn_menu() {
-  case $(menu "Learn" "  Keybindings\n  CachyOS Wiki\n  Hyprland Wiki\n󰣇  Arch Wiki\n  Neovim Docs\n󱆃  Bash Manual") in
-  *Keybindings*) ghostty -e bash -c 'hyprctl binds | less' ;;
-  *CachyOS*) xdg-open https://wiki.cachyos.org/ ;;
-  *Hyprland*) xdg-open https://wiki.hypr.land ;;
-  *Arch*) xdg-open https://wiki.archlinux.org ;;
-  *Neovim*) xdg-open https://neovim.io/doc/ ;;
-  *Bash*) xdg-open https://www.gnu.org/software/bash/manual/ ;;
+  case $(menu "Learn" "  Keybindings\n  CachyOS Wiki\n  Hyprland Wiki\n󰣇  Arch Wiki\n  Neovim Docs\n󱆃  Bash Manual") in
+  *Keybindings*) /home/felix/.local/bin/keybindings ;;
+  *CachyOS*)     xdg-open https://wiki.cachyos.org/ ;;
+  *Hyprland*)    xdg-open https://wiki.hypr.land ;;
+  *Arch*)        xdg-open https://wiki.archlinux.org ;;
+  *Neovim*)      xdg-open https://neovim.io/doc/ ;;
+  *Bash*)        xdg-open https://www.gnu.org/software/bash/manual/ ;;
   *) show_main_menu ;;
   esac
 }
@@ -43,156 +41,37 @@ show_learn_menu() {
 show_capture_menu() {
   case $(menu "Capture" "󰹑  Screenshot\n  Screen Recording\n󰈊  Color Picker\n󱄺  OCR Text") in
   *Screenshot*) grimblast copysave area ;;
-  *Recording*) wf-recorder -f ~/Videos/recording.mp4 ;;
-  *Color*) hyprpicker -a ;;
-  *OCR*) grim -g "$(slurp)" - | tesseract stdin stdout | wl-copy ;;
+  *Recording*)  wf-recorder -f ~/Videos/recording.mp4 ;;
+  *Color*)      hyprpicker -a ;;
+  *OCR*)        grim -g "$(slurp)" - | tesseract stdin stdout | wl-copy ;;
   *) show_main_menu ;;
   esac
 }
 
 show_toggle_menu() {
-  case $(menu "Toggle" "  Waybar\n󱩫  Screen Shader\n󰔟  Idle Timeout") in
+  case $(menu "Toggle" "󰍜  Waybar\n󱩫  Screen Shader\n󰔟  Idle Timeout") in
   *Waybar*) pkill -USR1 waybar ;;
   *Shader*) pkill wlsunset || wlsunset -t 4500 ;;
-  *Idle*) pkill hypridle || hypridle ;;
+  *Idle*)   pkill hypridle || hypridle ;;
   *) show_main_menu ;;
   esac
 }
 
 show_style_menu() {
-  case $(menu "Style" "󰸌  Theme\n󰸌  Create Custom Theme\n󰛖  Font\n󰸉  Background\n󰍜  Waybar Position\n󰘇  Corners") in
-  *Create*) show_create_theme_menu ;;
-  *Theme*) show_theme_menu ;;
-  *Font*) show_font_menu ;;
-  *Background*) show_background_menu ;;
-  *Waybar*) show_waybar_position_menu ;;
-  *Corners*) show_corners_menu ;;
+  case $(menu "Style" "󰸌  Edit Theme\n󰛖  Font\n󰸉  Background\n󰍜  Waybar Position\n󰘇  Corners\n  Gaps\n󱡕  Opacity\n󰂵  Blur\n󰘷  Shadows\n󰤺  Animations\n󰔌  Border Size") in
+  "*Edit Theme*")   ghostty -e bash -c 'nvim ~/.config/theme/colors.sh && sync-theme' ;;
+  *Font*)         show_font_menu ;;
+  *Background*)   show_background_menu ;;
+  *Waybar*)       show_waybar_position_menu ;;
+  *Corners*)      show_corners_menu ;;
+  *Gaps*)         show_gaps_menu ;;
+  *Opacity*)      show_opacity_menu ;;
+  *Blur*)         show_blur_menu ;;
+  *Shadows*)      show_shadows_menu ;;
+  *Animations*)   show_animations_menu ;;
+  *Border*)       show_border_menu ;;
   *) show_main_menu ;;
   esac
-}
-
-pick_color() {
-  local prompt="$1"
-  notify-send -u low "  Pick $prompt" "Click a pixel, then adjust in the color wheel"
-  wl-color-picker 2>/dev/null
-  sleep 0.3
-  wl-paste | tr -d '\n'
-}
-
-show_create_theme_menu() {
-  local theme_name
-  theme_name=$(echo "" | walker --dmenu --width 400 --minheight 1 --maxheight 1 -p "Theme name…" 2>/dev/null)
-  [[ -z $theme_name ]] && show_style_menu && return
-
-  local theme_dir="$HOME/.config/theme/themes/$theme_name"
-  mkdir -p "$theme_dir"
-
-  notify-send -u low "Creating theme: $theme_name" "You will pick colors one by one"
-  sleep 1
-
-  local background foreground accent cursor
-  local color0 color1 color2 color3 color4 color5 color6 color7
-  local color8 color9 color10 color11 color12 color13 color14 color15
-  local selection_background selection_foreground
-
-  background=$(pick_color "Pick BACKGROUND color"); sleep 0.5
-  foreground=$(pick_color "Pick FOREGROUND / text color"); sleep 0.5
-  accent=$(pick_color "Pick ACCENT color (waybar, walker border)"); sleep 0.5
-  cursor=$(pick_color "Pick CURSOR color"); sleep 0.5
-  selection_background=$(pick_color "Pick SELECTION BACKGROUND color"); sleep 0.5
-  selection_foreground=$(pick_color "Pick SELECTION FOREGROUND color"); sleep 0.5
-
-  notify-send -u low "Now picking terminal colors" "16 colors (color0–color15)"
-  sleep 1
-
-  color0=$(pick_color "color0 — Black"); sleep 0.5
-  color1=$(pick_color "color1 — Red"); sleep 0.5
-  color2=$(pick_color "color2 — Green"); sleep 0.5
-  color3=$(pick_color "color3 — Yellow"); sleep 0.5
-  color4=$(pick_color "color4 — Blue"); sleep 0.5
-  color5=$(pick_color "color5 — Magenta"); sleep 0.5
-  color6=$(pick_color "color6 — Cyan"); sleep 0.5
-  color7=$(pick_color "color7 — White"); sleep 0.5
-  color8=$(pick_color "color8 — Bright Black"); sleep 0.5
-  color9=$(pick_color "color9 — Bright Red"); sleep 0.5
-  color10=$(pick_color "color10 — Bright Green"); sleep 0.5
-  color11=$(pick_color "color11 — Bright Yellow"); sleep 0.5
-  color12=$(pick_color "color12 — Bright Blue"); sleep 0.5
-  color13=$(pick_color "color13 — Bright Magenta"); sleep 0.5
-  color14=$(pick_color "color14 — Bright Cyan"); sleep 0.5
-  color15=$(pick_color "color15 — Bright White"); sleep 0.5
-
-  cat > "$theme_dir/colors.toml" << EOF
-accent = "$accent"
-cursor = "$cursor"
-foreground = "$foreground"
-background = "$background"
-selection_foreground = "$selection_foreground"
-selection_background = "$selection_background"
-color0 = "$color0"
-color1 = "$color1"
-color2 = "$color2"
-color3 = "$color3"
-color4 = "$color4"
-color5 = "$color5"
-color6 = "$color6"
-color7 = "$color7"
-color8 = "$color8"
-color9 = "$color9"
-color10 = "$color10"
-color11 = "$color11"
-color12 = "$color12"
-color13 = "$color13"
-color14 = "$color14"
-color15 = "$color15"
-EOF
-
-  cat > ~/.config/theme/current/theme/walker.css << EOF
-@define-color selected-text $accent;
-@define-color text $foreground;
-@define-color base $background;
-@define-color border $accent;
-@define-color foreground $foreground;
-@define-color background $background;
-EOF
-
-  sed -i "s/@define-color background-dark .*/@define-color background-dark $background;/" ~/.config/waybar/style.css
-  sed -i "s/@define-color text-light .*/@define-color text-light $foreground;/" ~/.config/waybar/style.css
-  sed -i "s/@define-color accent-color .*/@define-color accent-color $accent;/" ~/.config/waybar/style.css
-
-  cat > ~/.config/ghostty/colors.toml << EOF
-[colors.primary]
-background = "$background"
-foreground = "$foreground"
-[colors.cursor]
-text = "$background"
-cursor = "$cursor"
-[colors.selection]
-text = "$selection_foreground"
-background = "$selection_background"
-[colors.normal]
-black = "$color0"
-red = "$color1"
-green = "$color2"
-yellow = "$color3"
-blue = "$color4"
-magenta = "$color5"
-cyan = "$color6"
-white = "$color7"
-[colors.bright]
-black = "$color8"
-red = "$color9"
-green = "$color10"
-yellow = "$color11"
-blue = "$color12"
-magenta = "$color13"
-cyan = "$color14"
-white = "$color15"
-EOF
-
-  pkill walker
-  pkill waybar; waybar & disown
-  notify-send "Theme '$theme_name' applied!" "Colors saved to $theme_dir"
 }
 
 show_font_menu() {
@@ -201,9 +80,8 @@ show_font_menu() {
   current=$(grep 'font-family' ~/.config/waybar/style.css | head -1 | sed "s/.*'\(.*\)'.*/\1/")
   chosen=$(echo "$fonts" | walker --dmenu --width 400 --minheight 1 --maxheight 630 -p "Font (current: $current)…" 2>/dev/null)
   if [[ -n $chosen ]]; then
-    sed -i "s/family = \".*\"/family = \"$chosen\"/g" ~/.config/ghostty/ghostty.toml
+    sed -i "s/font-family = .*/font-family = \"$chosen\"/" ~/.config/ghostty/config.ghostty
     sed -i "s/font-family: .*/font-family: '$chosen';/g" ~/.config/waybar/style.css
-    sed -i "s/<string>.*<\/string>/<string>$chosen<\/string>/g" ~/.config/fontconfig/fonts.conf
     pkill waybar; waybar & disown
     notify-send -u low "Font set to $chosen"
   else
@@ -211,39 +89,13 @@ show_font_menu() {
   fi
 }
 
-show_theme_menu() {
-  local themes chosen theme_name theme_path bg fg accent
-  themes=$(ls ~/omarchy-repo/themes/ 2>/dev/null | sed -E 's/(^|-)([a-z])/\1\u\2/g; s/-/ /g')
-  if [[ -z $themes ]]; then
-    notify-send -u low "No themes found in ~/omarchy-repo/themes/"
-    show_style_menu
-    return
-  fi
-  chosen=$(echo "$themes" | walker --dmenu --width 400 --minheight 1 --maxheight 630 -p "Theme…" 2>/dev/null)
-  if [[ -n $chosen ]]; then
-    theme_name=$(echo "$chosen" | tr '[:upper:]' '[:lower:]' | tr ' ' '-')
-    theme_path=~/omarchy-repo/themes/$theme_name
-    if [[ -d $theme_path ]]; then
-      bg=$(grep '^background' "$theme_path/colors.toml" 2>/dev/null | cut -d'"' -f2)
-      fg=$(grep '^foreground' "$theme_path/colors.toml" 2>/dev/null | cut -d'"' -f2)
-      accent=$(grep '^accent' "$theme_path/colors.toml" 2>/dev/null | cut -d'"' -f2)
-      if [[ -n $bg ]]; then
-        printf '@define-color base %s;\n@define-color background %s;\n@define-color text %s;\n@define-color border %s;\n@define-color selected-text #ffffff;\n@define-color accent %s;\n' \
-          "$bg" "$bg" "$fg" "$accent" "$accent" > ~/.config/theme/current/theme/walker.css
-        pkill walker
-        notify-send -u low "Theme set to $chosen"
-      fi
-    fi
-  else
-    show_style_menu
-  fi
-}
-
 show_background_menu() {
   local chosen
-  chosen=$(find ~/Pictures/Wallpapers/ -type f 2>/dev/null | walker --dmenu --width 500 --minheight 1 --maxheight 630 -p "Wallpaper…" 2>/dev/null)
+  chosen=$(find ~/.local/share/wallpapers/custom-wallpapers/ -type f 2>/dev/null | walker --dmenu --width 500 --minheight 1 --maxheight 630 -p "Wallpaper…" 2>/dev/null)
   if [[ -n $chosen ]]; then
-    swww img "$chosen"
+    sed -i "s|path = .*|path = $chosen|" ~/.config/hypr/hyprpaper.conf
+    hyprctl hyprpaper wallpaper ",$chosen" 2>/dev/null || { pkill hyprpaper; hyprpaper & disown; }
+    notify-send -u low "Wallpaper set"
   else
     show_style_menu
   fi
@@ -273,33 +125,110 @@ show_corners_menu() {
   esac
 }
 
+show_gaps_menu() {
+  case $(menu "Gaps" "  None\n  Small\n  Medium\n  Large") in
+  *None*)
+    sed -i 's/gaps_in.*=.*/gaps_in  = 0,/' ~/.config/hypr/hyprland.lua
+    sed -i 's/gaps_out.*=.*/gaps_out = 0,/' ~/.config/hypr/hyprland.lua
+    hyprctl reload ;;
+  *Small*)
+    sed -i 's/gaps_in.*=.*/gaps_in  = 3,/' ~/.config/hypr/hyprland.lua
+    sed -i 's/gaps_out.*=.*/gaps_out = 8,/' ~/.config/hypr/hyprland.lua
+    hyprctl reload ;;
+  *Medium*)
+    sed -i 's/gaps_in.*=.*/gaps_in  = 5,/' ~/.config/hypr/hyprland.lua
+    sed -i 's/gaps_out.*=.*/gaps_out = 20,/' ~/.config/hypr/hyprland.lua
+    hyprctl reload ;;
+  *Large*)
+    sed -i 's/gaps_in.*=.*/gaps_in  = 10,/' ~/.config/hypr/hyprland.lua
+    sed -i 's/gaps_out.*=.*/gaps_out = 40,/' ~/.config/hypr/hyprland.lua
+    hyprctl reload ;;
+  *) show_style_menu ;;
+  esac
+}
+
+show_opacity_menu() {
+  case $(menu "Inactive Opacity" "  100%\n  95%\n  90%\n  80%") in
+  *100%) sed -i 's/inactive_opacity.*=.*/inactive_opacity = 1.0,/' ~/.config/hypr/hyprland.lua; hyprctl reload ;;
+  *95%)  sed -i 's/inactive_opacity.*=.*/inactive_opacity = 0.95,/' ~/.config/hypr/hyprland.lua; hyprctl reload ;;
+  *90%)  sed -i 's/inactive_opacity.*=.*/inactive_opacity = 0.9,/' ~/.config/hypr/hyprland.lua; hyprctl reload ;;
+  *80%)  sed -i 's/inactive_opacity.*=.*/inactive_opacity = 0.8,/' ~/.config/hypr/hyprland.lua; hyprctl reload ;;
+  *) show_style_menu ;;
+  esac
+}
+
+show_blur_menu() {
+  case $(menu "Blur" "  Enable\n  Disable") in
+  *Enable*)  sed -i '/blur = {/{n; s/enabled.*=.*/enabled   = true,/}' ~/.config/hypr/hyprland.lua; hyprctl reload ;;
+  *Disable*) sed -i '/blur = {/{n; s/enabled.*=.*/enabled   = false,/}' ~/.config/hypr/hyprland.lua; hyprctl reload ;;
+  *) show_style_menu ;;
+  esac
+}
+
+show_shadows_menu() {
+  case $(menu "Shadows" "  Enable\n  Disable") in
+  *Enable*)  sed -i '/shadow = {/{n; s/enabled.*=.*/enabled      = true,/}' ~/.config/hypr/hyprland.lua; hyprctl reload ;;
+  *Disable*) sed -i '/shadow = {/{n; s/enabled.*=.*/enabled      = false,/}' ~/.config/hypr/hyprland.lua; hyprctl reload ;;
+  *) show_style_menu ;;
+  esac
+}
+
+show_animations_menu() {
+  case $(menu "Animations" "  Enable\n  Disable") in
+  *Enable*)  sed -i 's/animations = {/{&\n        enabled = true,/' ~/.config/hypr/hyprland.lua 2>/dev/null
+             sed -i '/animations = {/{n; s/enabled.*=.*/enabled = true,/}' ~/.config/hypr/hyprland.lua
+             hyprctl reload ;;
+  *Disable*) sed -i '/animations = {/{n; s/enabled.*=.*/enabled = false,/}' ~/.config/hypr/hyprland.lua
+             hyprctl reload ;;
+  *) show_style_menu ;;
+  esac
+}
+
+show_border_menu() {
+  case $(menu "Border Size" "  Thin (1px)\n  Medium (2px)\n  Thick (4px)") in
+  *Thin*)   sed -i 's/border_size.*=.*/border_size = 1,/' ~/.config/hypr/hyprland.lua; hyprctl reload ;;
+  *Medium*) sed -i 's/border_size.*=.*/border_size = 2,/' ~/.config/hypr/hyprland.lua; hyprctl reload ;;
+  *Thick*)  sed -i 's/border_size.*=.*/border_size = 4,/' ~/.config/hypr/hyprland.lua; hyprctl reload ;;
+  *) show_style_menu ;;
+  esac
+}
+
 show_setup_menu() {
-  case $(menu "Setup" "  Audio\n  Wi-Fi\n󰂯  Bluetooth\n  Default Apps") in
-  *Audio*) ghostty -e pulsemixer ;;
-  *Wi-Fi*) ghostty -e nmtui ;;
-  *Bluetooth*) ghostty -e bluetui ;;
+  case $(menu "Setup" "  Audio\n  Wi-Fi\n󰂯  Bluetooth\n󰈆  Default Apps") in
+  *Audio*)   ghostty -e pulsemixer ;;
+  *Wi-Fi*)   ghostty -e nmtui ;;
+  *Bluetooth*) ghostty -e bluetuith ;;
   *Default*) ghostty -e nvim ~/.config/mimeapps.list ;;
   *) show_main_menu ;;
   esac
 }
 
 show_configs_menu() {
-  case $(menu "Configs" "  Hyprland\n󰍜  Walker\n󰍜  Waybar\n󰎟  Mako\n  Alacritty") in
+  case $(menu "Configs" "  Hyprland\n󰍜  Walker\n󰍜  Waybar\n󰎟  Mako\n  Ghostty\n  Dotfiles") in
   *Hyprland*) ghostty -e nvim ~/.config/hypr/hyprland.lua ;;
-  *Walker*) ghostty -e nvim ~/.config/walker/config.toml ;;
-  *Waybar*) ghostty -e nvim ~/.config/waybar/config.jsonc ;;
-  *Mako*) ghostty -e nvim ~/.config/mako/config ;;
-  *Alacritty*) ghostty -e nvim ~/.config/ghostty/ghostty.toml ;;
+  *Walker*)   ghostty -e nvim ~/.config/walker/config.toml ;;
+  *Waybar*)   ghostty -e nvim ~/.config/waybar/config.jsonc ;;
+  *Mako*)     ghostty -e nvim ~/.config/mako/config ;;
+  *Ghostty*)  ghostty -e nvim ~/.config/ghostty/config.ghostty ;;
+  *Dotfiles*) show_dotfiles_menu ;;
   *) show_main_menu ;;
   esac
 }
 
+show_dotfiles_menu() {
+  case $(menu "Dotfiles" "  Save\n󰓦  Sync") in
+  *Save*) present_terminal "dotfiles-save" ;;
+  *Sync*) present_terminal "dotfiles-sync" ;;
+  *) show_configs_menu ;;
+  esac
+}
+
 show_install_menu() {
-  case $(menu "Install" "󰣇  Package\n󰣇  AUR\n󰖟  Browser\n  Terminal\n󰵮  Development") in
-  *Package*) show_pkg_install ;;
-  *AUR*) show_aur_install ;;
-  *Browser*) show_install_browser_menu ;;
-  *Terminal*) show_install_terminal_menu ;;
+  case $(menu "Install" "󰣇  Package\n󰣇  AUR\n󰖟  Browser\n  Terminal\n󰵮  Development") in
+  *Package*)     show_pkg_install ;;
+  *AUR*)         show_aur_install ;;
+  *Browser*)     show_install_browser_menu ;;
+  *Terminal*)    show_install_terminal_menu ;;
   *Development*) show_install_dev_menu ;;
   *) show_main_menu ;;
   esac
@@ -318,7 +247,6 @@ show_pkg_install() {
       --bind "alt-k:preview-up,alt-j:preview-down" \
       --color "pointer:green,marker:green")
     if [[ -n $pkg_names ]]; then
-      # Added the -o flag here so sudo can read your password input safely
       echo "$pkg_names" | tr "\n" " " | xargs -o sudo pacman -S
     fi
   '
@@ -337,38 +265,35 @@ show_aur_install() {
       --bind "alt-k:preview-up,alt-j:preview-down" \
       --color "pointer:green,marker:green")
     if [[ -n $pkg_names ]]; then
-      # Added -o flag so yay/sudo can grab keyboard focus for passwords/diffs
       echo "$pkg_names" | tr "\n" " " | xargs -o yay -S
     fi
   '
 }
 
 show_install_browser_menu() {
-  case $(menu "Install Browser" "󰖟  Zen\n  Brave\n  Firefox\n  Chrome") in
-  *Zen*) present_terminal "yay -S zen-browser-bin" ;;
-  *Brave*) present_terminal "yay -S brave-bin" ;;
+  case $(menu "Install Browser" "󰖟  Zen\n󰈹  Firefox\n  Chrome") in
+  *Zen*)     present_terminal "yay -S zen-browser-bin" ;;
   *Firefox*) present_terminal "sudo pacman -S firefox" ;;
-  *Chrome*) present_terminal "yay -S google-chrome" ;;
+  *Chrome*)  present_terminal "yay -S google-chrome" ;;
   *) show_install_menu ;;
   esac
 }
 
 show_install_terminal_menu() {
-  case $(menu "Install Terminal" "  Ghostty\n  Kitty\n  Foot") in
+  case $(menu "Install Terminal" "  Ghostty\n  Kitty\n  Foot") in
   *Ghostty*) present_terminal "yay -S ghostty" ;;
-  *Kitty*) present_terminal "sudo pacman -S kitty" ;;
-  *Foot*) present_terminal "sudo pacman -S foot" ;;
+  *Kitty*)   present_terminal "sudo pacman -S kitty" ;;
+  *Foot*)    present_terminal "sudo pacman -S foot" ;;
   *) show_install_menu ;;
   esac
 }
 
 show_install_dev_menu() {
-  case $(menu "Install Dev" "  Node.js\n  Python\n  Rust\n  Go\n  Docker") in
-  *Node*) present_terminal "sudo pacman -S nodejs npm" ;;
-  # Changed python-pip to python-pipx to prevent environment blocking errors
+  case $(menu "Install Dev" "  Node.js\n  Python\n  Rust\n󰟓  Go\n  Docker") in
+  *Node*)   present_terminal "sudo pacman -S nodejs npm" ;;
   *Python*) present_terminal "sudo pacman -S python python-pipx" ;;
-  *Rust*) present_terminal "sudo pacman -S rustup && rustup default stable" ;;
-  *Go*) present_terminal "sudo pacman -S go" ;;
+  *Rust*)   present_terminal "sudo pacman -S rustup && rustup default stable" ;;
+  *Go*)     present_terminal "sudo pacman -S go" ;;
   *Docker*) present_terminal "sudo pacman -S docker docker-compose && sudo systemctl enable --now docker" ;;
   *) show_install_menu ;;
   esac
@@ -401,10 +326,10 @@ show_update_menu() {
 
 show_system_menu() {
   case $(menu "System" "  Lock\n󰍃  Logout\n󰒲  Suspend\n  Reboot\n󰐥  Shutdown") in
-  *Lock*) hyprlock ;;
-  *Logout*) hyprctl dispatch exit ;;
-  *Suspend*) systemctl suspend ;;
-  *Reboot*) systemctl reboot ;;
+  *Lock*)     hyprlock ;;
+  *Logout*)   hyprctl dispatch exit ;;
+  *Suspend*)  systemctl suspend ;;
+  *Reboot*)   systemctl reboot ;;
   *Shutdown*) systemctl poweroff ;;
   *) show_main_menu ;;
   esac

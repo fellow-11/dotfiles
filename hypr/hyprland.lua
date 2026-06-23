@@ -114,8 +114,8 @@ hl.env("XDG_MENU_PREFIX", "arch-")
 -- Refer to https://wiki.hypr.land/Configuring/Basics/Variables/
 hl.config({
     general = {
-        gaps_in  = 5,
-        gaps_out = 20,
+        gaps_in  = 3,
+        gaps_out = 8,
 
         border_size = 2,
 
@@ -191,8 +191,8 @@ hl.animation({ leaf = "zoomFactor",    enabled = true,  speed = 7,    bezier = "
 -- Ref https://wiki.hypr.land/Configuring/Basics/Workspace-Rules/
 -- "Smart gaps" / "No gaps when only"
 -- uncomment all if you wish to use that.
--- hl.workspace_rule({ workspace = "w[tv1]", gaps_out = 0, gaps_in = 0 })
--- hl.workspace_rule({ workspace = "f[1]",   gaps_out = 0, gaps_in = 0 })
+-- hl.workspace_rule({ workspace = "w[tv1]", gaps_out = 8,
+-- hl.workspace_rule({ workspace = "f[1]",   gaps_out = 8,
 -- hl.window_rule({
 --     name  = "no-gaps-wtv1",
 --     match = { float = false, workspace = "w[tv1]" },
@@ -443,3 +443,9 @@ hl.workspace_rule({ workspace = "3", monitor = "eDP-1" })
 hl.workspace_rule({ workspace = "4", monitor = "eDP-1" })
 hl.workspace_rule({ workspace = "5", monitor = "eDP-1" })
 hl.workspace_rule({ workspace = "6", monitor = "eDP-1", default = true })
+
+hl.window_rule({
+    match = { class = "org.omarchy.screensaver" },
+    float = true,
+    fullscreen = true
+})
