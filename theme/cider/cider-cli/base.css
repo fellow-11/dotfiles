@@ -1,0 +1,774 @@
+*,
+*::before,
+*::after {
+  border-radius: 0 !important;
+}
+
+.material-icons,
+.mdi,
+[class*="mdi-"],
+[class^="mdi-"] {
+  font-size: 16px !important;
+  font-weight: normal !important;
+  filter: grayscale(1) contrast(1.3);
+  opacity: 0.9;
+}
+
+@font-face {
+  font-family: 'IBM Plex Mono';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/ibmplexmono/v20/-F63fjptAgt5VM-kVkqdyU8n5ig.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'IBM Plex Mono';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/ibmplexmono/v20/-F6qfjptAgt5VM-kVkqdyU8n3twJ8lc.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'IBM Plex Mono';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/ibmplexmono/v20/-F6qfjptAgt5VM-kVkqdyU8n3vAO8lc.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'IBM Plex Mono';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/ibmplexmono/v20/-F6qfjptAgt5VM-kVkqdyU8n3pQP8lc.ttf) format('truetype');
+}
+:root {
+  --terminal-font: "IBM Plex Mono", "SF Mono", "Menlo", "Monaco", "Cascadia Mono", "Consolas", "Liberation Mono", monospace;
+  --terminal-bg: #151423;
+  --terminal-bg-alt: #1b1a2b;
+  --terminal-surface: #1f1d33;
+  --terminal-surface-alt: #25243b;
+  --terminal-surface-strong: #2c2a44;
+  --terminal-border: rgba(196, 160, 255, 0.24);
+  --terminal-border-strong: rgba(222, 196, 255, 0.48);
+  --terminal-text: #ddd8f2;
+  --terminal-muted: #8e89a9;
+  --terminal-faint: #67617d;
+  --terminal-accent: #cfaeff;
+  --terminal-accent-strong: #f0d7ff;
+  --terminal-success: #7ce0b3;
+  --terminal-warning: #f1d28a;
+  --terminal-danger: #ff8fa4;
+  --keyColor: var(--terminal-accent);
+  --keyColorDefault: var(--terminal-accent);
+  --keyColor-rgb: 207, 174, 255;
+  --keyColor-rollover: var(--terminal-accent-strong);
+  --keyColor-rollover-rgb: 240, 215, 255;
+  --keyColor-pressed: #b58fff;
+  --keyColor-pressed-rgb: 181, 143, 255;
+  --keyColor-deepPressed: #d9bfff;
+  --keyColor-deepPressed-rgb: 217, 191, 255;
+  --keyColor-disabled: rgba(207, 174, 255, 0.28);
+  --keyColor-primary: rgba(207, 174, 255, 0.18);
+  --textColor: var(--terminal-text);
+  --borderColor: var(--terminal-border);
+  --selected: rgba(207, 174, 255, 0.12);
+  --selected-click: rgba(207, 174, 255, 0.18);
+  --hover: rgba(255, 255, 255, 0.06);
+  --modalBackground: var(--terminal-surface);
+  --songProgressColor: var(--terminal-accent);
+  --songProgressBackground: rgba(255, 255, 255, 0.1);
+  --mediaItemRadius: 0px;
+  --mediaItemRadiusSmall: 0px;
+  --mediaItemRadiusMedium: 0px;
+  --mediaItemRadiusRound: 0px;
+  --panelRadius: 0px;
+  --contentInnerPadding: 16px;
+  --sidebarWidth: 292px;
+  --glassFilter: none;
+  --glassFilterHeavy: none;
+}
+@media (prefers-color-scheme: light) {
+  :root {
+    --terminal-bg: #f2efe8;
+    --terminal-bg-alt: #e9e4d8;
+    --terminal-surface: #f7f3ea;
+    --terminal-surface-alt: #ece6d8;
+    --terminal-surface-strong: #dfd7c6;
+    --terminal-border: rgba(60, 47, 90, 0.24);
+    --terminal-border-strong: rgba(60, 47, 90, 0.42);
+    --terminal-text: #2a2535;
+    --terminal-muted: #655f75;
+    --terminal-faint: #847d92;
+    --terminal-accent: #6e49b4;
+    --terminal-accent-strong: #8a66cf;
+    --terminal-success: #177c57;
+    --terminal-warning: #8d6317;
+    --terminal-danger: #a74258;
+    --keyColor: var(--terminal-accent);
+    --keyColorDefault: var(--terminal-accent);
+    --keyColor-rgb: 110, 73, 180;
+    --keyColor-rollover: var(--terminal-accent-strong);
+    --keyColor-rollover-rgb: 138, 102, 207;
+    --keyColor-pressed: #5f3ea0;
+    --keyColor-pressed-rgb: 95, 62, 160;
+    --keyColor-deepPressed: #7b58c6;
+    --keyColor-deepPressed-rgb: 123, 88, 198;
+    --keyColor-disabled: rgba(110, 73, 180, 0.2);
+    --keyColor-primary: rgba(110, 73, 180, 0.12);
+    --textColor: var(--terminal-text);
+    --borderColor: var(--terminal-border);
+    --selected: rgba(110, 73, 180, 0.1);
+    --selected-click: rgba(110, 73, 180, 0.14);
+    --hover: rgba(42, 37, 53, 0.06);
+    --modalBackground: var(--terminal-surface);
+    --songProgressColor: var(--terminal-accent);
+    --songProgressBackground: rgba(42, 37, 53, 0.12);
+  }
+}
+html,
+body,
+#app {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+  color: var(--terminal-text);
+  font-family: var(--terminal-font);
+  background: linear-gradient(180deg, var(--terminal-bg) 0%, var(--terminal-bg-alt) 100%);
+}
+body {
+  color-scheme: dark light;
+  font-size: 14px;
+  letter-spacing: 0.01em;
+}
+body::before,
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9998;
+}
+body::before {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.03), transparent 20%), repeating-linear-gradient(180deg, transparent 0 2px, rgba(255, 255, 255, 0.02) 2px 3px);
+  opacity: 0.16;
+}
+body::after {
+  background: radial-gradient(circle at center, transparent 45%, rgba(0, 0, 0, 0.18) 100%);
+  opacity: 0.5;
+}
+::selection {
+  background: var(--selected);
+  color: var(--terminal-text);
+}
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+*:focus-visible {
+  outline: 1px solid var(--terminal-accent);
+  outline-offset: 1px;
+}
+a,
+a:-webkit-any-link {
+  color: var(--terminal-accent);
+}
+hr {
+  border: 0;
+  height: 1px;
+  background: var(--terminal-border);
+}
+::-webkit-scrollbar {
+  width: 14px;
+  height: 14px;
+}
+::-webkit-scrollbar-track-piece {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--terminal-border-strong);
+  border: 3px solid transparent;
+  border-radius: 0;
+  background-clip: padding-box;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--terminal-accent);
+  background-clip: padding-box;
+}
+#app {
+  background: transparent;
+  color: var(--terminal-text);
+}
+#app,
+.app-navigation,
+.app-drawer,
+.app-sidebar-content,
+.content-inner,
+.library-page .library-header,
+.album-header,
+.playlist-page .playlist-body,
+.installed-themes-page .style-editor-container,
+.installed-themes-page .repo-header,
+.github-themes-page .github-preview,
+.podcasts-page .podcasts-list,
+.podcasts-page .podcasts-details,
+.modal-window,
+.modal-content,
+.dropdown-menu,
+.context-menu-body,
+.search-hints-container .search-hints,
+.usermenu-container .usermenu-body,
+.well,
+.card,
+.list-group-item,
+.btn,
+.btn-group,
+.nav-link,
+input,
+textarea,
+select {
+  font-family: var(--terminal-font) !important;
+}
+#navigation-bar,
+.app-navigation,
+.app-chrome,
+.app-drawer,
+.app-sidebar-content,
+.app-sidebar-header,
+.app-sidebar-footer,
+.app-sidebar-button,
+.app-sidebar-item,
+.app-sidebar-notification,
+.content-inner,
+.library-page .library-header,
+.album-header,
+.playlist-page .playlist-body,
+.podcasts-page .podcasts-list,
+.podcasts-page .podcasts-details,
+.modal-window,
+.modal-content,
+.modal-header,
+.modal-lowercontent,
+.dropdown-menu,
+.context-menu-body,
+.context-menu-item,
+.search-hints,
+.usermenu-body,
+.well,
+.card,
+.card-body,
+.card-footer,
+.list-group-item,
+.btn,
+.btn-group,
+.nav-link,
+.themeLabel,
+.stylePicker,
+.cd-mediaitem-square,
+.cd-mediaitem-brick,
+.cd-mediaitem-list-item,
+.mediaitem-artwork,
+.artwork,
+.artworkMaterial,
+.artworkMaterial img,
+.playlist-display,
+.playlist-display .artworkContainer,
+.playlist-display .playlist-hero .mediaitem-artwork,
+.mediaContainer,
+.podcast-artwork,
+.github-avatar,
+.sidebar-user-icon,
+.sidebar-playlist,
+.repo-preview,
+.repo-header,
+.search-input,
+.search-input-container,
+.search-input--icon,
+.app-chrome .app-chrome-item > .app-playback-controls .artwork,
+.app-chrome .app-chrome-item > .app-playback-controls .actions,
+.app-chrome .app-chrome-item > .app-playback-controls .lcdMenu,
+.app-chrome .app-chrome-item > .app-playback-controls .song-progress,
+.app-chrome .app-chrome-item > .app-playback-controls .song-progress input[type="range"],
+.volume-button,
+.volume-button--small,
+.md-btn,
+.md-option-line,
+.md-option-header,
+.md-header-title {
+  border-radius: 0 !important;
+}
+.app-navigation,
+#navigation-bar,
+.app-drawer,
+.app-sidebar-content,
+.content-inner,
+.library-page .library-header,
+.album-header,
+.playlist-page .playlist-body,
+.well,
+.card,
+.modal-window,
+.modal-content,
+.dropdown-menu,
+.context-menu-body,
+.search-hints,
+.usermenu-body,
+.repo-header,
+.podcasts-page .podcasts-list,
+.podcasts-page .podcasts-details {
+  background: var(--terminal-surface);
+  border: 1px solid var(--terminal-border);
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+#navigation-bar,
+.app-navigation,
+.app-drawer,
+.content-inner,
+.library-page .library-header,
+.album-header,
+.playlist-page .playlist-body,
+.modal-window,
+.modal-content,
+.dropdown-menu,
+.context-menu-body,
+.search-hints,
+.usermenu-body {
+  color: var(--terminal-text);
+}
+.app-navigation,
+#navigation-bar {
+  padding-inline: 16px;
+  min-height: 58px;
+}
+.app-chrome {
+  background: var(--terminal-surface);
+  border-bottom: 1px solid var(--terminal-border);
+}
+.app-chrome .app-chrome-item,
+.app-chrome .app-chrome--left,
+.app-chrome .app-chrome--center,
+.app-chrome .app-chrome--right {
+  border-radius: 0 !important;
+}
+.app-sidebar-header,
+.app-sidebar-footer {
+  background: var(--terminal-surface-alt);
+  border-bottom: 1px solid var(--terminal-border);
+}
+.app-sidebar-content {
+  border-right: 1px solid var(--terminal-border);
+}
+.app-sidebar-item,
+.list-group-item,
+.nav-link,
+.btn,
+.app-sidebar-button,
+.context-menu-item,
+.search-hint,
+.usermenu-item,
+.md-btn,
+.md-option-line,
+.stylePicker,
+.themeContextMenu {
+  border-radius: 0 !important;
+  border: 1px solid var(--terminal-border);
+  background: var(--terminal-surface-alt);
+  color: var(--terminal-text);
+  box-shadow: none !important;
+  transition: background-color 0.12s ease, border-color 0.12s ease, color 0.12s ease, transform 0.12s ease;
+}
+.app-sidebar-item:hover,
+.list-group-item:hover,
+.nav-link:hover,
+.btn:hover,
+.app-sidebar-button:hover,
+.context-menu-item:hover,
+.search-hint:hover,
+.usermenu-item:hover,
+.md-btn:hover,
+.stylePicker:hover {
+  background: var(--selected);
+  border-color: var(--terminal-border-strong);
+}
+.app-sidebar-item:active,
+.list-group-item:active,
+.nav-link:active,
+.btn:active,
+.app-sidebar-button:active,
+.context-menu-item:active,
+.search-hint:active,
+.usermenu-item:active,
+.md-btn:active {
+  background: var(--selected-click);
+  transform: translateY(1px);
+}
+.app-sidebar-item.active,
+.list-group-item.active,
+.nav-link.active {
+  background: var(--selected);
+  border-color: var(--terminal-accent);
+  color: var(--terminal-text);
+}
+.app-sidebar-button > .sidebar-user-icon,
+.app-sidebar-button > .sidebar-user-text,
+.sidebar-user-icon,
+.github-avatar,
+.podcast-artwork {
+  border-radius: 0 !important;
+}
+.app-sidebar-button > .sidebar-user-text .fullname,
+.app-sidebar-button > .sidebar-user-text .handle-text,
+.app-sidebar-item,
+.repo-name,
+.repo-url,
+.app-title-text,
+.song-name,
+.song-artist,
+.song-artist-album,
+.playlist-name,
+.playlist-info,
+.header-text,
+.nav-item,
+.content-inner,
+.text-overflow-elipsis,
+.themeLabel,
+.md-labeltext {
+  letter-spacing: 0.03em;
+}
+.search-input,
+input[type="text"],
+input[type="number"],
+input[type="password"],
+textarea,
+select {
+  border-radius: 0 !important;
+  border: 1px solid var(--terminal-border);
+  background: var(--terminal-surface-alt);
+  box-shadow: none !important;
+  padding: 0.65rem 0.75rem;
+  min-height: 38px;
+  color: var(--terminal-text);
+}
+.search-input::placeholder,
+input::placeholder,
+textarea::placeholder {
+  color: var(--terminal-muted);
+}
+.search-input:focus,
+input:focus,
+textarea:focus,
+select:focus {
+  border-color: var(--terminal-accent);
+  outline: none;
+}
+.btn,
+.md-btn,
+.volume-button,
+.volume-button--small,
+.removeItem,
+.close-btn,
+.menu-panel.menu-header-text.close-btn {
+  text-transform: none;
+  font-weight: 500;
+}
+.btn-primary,
+.btn.btn-primary,
+.md-btn.primary {
+  background: var(--terminal-accent);
+  border-color: var(--terminal-accent);
+  color: #161320;
+}
+.btn-primary:hover,
+.btn.btn-primary:hover,
+.md-btn.primary:hover {
+  background: var(--terminal-accent-strong);
+}
+.dropdown-menu,
+.context-menu-body,
+.usermenu-body,
+.search-hints {
+  padding: 0;
+  border-color: var(--terminal-border-strong);
+}
+.dropdown-item,
+.context-menu-item,
+.usermenu-item,
+.search-hint {
+  color: var(--terminal-text);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+}
+.dropdown-item:last-child,
+.context-menu-item:last-child,
+.usermenu-item:last-child,
+.search-hint:last-child {
+  border-bottom: 0;
+}
+.well,
+.card,
+.modal-window,
+.modal-content,
+.modal-header,
+.modal-lowercontent,
+.stylePicker {
+  background: var(--terminal-surface);
+  border-color: var(--terminal-border);
+}
+.modal-window,
+.modal-content {
+  overflow: hidden;
+}
+.modal-header,
+.modal-lowercontent {
+  border-color: var(--terminal-border);
+}
+.modal .close,
+.close-btn {
+  color: var(--terminal-text);
+  opacity: 0.8;
+}
+.modal .close:hover,
+.close-btn:hover {
+  opacity: 1;
+}
+.cd-mediaitem-square,
+.cd-mediaitem-brick,
+.cd-mediaitem-list-item,
+.mediaContainer,
+.playlist-display .playlist-hero,
+.playlist-display .artworkContainer,
+.playlist-display .mediaitem-artwork,
+.artwork,
+.artworkMaterial,
+.artworkMaterial img,
+.app-chrome .app-chrome-item > .app-playback-controls .artwork,
+.app-chrome .app-chrome-item > .app-playback-controls .actions,
+.repo-preview img,
+.github-avatar,
+.podcast-artwork {
+  border-radius: 0 !important;
+  border: 1px solid var(--terminal-border);
+  box-shadow: none !important;
+  background-clip: padding-box;
+  overflow: hidden;
+}
+.cd-mediaitem-square,
+.cd-mediaitem-brick,
+.cd-mediaitem-list-item,
+.list-group-item,
+.app-sidebar-item {
+  background: var(--terminal-surface-alt);
+}
+.cd-mediaitem-square .title,
+.cd-mediaitem-square .info-rect,
+.cd-mediaitem-brick .title,
+.cd-mediaitem-list-item .title,
+.cd-mediaitem-list-item .subtitle,
+.cd-mediaitem-list-item .text,
+.cd-mediaitem-list-item .song-name,
+.cd-mediaitem-list-item .song-artist {
+  color: var(--terminal-text);
+}
+.mediaitem-artwork,
+.artwork,
+.artworkMaterial img,
+.playlist-display .artworkContainer img,
+.playlist-display .playlist-hero img,
+.app-chrome .app-chrome-item > .app-playback-controls .artwork,
+.github-avatar,
+.podcast-artwork {
+  image-rendering: pixelated;
+  filter: none;
+}
+.playlist-display .artworkContainer::after,
+.playlist-display .playlist-hero::after,
+.app-chrome .app-chrome-item > .app-playback-controls .artwork::after,
+.artworkMaterial::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(180deg, transparent 0%, rgba(255, 255, 255, 0.04) 50%, transparent 100%), repeating-linear-gradient(180deg, transparent 0 3px, rgba(255, 255, 255, 0.03) 3px 4px);
+  opacity: 0.28;
+  mix-blend-mode: overlay;
+}
+.app-chrome .app-chrome-item > .app-playback-controls {
+  background: var(--terminal-surface);
+  border-top: 1px solid var(--terminal-border);
+}
+.app-chrome .app-chrome-item > .app-playback-controls .song-name,
+.app-chrome .app-chrome-item > .app-playback-controls .song-artist,
+.app-chrome .app-chrome-item > .app-playback-controls .song-artist-album,
+.app-chrome .app-chrome-item > .app-playback-controls .song-duration p {
+  font-family: var(--terminal-font);
+  color: var(--terminal-text);
+}
+.app-chrome .app-chrome-item > .app-playback-controls .song-progress {
+  --rangeTrackHeight: 6px;
+}
+.app-chrome .app-chrome-item > .app-playback-controls .song-progress input[type="range"] {
+  border-radius: 0;
+}
+.app-chrome .app-chrome-item > .app-playback-controls .song-progress input[type="range"]::-webkit-slider-runnable-track {
+  border-radius: 0;
+  background: var(--songProgressBackground);
+}
+.app-chrome .app-chrome-item > .app-playback-controls .song-progress input[type="range"]::-webkit-slider-thumb {
+  border-radius: 0;
+  background: var(--songProgressColor);
+}
+.app-chrome .app-chrome-item > .app-playback-controls .artwork {
+  background-size: cover;
+  background-color: var(--terminal-surface-alt);
+}
+.app-chrome .app-chrome-item > .app-playback-controls .actions .lcdMenu,
+.volume-button,
+.volume-button--small {
+  background: transparent;
+  border-color: transparent;
+}
+.app-chrome .app-chrome-item > .app-playback-controls .actions .lcdMenu:hover,
+.volume-button:hover,
+.volume-button--small:hover {
+  background: var(--selected);
+}
+.app-chrome .app-chrome-item > .app-playback-controls .actions .lcdMenu:active,
+.volume-button:active,
+.volume-button--small:active {
+  background: var(--selected-click);
+}
+.app-navigation .search-input-container,
+.album-header,
+.library-page .library-header,
+.playlist-page .playlist-body .search-input-container,
+.content-inner .search-input-container {
+  border-color: var(--terminal-border);
+}
+.library-page .well,
+.playlist-page .playlist-body,
+.album-header,
+.library-page .library-header,
+.content-inner,
+.content-inner.podcasts-page .podcasts-list,
+.content-inner.podcasts-page .podcasts-details {
+  background: var(--terminal-surface);
+}
+.playlist-page .playlist-display .playlist-info .playlist-name,
+.album-header .album-title,
+.content-inner .header-text,
+.repo-name,
+.repo-preview-name {
+  font-size: 1rem;
+  text-transform: none;
+}
+.album-header,
+.playlist-page .floating-header,
+.library-page .library-header,
+.repo-header {
+  border-bottom: 1px solid var(--terminal-border);
+}
+.playlist-page .playlist-display .artworkContainer {
+  opacity: 0.9;
+}
+.playlist-page .playlist-display .playlistInfo,
+.playlist-page .playlist-display .playlist-info {
+  color: var(--terminal-text);
+}
+.playlist-page .playlist-body .tabs .nav-link,
+.search-page .searchToggle > button,
+.installed-themes-page .themeContextMenu,
+.github-themes-page .repos-list .list-group-item,
+.installed-themes-page .stylestack-editor .list-group-item {
+  border-radius: 0 !important;
+  border: 1px solid var(--terminal-border);
+  background: var(--terminal-surface-alt);
+  color: var(--terminal-text);
+  box-shadow: none !important;
+}
+.search-page .cd-mediaitem-square.mediaitem-brick,
+.cd-mediaitem-square.mediaitem-brick {
+  border-radius: 0 !important;
+  background: var(--terminal-surface-alt);
+}
+.search-page .cd-mediaitem-square.mediaitem-brick .artwork-container .artwork {
+  border-radius: 0 !important;
+}
+.search-page .cd-mediaitem-square.mediaitem-brick .title {
+  color: var(--terminal-text);
+  font-weight: 600;
+}
+.lyric-body,
+.lyric-footer,
+.player_top,
+.more-btn-round,
+.social-btn,
+.sidebar-playlist,
+.oobe-titlebar .button-group > button {
+  border-radius: 0 !important;
+}
+.lyric-line.active .verse,
+.lyric-line.active .verse.verse-active {
+  color: var(--terminal-accent-strong);
+}
+.lyric-line:hover {
+  background: var(--selected);
+}
+.github-themes-page .github-avatar,
+.installed-themes-page .list-group-item,
+.installed-themes-page .style-editor-container .list-group-item,
+.installed-themes-page .repo-header,
+.installed-themes-page .gh-header,
+.installed-themes-page .gh-content,
+.installed-themes-page .repos-list,
+.installed-themes-page .style-editor-container {
+  border-radius: 0 !important;
+}
+.repo-url,
+.reasonSP,
+.md-labeltext,
+.app-sidebar-button > .sidebar-user-text .handle-text,
+.app-sidebar-button > .sidebar-user-text .fullname,
+.song-duration,
+.song-artist-album {
+  color: var(--terminal-muted);
+}
+.app-sidebar-notification {
+  background: var(--terminal-accent);
+  color: #161320;
+}
+.app-sidebar-notification .message {
+  color: #161320;
+}
+.popover,
+.tooltip,
+.toast,
+.notyf {
+  font-family: var(--terminal-font);
+}
+.cursor {
+  border-radius: 0 !important;
+  box-shadow: 0 0 0 1px var(--terminal-accent);
+}
+@media (prefers-color-scheme: light) {
+  body::before {
+    opacity: 0.08;
+  }
+  body::after {
+    opacity: 0.18;
+  }
+  .app-chrome .app-chrome-item > .app-playback-controls .artwork,
+  .mediaitem-artwork,
+  .artwork,
+  .artworkMaterial img,
+  .github-avatar,
+  .podcast-artwork {
+    filter: none;
+  }
+  .btn-primary,
+  .btn.btn-primary,
+  .md-btn.primary {
+    color: #f7f3ea;
+  }
+}

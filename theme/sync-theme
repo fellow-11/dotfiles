@@ -96,6 +96,7 @@ render "$TEMPLATES/fastfetch.jsonc"           "$HOME/.config/fastfetch/config.js
 render "$TEMPLATES/nvim-custom.lua"           "$HOME/.config/nvim/colors/custom.lua"
 render "$TEMPLATES/fzf-bat.zsh"              "$HOME/.config/theme/fzf-bat.zsh"
 render "$TEMPLATES/bat-custom.tmTheme"        "$(bat --config-dir 2>/dev/null || echo "$HOME/.config/bat")/themes/custom.tmTheme"
+render "$TEMPLATES/cider-cli-colors.css" "$HOME/.config/sh.cider.genten/themes/cider-cli/colors.css"
 
 # nvim init.lua — only write if empty/missing
 if [[ ! -s "$HOME/.config/nvim/init.lua" ]]; then

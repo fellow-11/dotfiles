@@ -24,3 +24,4 @@ export ZSH_AUTOSUGGEST_STRATEGY=(history completion)
 export PATH="$HOME/.local/bin:$PATH"
 alias dotfiles-sync='~/dotfiles/sync.sh'
 alias dotfiles-sync='~/dotfiles/sync.sh'
+alias sync-theme='~/.config/theme/sync-theme'

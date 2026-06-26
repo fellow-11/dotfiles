@@ -1,0 +1,153 @@
+:root {
+  --terminal-bg:              #121212;
+  --terminal-bg-alt:          #1a1a1a;
+  --terminal-surface:         #1e1e1e;
+  --terminal-surface-alt:     #242424;
+  --terminal-surface-strong:  #2a2a2a;
+  --terminal-border:          rgba(81, 81, 81, 0.5);
+  --terminal-border-strong:   #515151;
+  --terminal-text:            #bebebe;
+  --terminal-muted:           #8a8a8d;
+  --terminal-faint:           #606060;
+  --terminal-accent:          #e68e0d;
+  --terminal-accent-strong:   #f59e0b;
+  --terminal-success:         #FFC107;
+  --terminal-warning:         #FFC107;
+  --terminal-danger:          #D35F5F;
+  --keyColor:                 var(--terminal-accent);
+  --keyColorDefault:          var(--terminal-accent);
+  --keyColor-rgb:             230, 142, 13;
+  --keyColor-rollover:        var(--terminal-accent-strong);
+  --keyColor-rollover-rgb:    245, 158, 11;
+  --keyColor-pressed:         #c47a0b;
+  --keyColor-pressed-rgb:     196, 122, 11;
+  --keyColor-deepPressed:     #d4870c;
+  --keyColor-deepPressed-rgb: 212, 135, 12;
+  --keyColor-disabled:        rgba(230, 142, 13, 0.28);
+  --keyColor-primary:         rgba(230, 142, 13, 0.18);
+  --selected:                 rgba(230, 142, 13, 0.12);
+  --selected-click:           rgba(230, 142, 13, 0.18);
+  --hover:                    rgba(255, 255, 255, 0.06);
+  --songProgressColor:        var(--terminal-accent);
+}
+
+* {
+  --mats-glazeBackground: unset;
+  --mats-glazeOpacity: 0;
+}
+
+.chrome-button:before, .nav-flipper:before {
+  --mats-glazeBackground: unset;
+  --mats-glazeOpacity: 0;
+}
+
+/* ── Main background ─────────────────────────────────────────────────── */
+#app, .content-inner, [sfc-name="PageStackItem"] {
+  background: var(--terminal-bg) !important;
+}
+
+/* ── Remove accent border on artwork from base.css ───────────────────── */
+.mediaitem-artwork,
+.artwork,
+.artworkMaterial img,
+.playlist-display .artworkContainer img,
+.playlist-display .playlist-hero img {
+  box-shadow: none !important;
+  border-color: #515151 !important;
+}
+
+/* ── Flatten media item cards ────────────────────────────────────────── */
+[sfc-name="MediaItem"],
+[sfc-name="MediaItemGrid"] {
+  background: transparent !important;
+  box-shadow: none !important;
+  border: 1px solid #515151 !important;
+}
+
+/* ── Hide artwork in track list ──────────────────────────────────────── */
+[sfc-name="LibrarySongListItem"] img,
+[sfc-name="LibrarySongListItem"] .artwork,
+[sfc-name="LibrarySongListItem"] .mediaitem-artwork,
+[sfc-name="ListItem"] img,
+[sfc-name="ListItem"] .artwork,
+[sfc-name="ListItemScaffold"] img,
+[sfc-name="ListItemScaffold"] .artwork {
+  display: none !important;
+}
+
+/* ── Active track row ────────────────────────────────────────────────── */
+[sfc-name="LibrarySongListItem"].active,
+[sfc-name="LibrarySongListItem"][data-playing="true"] {
+  background: rgba(230, 142, 13, 0.15) !important;
+  border-left: 2px solid #e68e0d !important;
+  color: #e68e0d !important;
+}
+
+/* ── Row hover ───────────────────────────────────────────────────────── */
+[sfc-name="LibrarySongListItem"]:hover {
+  background: rgba(255, 255, 255, 0.05) !important;
+  color: #ffffff !important;
+}
+
+/* ── Tighter row height ──────────────────────────────────────────────── */
+[sfc-name="LibrarySongListItem"],
+[sfc-name="ListItem"],
+[sfc-name="ListItemScaffold"] {
+  min-height: 28px !important;
+  height: 28px !important;
+  padding-top: 2px !important;
+  padding-bottom: 2px !important;
+  font-size: 0.8rem !important;
+}
+
+/* ── Dimmer non-active text ──────────────────────────────────────────── */
+[sfc-name="LibrarySongListItem"],
+[sfc-name="ListItem"] {
+  color: #bebebe !important;
+}
+
+/* ── Column separators ───────────────────────────────────────────────── */
+.library-song-list-item > *,
+[sfc-name="LibrarySongListItem"] > * {
+  border-right: 1px solid #2a2a2a !important;
+  padding-right: 8px !important;
+}
+
+[sfc-name="LibrarySongListItem"] > *:last-child {
+  border-right: none !important;
+}
+
+/* ── Light mode ──────────────────────────────────────────────────────── */
+.body--light {
+  --terminal-bg:              #f5f5f0;
+  --terminal-bg-alt:          #eeede8;
+  --terminal-surface:         #f0efe9;
+  --terminal-surface-alt:     #e8e7e0;
+  --terminal-surface-strong:  #dddcd5;
+  --terminal-border:          rgba(180, 175, 160, 0.5);
+  --terminal-border-strong:   #b4afa0;
+  --terminal-text:            #2a2a2a;
+  --terminal-muted:           #6a6a6a;
+  --terminal-faint:           #909090;
+  --hover:                    rgba(0, 0, 0, 0.06);
+  --selected:                 rgba(230, 142, 13, 0.12);
+  --selected-click:           rgba(230, 142, 13, 0.18);
+  --songProgressBackground:   rgba(0, 0, 0, 0.1);
+}
+
+/* ── Immersive mode background ───────────────────────────────────────── */
+[sfc-name="ImmersiveSolarium"],
+[sfc-name="ImmersiveMetadata"],
+.immersive-container,
+.immersive-background {
+  background: transparent !important;
+}
+
+/* ── Player bar background ───────────────────────────────────────────── */
+[sfc-name="AMPLCDGlass"] {
+  background: var(--terminal-surface) !important;
+  border-top: 1px solid var(--terminal-border) !important;
+}
+.body--light [sfc-name="AMPLCDGlass"] {
+  background: var(--terminal-surface) !important;
+}

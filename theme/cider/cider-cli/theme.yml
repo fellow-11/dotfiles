@@ -1,0 +1,9 @@
+name: Cider-CLI
+stylesheets:
+  - file: main.css
+    name: Cider-CLI
+    description: Core theme styles — monospace font, flat design, no rounded corners, and terminal-inspired layout tweaks.
+  - file: colors.css
+    name: System Colors
+    description: Syncs the theme colors to your system accent and palette. Sets a custom font. Toggle off to use the built-in color scheme and font.
+    enabled: true
