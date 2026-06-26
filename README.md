@@ -98,7 +98,7 @@ This automatically regenerates and reloads color configs for:
 - btop
 - Fastfetch
 - fzf / bat
-- Cider (accent color)
+- Cider (accent color + [Cider-CLI theme](./theme/cider/cider-cli) colors)
 
 Templates live in `~/.config/theme/templates/`. To add a new app, create a template there and add a `render` line to `sync-theme`.
 
