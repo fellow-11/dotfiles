@@ -86,6 +86,7 @@ Edit your palette there, then run:
 ```bash
 sync-theme
 ```
+> **Note:** Add `alias sync-theme='~/.config/theme/sync-theme'` to `~/.zshrc` to run `sync-theme` from any zsh terminal without the full path.
 
 This automatically regenerates and reloads color configs for:
 - Hyprland (borders)
