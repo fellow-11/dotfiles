@@ -325,13 +325,14 @@ show_update_menu() {
 }
 
 show_system_menu() {
-  case $(menu "System" "  Lock\n󰍃  Logout\n󰒲  Suspend\n  Reboot\n󰐥  Shutdown") in
-  *Lock*)     hyprlock ;;
-  *Logout*)   hyprctl dispatch exit ;;
-  *Suspend*)  systemctl suspend ;;
-  *Reboot*)   systemctl reboot ;;
-  *Shutdown*) systemctl poweroff ;;
-  *) show_main_menu ;;
+  case $(menu "System" "  Screensaver\n  Lock\n󰍃  Logout\n󰒲  Suspend\n  Reboot\n󰐥  Shutdown") in
+  *Screensaver*) /home/felix/.config/screensaver/omarchy-launch-screensaver ;;
+  *Lock*)        hyprlock ;;
+  *Logout*)      hyprctl dispatch exit ;;
+  *Suspend*)     systemctl suspend ;;
+  *Reboot*)      systemctl reboot ;;
+  *Shutdown*)    systemctl poweroff ;;
+  *)      	 show_main_menu ;;
   esac
 }
 

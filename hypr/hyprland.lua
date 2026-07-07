@@ -73,6 +73,7 @@ hl.on("hyprland.start", function ()
     hl.exec_cmd("discord")
     hl.exec_cmd("zen-browser")
     hl.exec_cmd("steam")
+    hl.exec_cmd("heroic")
     hl.exec_cmd("cider")
 
 end)
@@ -283,16 +284,16 @@ local mainMod = "SUPER" -- Sets "Windows" key as main modifier
 
 
 -- Applications
-hl.bind("SUPER + RETURN",      hl.dsp.exec_cmd(terminal),                    { description = "Terminal" })
-hl.bind("SUPER + E",           hl.dsp.exec_cmd(fileManager),                 { description = "File manager" })
-hl.bind("SUPER + SPACE",       hl.dsp.exec_cmd(menu),                        { description = "Launcher" })
+hl.bind("SUPER + RETURN",      hl.dsp.exec_cmd(terminal),                	       { description = "Terminal" })
+hl.bind("SUPER + E",           hl.dsp.exec_cmd(fileManager),                           { description = "File manager" })
+hl.bind("SUPER + SPACE",       hl.dsp.exec_cmd(menu),                                  { description = "Launcher" })
 hl.bind("SUPER + ALT + SPACE", hl.dsp.exec_cmd("/home/felix/.local/bin/sys-menu"),     { description = "System menu" })
  
 -- Windows
-local closeWindowBind = hl.bind("SUPER + W", hl.dsp.window.close(),          { description = "Close window" })
-hl.bind("SUPER + T",           hl.dsp.window.float({ action = "toggle" }),   { description = "Float toggle" })
-hl.bind("SUPER + P",           hl.dsp.window.pseudo(),                       { description = "Pseudo window" })
-hl.bind("SUPER + J",           hl.dsp.layout("togglesplit"),                 { description = "Toggle split" })
+local closeWindowBind = hl.bind("SUPER + W", hl.dsp.window.close(),        			     { description = "Close window" })
+hl.bind("SUPER + T",           hl.dsp.window.float({ action = "toggle" }), 			     { description = "Float toggle" })
+hl.bind("SUPER + P",           hl.dsp.window.pseudo(),                      		      	     { description = "Pseudo window" })
+hl.bind("SUPER + J",           hl.dsp.layout("togglesplit"),               			     { description = "Toggle split" })
 hl.bind("SUPER + F",           hl.dsp.window.fullscreen({ mode = "fullscreen", action = "toggle" }), { description = "Fullscreen" })
 hl.bind("SUPER + ALT + F",     hl.dsp.window.fullscreen({ mode = "maximized", action = "toggle" }),  { description = "Maximize" })
  
@@ -310,19 +311,19 @@ for i = 1, 10 do
 end
  
 -- Special workspace (scratchpad)
-hl.bind("SUPER + Z",           hl.dsp.workspace.toggle_special("magic"),             { description = "Toggle scratchpad" })
+hl.bind("SUPER + Z",           hl.dsp.workspace.toggle_special("magic"),            { description = "Toggle scratchpad" })
 hl.bind("SUPER + SHIFT + Z",   hl.dsp.window.move({ workspace = "special:magic" }), { description = "Move window to scratchpad" })
  
 -- Scroll workspaces
-hl.bind("SUPER + mouse_down",  hl.dsp.focus({ workspace = "e+1" }),          { description = "Next workspace" })
-hl.bind("SUPER + mouse_up",    hl.dsp.focus({ workspace = "e-1" }),          { description = "Previous workspace" })
+hl.bind("SUPER + mouse_down",  hl.dsp.focus({ workspace = "e+1" }), { description = "Next workspace" })
+hl.bind("SUPER + mouse_up",    hl.dsp.focus({ workspace = "e-1" }), { description = "Previous workspace" })
  
 -- Mouse window management
-hl.bind("SUPER + mouse:272",   hl.dsp.window.drag(),                         { mouse = true, description = "Move window" })
-hl.bind("SUPER + mouse:273",   hl.dsp.window.resize(),                       { mouse = true, description = "Resize window" })
+hl.bind("SUPER + mouse:272",   hl.dsp.window.drag(),   { mouse = true, description = "Move window" })
+hl.bind("SUPER + mouse:273",   hl.dsp.window.resize(), { mouse = true, description = "Resize window" })
  
 -- System
-hl.bind("SUPER + M",           hl.dsp.exec_cmd("hyprlock"),                  { description = "Lock screen" })
+hl.bind("SUPER + M", hl.dsp.exec_cmd("hyprlock"), { description = "Lock screen" })
  
 -- Touchbar: Display brightness
 hl.bind("XF86MonBrightnessDown", hl.dsp.exec_cmd("my-touchbar-controller display 5%-"),  { locked = true, repeating = true, description = "Brightness down" })
@@ -378,6 +379,29 @@ hl.bind("SUPER + SHIFT + S", hl.dsp.exec_cmd([[
     grimblast save output "$FILE" && \
     [ "$(notify-send 'Screen Captured' 'Click to edit capture' -i "$FILE" --action='default=Edit')" = "default" ] && satty -f "$FILE"
 ]]), { description = "Screenshot screen" })
+
+-- Gamemode toggle
+hl.bind("SUPER + F12", hl.dsp.exec_cmd("/home/felix/.config/scripts/gamemode.sh"), { description = "Gamemode toggle" })
+
+-- Gamemode submap: only SUPER+F works, everything else suppressed
+hl.define_submap("gamemode", function()
+    hl.bind("SUPER + F12", hl.dsp.exec_cmd("/home/felix/.config/scripts/gamemode.sh"), { description = "Exit gamemode" })
+    hl.bind("SUPER + K", hl.dsp.exec_cmd("/home/felix/.local/bin/keybindings"),        { description = "Show keybindings" })
+
+    -- Keep media/brightness/audio keys working
+    hl.bind("XF86MonBrightnessDown", hl.dsp.exec_cmd("my-touchbar-controller display 5%-"),                   { locked = true, repeating = true, description = "Brightness down" })
+    hl.bind("XF86MonBrightnessUp",   hl.dsp.exec_cmd("my-touchbar-controller display +5%"),                   { locked = true, repeating = true, description = "Brightness up" })
+    hl.bind("XF86KbdBrightnessDown", hl.dsp.exec_cmd("my-touchbar-controller keyboard 10%-"),                 { locked = true, repeating = true, description = "Keyboard brightness down" })
+    hl.bind("XF86KbdBrightnessUp",   hl.dsp.exec_cmd("my-touchbar-controller keyboard +10%"),                 { locked = true, repeating = true, description = "Keyboard brightness up" })
+    hl.bind("XF86AudioMicMute",      hl.dsp.exec_cmd("my-touchbar-controller audio --input-volume mute-toggle"),  { locked = true, description = "Mute mic" })
+    hl.bind("XF86AudioMute",         hl.dsp.exec_cmd("my-touchbar-controller audio --output-volume mute-toggle"), { locked = true, description = "Mute audio" })
+    hl.bind("XF86AudioLowerVolume",  hl.dsp.exec_cmd("my-touchbar-controller audio --output-volume lower"),       { locked = true, repeating = true, description = "Volume down" })
+    hl.bind("XF86AudioRaiseVolume",  hl.dsp.exec_cmd("my-touchbar-controller audio --output-volume raise"),       { locked = true, repeating = true, description = "Volume up" })
+    hl.bind("XF86AudioPrev",         hl.dsp.exec_cmd("my-touchbar-controller media previous"),                    { locked = true, description = "Previous track" })
+    hl.bind("XF86AudioPause",        hl.dsp.exec_cmd("my-touchbar-controller media play-pause"),                  { locked = true, description = "Play/pause" })
+    hl.bind("XF86AudioPlay",         hl.dsp.exec_cmd("my-touchbar-controller media play-pause"),                  { locked = true, description = "Play/pause" })
+    hl.bind("XF86AudioNext",         hl.dsp.exec_cmd("my-touchbar-controller media next"),                        { locked = true, description = "Next track" })
+end)
 
 --------------------------------
 ---- WINDOWS AND WORKSPACES ----

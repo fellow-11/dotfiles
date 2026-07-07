@@ -44,8 +44,10 @@ modmask_to_text() {
 
 build_keymap_cache
 
-hyprctl -j binds | jq -r '.[] |
+SUBMAP=$([ -f /tmp/hypr-gamemode ] && echo "gamemode" || echo "")
+hyprctl -j binds | jq -r --arg s "$SUBMAP" '.[] |
   select(.description != "" and .description != null) |
+  select(.submap == $s) |
   [.modmask, (.key // ""), (.keycode // 0), .description] | join("\u001f")
 ' | while IFS=$'\x1f' read -r modmask key keycode description; do
   [[ -z $key && $keycode != "0" ]] && key="code:$keycode"
