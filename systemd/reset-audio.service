@@ -1,0 +1,12 @@
+[Unit]
+Description=Reset default audio device
+After=suspend.target hibernate.target hybrid-sleep.target suspend-then-hibernate.target wireplumber.service
+Wants=wireplumber.service
+
+[Service]
+User=felix
+Type=oneshot
+ExecStart=/home/felix/.config/scripts/reset-audio.sh
+
+[Install]
+WantedBy=default.target suspend.target hibernate.target hybrid-sleep.target suspend-then-hibernate.target
