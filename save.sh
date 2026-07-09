@@ -8,7 +8,6 @@ echo "Saving dotfiles..."
 cp -r ~/.config/hypr/*                   "$DOTFILES/hypr/"
 cp -r ~/.config/waybar/*                 "$DOTFILES/waybar/"
 cp -r ~/.config/walker/*                 "$DOTFILES/walker/"
-cp -r ~/.config/fish/*                   "$DOTFILES/fish/"
 cp -r ~/.config/theme/*                  "$DOTFILES/theme/"
 cp -r ~/.config/sh.cider.genten/themes/* "$DOTFILES/theme/cider/" 2>/dev/null
 cp -r ~/.config/btop/*        		 "$DOTFILES/btop/"

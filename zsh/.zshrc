@@ -25,3 +25,4 @@ export PATH="$HOME/.local/bin:$PATH"
 alias dotfiles-sync='~/dotfiles/sync.sh'
 alias dotfiles-sync='~/dotfiles/sync.sh'
 alias sync-theme='~/.config/theme/sync-theme'
+export YDOTOOL_SOCKET=/run/user/1000/.ydotool_socket
