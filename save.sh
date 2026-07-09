@@ -25,6 +25,7 @@ cp -r ~/.config/mako/*                   "$DOTFILES/mako/"        2>/dev/null
 cp -r ~/.config/swayosd/*                "$DOTFILES/swayosd/"     2>/dev/null
 cp -r ~/.config/wlogout/*                "$DOTFILES/wlogout/"     2>/dev/null
 cp -r ~/.config/screensaver/*            "$DOTFILES/screensaver/" 2>/dev/null
+cp -r ~/.config/scripts/*                "$DOTFILES/scripts/"     2>/dev/null
 
 # Shell
 cp ~/.zshrc "$DOTFILES/zsh/"
