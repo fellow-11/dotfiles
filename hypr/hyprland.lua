@@ -88,6 +88,7 @@ hl.env("XCURSOR_SIZE", "24")
 hl.env("HYPRCURSOR_SIZE", "24")
 hl.env("QT_QPA_PLATFORMTHEME", "qt6ct")
 hl.env("XDG_MENU_PREFIX", "arch-")
+local is_gaming = false
 
 -----------------------
 ----- PERMISSIONS -----
@@ -288,8 +289,8 @@ hl.bind("SUPER + RETURN",      hl.dsp.exec_cmd(terminal),                	      
 hl.bind("SUPER + E",           hl.dsp.exec_cmd(fileManager),                                                  { description = "File manager" })
 hl.bind("SUPER + SPACE",       hl.dsp.exec_cmd(menu),                                                         { description = "Launcher" })
 hl.bind("SUPER + ALT + SPACE", hl.dsp.exec_cmd("/home/felix/.local/bin/sys-menu"),                            { description = "System menu" })
-hl.bind("F6", hl.dsp.exec_cmd("/home/felix/.config/scripts/autoclicker-toggle.py --start"), { repeating = false, transparent = true, description = "Start autoclicker (press)" })
-hl.bind("F6", hl.dsp.exec_cmd("/home/felix/.config/scripts/autoclicker-toggle.py --stop"), { release = true, transparent = true, description = "Stop autoclicker (release)" })
+hl.bind("F6", hl.dsp.exec_cmd("/home/felix/.config/scripts/autoclicker-toggle.py --start"), { repeating = false, transparent = true, transparent = true, description = "Start autoclicker (press)" })
+hl.bind("F6", hl.dsp.exec_cmd("/home/felix/.config/scripts/autoclicker-toggle.py --stop"), { release = true, transparent = true, transparent = true, description = "Stop autoclicker (release)" })
 
 -- Windows
 local closeWindowBind = hl.bind("SUPER + W", hl.dsp.window.close(),        			     { description = "Close window" })
@@ -321,8 +322,22 @@ hl.bind("SUPER + mouse_down",  hl.dsp.focus({ workspace = "e+1" }), { descriptio
 hl.bind("SUPER + mouse_up",    hl.dsp.focus({ workspace = "e-1" }), { description = "Previous workspace" })
  
 -- Mouse window management
-hl.bind("SUPER + mouse:272",   hl.dsp.window.drag(),   { mouse = true, description = "Move window" })
-hl.bind("SUPER + mouse:273",   hl.dsp.window.resize(), { mouse = true, description = "Resize window" })
+hl.bind("SUPER + mouse:272", function()
+    local f = io.open("/tmp/hypr-gamemode", "r")
+    if f then
+        io.close(f)
+    else
+        hl.dispatch(hl.dsp.window.drag())
+    end
+end, { mouse = true, description = "Move window" })
+hl.bind("SUPER + mouse:273", function()
+    local f = io.open("/tmp/hypr-gamemode", "r")
+    if f then
+        io.close(f)
+    else
+        hl.dispatch(hl.dsp.window.resize())
+    end
+end, { mouse = true, description = "Resize window" })
  
 -- System
 hl.bind("SUPER + M", hl.dsp.exec_cmd("hyprlock"), { description = "Lock screen" })
@@ -385,10 +400,20 @@ hl.bind("SUPER + SHIFT + S", hl.dsp.exec_cmd([[
 -- Gamemode toggle
 hl.bind("SUPER + F12", hl.dsp.exec_cmd("/home/felix/.config/scripts/gamemode.sh"), { description = "Gamemode toggle" })
 
--- Gamemode submap: only SUPER+F works, everything else suppressed
+-- Gamemode submap
 hl.define_submap("gamemode", function()
-    hl.bind("SUPER + F12", hl.dsp.exec_cmd("/home/felix/.config/scripts/gamemode.sh"), { description = "Exit gamemode" })
+    is_gaming = true
+
+
+    hl.bind("SUPER + F12", function()
+        is_gaming = false
+
+        hl.exec_cmd("/home/felix/.config/scripts/gamemode.sh")
+    end, { description = "Exit gamemode" })
+
     hl.bind("SUPER + K", hl.dsp.exec_cmd("/home/felix/.local/bin/keybindings"),        { description = "Show keybindings" })
+    hl.bind("F6", hl.dsp.exec_cmd("/home/felix/.config/scripts/autoclicker-toggle.py --start"), { repeating = false, transparent = true, ignore_mods = true, description = "Start autoclicker (press)" })
+    hl.bind("F6", hl.dsp.exec_cmd("/home/felix/.config/scripts/autoclicker-toggle.py --stop"), { release = true, transparent = true, ignore_mods = true, description = "Stop autoclicker (release)" })
 
     -- Keep media/brightness/audio keys working
     hl.bind("XF86MonBrightnessDown", hl.dsp.exec_cmd("my-touchbar-controller display 5%-"),                   { locked = true, repeating = true, description = "Brightness down" })
