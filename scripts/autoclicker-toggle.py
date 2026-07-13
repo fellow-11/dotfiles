@@ -67,7 +67,7 @@ def ensure_config():
 
 
 def ydotool_click(button):
-    subprocess.run(["ydotool", "click", BUTTON_CODES[button]], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=False)
+    subprocess.run(["ydotool", "click", BUTTON_CODES[button]], check=False)
 
 
 def hypr_movecursor(x, y):
