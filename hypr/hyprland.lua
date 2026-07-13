@@ -284,11 +284,13 @@ local mainMod = "SUPER" -- Sets "Windows" key as main modifier
 
 
 -- Applications
-hl.bind("SUPER + RETURN",      hl.dsp.exec_cmd(terminal),                	       { description = "Terminal" })
-hl.bind("SUPER + E",           hl.dsp.exec_cmd(fileManager),                           { description = "File manager" })
-hl.bind("SUPER + SPACE",       hl.dsp.exec_cmd(menu),                                  { description = "Launcher" })
-hl.bind("SUPER + ALT + SPACE", hl.dsp.exec_cmd("/home/felix/.local/bin/sys-menu"),     { description = "System menu" })
- 
+hl.bind("SUPER + RETURN",      hl.dsp.exec_cmd(terminal),                	                              { description = "Terminal" })
+hl.bind("SUPER + E",           hl.dsp.exec_cmd(fileManager),                                                  { description = "File manager" })
+hl.bind("SUPER + SPACE",       hl.dsp.exec_cmd(menu),                                                         { description = "Launcher" })
+hl.bind("SUPER + ALT + SPACE", hl.dsp.exec_cmd("/home/felix/.local/bin/sys-menu"),                            { description = "System menu" })
+hl.bind("F6", hl.dsp.exec_cmd("/home/felix/.config/scripts/autoclicker-toggle.py --start"), { repeating = false, transparent = true, description = "Start autoclicker (press)" })
+hl.bind("F6", hl.dsp.exec_cmd("/home/felix/.config/scripts/autoclicker-toggle.py --stop"), { release = true, transparent = true, description = "Stop autoclicker (release)" })
+
 -- Windows
 local closeWindowBind = hl.bind("SUPER + W", hl.dsp.window.close(),        			     { description = "Close window" })
 hl.bind("SUPER + T",           hl.dsp.window.float({ action = "toggle" }), 			     { description = "Float toggle" })
@@ -472,4 +474,10 @@ hl.window_rule({
     match = { class = "org.omarchy.screensaver" },
     float = true,
     fullscreen = true
+})
+
+hl.window_rule({
+  name = "float-autoclicker",
+  match = { class = "^(dev.felix.autoclicker)$" },
+  float = true,
 })

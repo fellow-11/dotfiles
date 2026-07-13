@@ -1,0 +1,124 @@
+/*
+ * autoclicker-gui-config.css — ALL visual settings for the autoclicker GUI.
+ *
+ * Colors ({{VAR}}) are rendered by sync-theme from ~/.config/theme/colors.sh.
+ * Non-color values below (font-size, spacing, etc.) are plain CSS -- edit
+ * them directly in THIS template file and re-run sync-theme, since they
+ * aren't sourced from colors.sh.
+ *
+ * Rendered to: ~/.config/autoclicker/gui-config.css
+ * Loaded by:   autoclicker.py via Gtk.CssProvider at startup + "Reload theme"
+ */
+
+/* ── GUI Scale ──────────────────────────────────────────────────────────
+ * Master scale knob. Since padding/spacing below are defined in em, they
+ * scale together with this percentage -- not just text size.
+ * 100% = default. Try 85% for compact, 130% for larger.
+ */
+.autoclicker-window {
+    font-size: 75%;
+}
+
+/* ── Corner rounding ────────────────────────────────────────────────────
+ * Universal radius, same value at every occurrence below (frames, inputs,
+ * dropdowns, checkboxes, buttons). GTK CSS has no var()/calc(), so there's
+ * no single source of truth here -- if you change it, find/replace
+ * "border-radius: 0px;" everywhere in this file to keep it consistent.
+ * 0px = sharp corners, higher values = rounder (try 6px, 12px, etc).
+ */
+
+.autoclicker-window .autoclicker-root {
+    margin: 0.75em;
+}
+
+.autoclicker-window .autoclicker-frame-inner {
+    padding: 0.6em;
+}
+
+window.autoclicker-window {
+    background-color: {{BG}};
+    color: {{FG}};
+}
+
+.autoclicker-window frame {
+    border: 1px solid {{BORDER}};
+    border-radius: 0px;
+    background-color: alpha({{FG}}, 0.03);
+}
+
+.autoclicker-window frame > label {
+    color: {{ACCENT}};
+    font-weight: bold;
+}
+
+.autoclicker-window label {
+    color: {{FG}};
+}
+
+.autoclicker-window label.dim-label {
+    color: {{MUTED}};
+}
+
+.autoclicker-window entry,
+.autoclicker-window spinbutton {
+    background-color: alpha({{FG}}, 0.06);
+    color: {{FG}};
+    border: 1px solid {{BORDER}};
+    border-radius: 0px;
+}
+
+.autoclicker-window spinbutton button {
+    color: {{FG}};
+}
+
+.autoclicker-window checkbutton check {
+    border: 1px solid {{BORDER}};
+    background-color: alpha({{FG}}, 0.04);
+    border-radius: 0px;
+}
+
+.autoclicker-window checkbutton check:checked {
+    background-color: {{ACCENT}};
+    border-color: {{ACCENT}};
+}
+
+.autoclicker-window dropdown {
+    background-color: alpha({{FG}}, 0.06);
+    color: {{FG}};
+    border: 1px solid {{BORDER}};
+    border-radius: 0px;
+}
+
+.autoclicker-window button.suggested-action {
+    background-color: {{ACCENT}};
+    color: {{BG}};
+    border-radius: 0px;
+}
+
+.autoclicker-window button.suggested-action:hover {
+    background-color: alpha({{ACCENT}}, 0.85);
+}
+
+.autoclicker-window button.destructive-action {
+    background-color: {{BORDER}};
+    color: {{FG}};
+    border-radius: 0px;
+}
+
+.autoclicker-window button.destructive-action:hover {
+    background-color: alpha({{BORDER}}, 0.7);
+}
+
+.autoclicker-window .autoclicker-status {
+    font-size: 1.3em;
+    font-weight: bold;
+}
+
+.autoclicker-window .status-running {
+    color: {{ACCENT}};
+    font-weight: bold;
+}
+
+.autoclicker-window .status-idle {
+    color: {{MUTED}};
+}
