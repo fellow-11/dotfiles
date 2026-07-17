@@ -285,12 +285,12 @@ local mainMod = "SUPER" -- Sets "Windows" key as main modifier
 
 
 -- Applications
-hl.bind("SUPER + RETURN",      hl.dsp.exec_cmd(terminal),                	                              { description = "Terminal" })
-hl.bind("SUPER + E",           hl.dsp.exec_cmd(fileManager),                                                  { description = "File manager" })
-hl.bind("SUPER + SPACE",       hl.dsp.exec_cmd(menu),                                                         { description = "Launcher" })
-hl.bind("SUPER + ALT + SPACE", hl.dsp.exec_cmd("/home/felix/.local/bin/sys-menu"),                            { description = "System menu" })
-hl.bind("F6", hl.dsp.exec_cmd("/home/felix/.config/scripts/autoclicker-toggle.py --start"), { repeating = false, transparent = true, transparent = true, description = "Start autoclicker (press)" })
-hl.bind("F6", hl.dsp.exec_cmd("/home/felix/.config/scripts/autoclicker-toggle.py --stop"), { release = true, transparent = true, transparent = true, description = "Stop autoclicker (release)" })
+hl.bind("SUPER + RETURN",      hl.dsp.exec_cmd(terminal),                	                   { description = "Terminal" })
+hl.bind("SUPER + E",           hl.dsp.exec_cmd(fileManager),                                       { description = "File manager" })
+hl.bind("SUPER + SPACE",       hl.dsp.exec_cmd(menu),                                              { description = "Launcher" })
+hl.bind("SUPER + ALT + SPACE", hl.dsp.exec_cmd("~/.local/bin/sys-menu"),                           { description = "System menu" })
+hl.bind("F6", 		       hl.dsp.exec_cmd("~/.config/scripts/autoclicker-toggle.py --start"), { transparent = true, ignore_mods = true, description = "Start autoclicker (press)" })
+hl.bind("F6", 		       hl.dsp.exec_cmd("~/.config/scripts/autoclicker-toggle.py --stop"),  { release = true, transparent = true, ignore_mods = true, description = "Stop autoclicker (release)" })
 
 -- Windows
 local closeWindowBind = hl.bind("SUPER + W", hl.dsp.window.close(),        			     { description = "Close window" })
@@ -411,9 +411,9 @@ hl.define_submap("gamemode", function()
         hl.exec_cmd("/home/felix/.config/scripts/gamemode.sh")
     end, { description = "Exit gamemode" })
 
-    hl.bind("SUPER + K", hl.dsp.exec_cmd("/home/felix/.local/bin/keybindings"),        { description = "Show keybindings" })
+    hl.bind("SUPER + K", hl.dsp.exec_cmd("/home/felix/.local/bin/keybindings"),                 { description = "Show keybindings" })
     hl.bind("F6", hl.dsp.exec_cmd("/home/felix/.config/scripts/autoclicker-toggle.py --start"), { repeating = false, transparent = true, ignore_mods = true, description = "Start autoclicker (press)" })
-    hl.bind("F6", hl.dsp.exec_cmd("/home/felix/.config/scripts/autoclicker-toggle.py --stop"), { release = true, transparent = true, ignore_mods = true, description = "Stop autoclicker (release)" })
+    hl.bind("F6", hl.dsp.exec_cmd("/home/felix/.config/scripts/autoclicker-toggle.py --stop"),  { release = true, transparent = true, ignore_mods = true, description = "Stop autoclicker (release)" })
 
     -- Keep media/brightness/audio keys working
     hl.bind("XF86MonBrightnessDown", hl.dsp.exec_cmd("my-touchbar-controller display 5%-"),                   { locked = true, repeating = true, description = "Brightness down" })

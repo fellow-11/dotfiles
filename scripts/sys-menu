@@ -11,7 +11,7 @@ present_terminal() {
 }
 
 show_main_menu() {
-  case $(menu "Go" "󰀻  Apps\n󰧑  Learn\n󰄀  Capture\n󱓞  Toggle\n  Style\n󰒓  Setup\n  Configs\n󰉉  Install\n󰭌  Remove\n  Update\n⏻  System") in
+  case $(menu "Go" "󰀻  Apps\n󰧑  Learn\n󰄀  Capture\n󱓞  Toggle\n  Style\n󰒓  Setup\n  Configs\n󰉉  Install\n󰭌  Remove\n  Update\n󱂬  Workspaces\n⏻  System") in
   *Apps*)    walker -p "Launch…" ;;
   *Learn*)   show_learn_menu ;;
   *Capture*) show_capture_menu ;;
@@ -22,6 +22,7 @@ show_main_menu() {
   *Install*) show_install_menu ;;
   *Remove*)  show_remove_menu ;;
   *Update*)  show_update_menu ;;
+  *Workspaces*) show_workspaces_menu ;;
   *System*)  show_system_menu ;;
   esac
 }
@@ -49,12 +50,41 @@ show_capture_menu() {
 }
 
 show_toggle_menu() {
-  case $(menu "Toggle" "󰍜  Waybar\n󱩫  Screen Shader\n󰔟  Idle Timeout") in
+  case $(menu "Toggle" "󰍜  Waybar\n󱩫  Screen Shader\n󰔟  Idle Timeout\n  Hardware") in
   *Waybar*) pkill -USR1 waybar ;;
   *Shader*) pkill wlsunset || wlsunset -t 4500 ;;
   *Idle*)   pkill hypridle || hypridle ;;
+  *Hardware*) show_hardware_menu ;;
   *) show_main_menu ;;
   esac
+}
+
+show_hardware_menu() {
+  case $(menu "Hardware" "󰟸  Trackpad") in
+  *Trackpad*) toggle_trackpad ;;
+  *) show_toggle_menu ;;
+  esac
+}
+
+toggle_trackpad() {
+  local status_file="/tmp/hypr-trackpad-disabled"
+  local device_name
+  device_name=$(hyprctl devices -j | jq -r '.mice[] | select(.name | test("trackpad"; "i")) | .name' | head -1)
+
+  if [[ -z "$device_name" ]]; then
+    notify-send -u critical "Trackpad toggle" "No trackpad device found"
+    return
+  fi
+
+  if [[ -f "$status_file" ]]; then
+    hyprctl eval "hl.device({ name = '$device_name', enabled = true })"
+    rm -f "$status_file"
+    notify-send -u low "Trackpad enabled"
+  else
+    hyprctl eval "hl.device({ name = '$device_name', enabled = false })"
+    touch "$status_file"
+    notify-send -u low "Trackpad disabled"
+  fi
 }
 
 show_style_menu() {
@@ -322,6 +352,31 @@ show_update_menu() {
   *System*) present_terminal "yay -Syu" ;;
   *) show_main_menu ;;
   esac
+}
+
+show_workspaces_menu() {
+  local ws
+  ws=$(menu "Workspaces" "1\n2\n3\n4\n5\n6")
+  if [[ -n $ws ]]; then
+    show_monitor_menu_for_workspace "$ws"
+  else
+    show_main_menu
+  fi
+}
+
+show_monitor_menu_for_workspace() {
+  local workspace="$1"
+  local monitor_list monitor_choice monitor_name
+
+  monitor_list=$(hyprctl monitors -j | jq -r '.[].name')
+  monitor_choice=$(echo "$monitor_list" | menu "Move workspace $workspace to…" "$(echo "$monitor_list" | tr '\n' '\n')")
+
+  if [[ -n $monitor_choice ]]; then
+    hyprctl dispatch "hl.dsp.workspace.move({ workspace = $workspace, monitor = '$monitor_choice'})"
+    notify-send -u low "Workspace $workspace" "Moved to $monitor_choice (until reload)"
+  else
+    show_workspaces_menu
+  fi
 }
 
 show_system_menu() {

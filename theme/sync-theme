@@ -48,6 +48,7 @@ render() {
     read -r BG_R BG_G BG_B         <<< "$(hex_to_rgb "$BG")"
     read -r FG_R FG_G FG_B         <<< "$(hex_to_rgb "$FG")"
     read -r ACCENT_R ACCENT_G ACCENT_B <<< "$(hex_to_rgb "$ACCENT")"
+    read -r BORDER_R BORDER_G BORDER_B <<< "$(hex_to_rgb "$BORDER")"
 
     content="${content//\{\{BG_R\}\}/$BG_R}"
     content="${content//\{\{BG_G\}\}/$BG_G}"
@@ -58,6 +59,9 @@ render() {
     content="${content//\{\{ACCENT_R\}\}/$ACCENT_R}"
     content="${content//\{\{ACCENT_G\}\}/$ACCENT_G}"
     content="${content//\{\{ACCENT_B\}\}/$ACCENT_B}"
+    content="${content//\{\{BORDER_R\}\}/$BORDER_R}"
+    content="${content//\{\{BORDER_G\}\}/$BORDER_G}"
+    content="${content//\{\{BORDER_B\}\}/$BORDER_B}"
 
     # Plain hex values
     content="${content//\{\{BG\}\}/$BG}"
