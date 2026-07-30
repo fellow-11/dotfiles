@@ -6,6 +6,10 @@ menu() {
   echo -e "$options" | walker --dmenu --width 295 --minheight 1 --maxheight 630 -p "$prompt…" 2>/dev/null
 }
 
+confirm() {
+  [[ $(menu "Confirm" "  Yes\n  No") == *Yes* ]]
+}
+
 present_terminal() {
   ghostty -e bash -c "$1; read -p 'Press enter to close...'"
 }
@@ -88,18 +92,12 @@ toggle_trackpad() {
 }
 
 show_style_menu() {
-  case $(menu "Style" "󰸌  Edit Theme\n󰛖  Font\n󰸉  Background\n󰍜  Waybar Position\n󰘇  Corners\n  Gaps\n󱡕  Opacity\n󰂵  Blur\n󰘷  Shadows\n󰤺  Animations\n󰔌  Border Size") in
+  case $(menu "Style" "󰸌  Edit Theme\n󰛖  Font\n󰸉  Background\n󰍜  Waybar Position\n  Config") in
   "*Edit Theme*")   ghostty -e bash -c 'nvim ~/.config/theme/colors.sh && sync-theme' ;;
   *Font*)         show_font_menu ;;
   *Background*)   show_background_menu ;;
   *Waybar*)       show_waybar_position_menu ;;
-  *Corners*)      show_corners_menu ;;
-  *Gaps*)         show_gaps_menu ;;
-  *Opacity*)      show_opacity_menu ;;
-  *Blur*)         show_blur_menu ;;
-  *Shadows*)      show_shadows_menu ;;
-  *Animations*)   show_animations_menu ;;
-  *Border*)       show_border_menu ;;
+  *Config*)       ghostty -e nvim /home/felix/.config/hypr/hyprland.lua ;;
   *) show_main_menu ;;
   esac
 }
@@ -139,86 +137,6 @@ show_waybar_position_menu() {
   *Bottom*)
     sed -i 's/"position": "top"/"position": "bottom"/' ~/.config/waybar/config.jsonc
     pkill waybar; waybar & disown ;;
-  *) show_style_menu ;;
-  esac
-}
-
-show_corners_menu() {
-  case $(menu "Corners" "󰝣  Sharp\n󰘇  Round") in
-  *Sharp*)
-    sed -i 's/rounding.*=.*/rounding       = 0,/' ~/.config/hypr/hyprland.lua
-    hyprctl reload ;;
-  *Round*)
-    sed -i 's/rounding.*=.*/rounding       = 10,/' ~/.config/hypr/hyprland.lua
-    hyprctl reload ;;
-  *) show_style_menu ;;
-  esac
-}
-
-show_gaps_menu() {
-  case $(menu "Gaps" "  None\n  Small\n  Medium\n  Large") in
-  *None*)
-    sed -i 's/gaps_in.*=.*/gaps_in  = 0,/' ~/.config/hypr/hyprland.lua
-    sed -i 's/gaps_out.*=.*/gaps_out = 0,/' ~/.config/hypr/hyprland.lua
-    hyprctl reload ;;
-  *Small*)
-    sed -i 's/gaps_in.*=.*/gaps_in  = 3,/' ~/.config/hypr/hyprland.lua
-    sed -i 's/gaps_out.*=.*/gaps_out = 8,/' ~/.config/hypr/hyprland.lua
-    hyprctl reload ;;
-  *Medium*)
-    sed -i 's/gaps_in.*=.*/gaps_in  = 5,/' ~/.config/hypr/hyprland.lua
-    sed -i 's/gaps_out.*=.*/gaps_out = 20,/' ~/.config/hypr/hyprland.lua
-    hyprctl reload ;;
-  *Large*)
-    sed -i 's/gaps_in.*=.*/gaps_in  = 10,/' ~/.config/hypr/hyprland.lua
-    sed -i 's/gaps_out.*=.*/gaps_out = 40,/' ~/.config/hypr/hyprland.lua
-    hyprctl reload ;;
-  *) show_style_menu ;;
-  esac
-}
-
-show_opacity_menu() {
-  case $(menu "Inactive Opacity" "  100%\n  95%\n  90%\n  80%") in
-  *100%) sed -i 's/inactive_opacity.*=.*/inactive_opacity = 1.0,/' ~/.config/hypr/hyprland.lua; hyprctl reload ;;
-  *95%)  sed -i 's/inactive_opacity.*=.*/inactive_opacity = 0.95,/' ~/.config/hypr/hyprland.lua; hyprctl reload ;;
-  *90%)  sed -i 's/inactive_opacity.*=.*/inactive_opacity = 0.9,/' ~/.config/hypr/hyprland.lua; hyprctl reload ;;
-  *80%)  sed -i 's/inactive_opacity.*=.*/inactive_opacity = 0.8,/' ~/.config/hypr/hyprland.lua; hyprctl reload ;;
-  *) show_style_menu ;;
-  esac
-}
-
-show_blur_menu() {
-  case $(menu "Blur" "  Enable\n  Disable") in
-  *Enable*)  sed -i '/blur = {/{n; s/enabled.*=.*/enabled   = true,/}' ~/.config/hypr/hyprland.lua; hyprctl reload ;;
-  *Disable*) sed -i '/blur = {/{n; s/enabled.*=.*/enabled   = false,/}' ~/.config/hypr/hyprland.lua; hyprctl reload ;;
-  *) show_style_menu ;;
-  esac
-}
-
-show_shadows_menu() {
-  case $(menu "Shadows" "  Enable\n  Disable") in
-  *Enable*)  sed -i '/shadow = {/{n; s/enabled.*=.*/enabled      = true,/}' ~/.config/hypr/hyprland.lua; hyprctl reload ;;
-  *Disable*) sed -i '/shadow = {/{n; s/enabled.*=.*/enabled      = false,/}' ~/.config/hypr/hyprland.lua; hyprctl reload ;;
-  *) show_style_menu ;;
-  esac
-}
-
-show_animations_menu() {
-  case $(menu "Animations" "  Enable\n  Disable") in
-  *Enable*)  sed -i 's/animations = {/{&\n        enabled = true,/' ~/.config/hypr/hyprland.lua 2>/dev/null
-             sed -i '/animations = {/{n; s/enabled.*=.*/enabled = true,/}' ~/.config/hypr/hyprland.lua
-             hyprctl reload ;;
-  *Disable*) sed -i '/animations = {/{n; s/enabled.*=.*/enabled = false,/}' ~/.config/hypr/hyprland.lua
-             hyprctl reload ;;
-  *) show_style_menu ;;
-  esac
-}
-
-show_border_menu() {
-  case $(menu "Border Size" "  Thin (1px)\n  Medium (2px)\n  Thick (4px)") in
-  *Thin*)   sed -i 's/border_size.*=.*/border_size = 1,/' ~/.config/hypr/hyprland.lua; hyprctl reload ;;
-  *Medium*) sed -i 's/border_size.*=.*/border_size = 2,/' ~/.config/hypr/hyprland.lua; hyprctl reload ;;
-  *Thick*)  sed -i 's/border_size.*=.*/border_size = 4,/' ~/.config/hypr/hyprland.lua; hyprctl reload ;;
   *) show_style_menu ;;
   esac
 }
@@ -355,27 +273,103 @@ show_update_menu() {
 }
 
 show_workspaces_menu() {
+ case $(menu "Workspaces" "󰒓  Presets\n󰓡  Swap Workspaces\n󰆾  Move Workspace") in
+  *Presets*) show_workspaces_presets ;;
+  *Swap*)    show_workspaces_swap ;;
+  *Move*)    show_workspaces_move ;;
+  *)         show_main_menu ;;
+  esac
+}
+
+show_workspaces_presets() {
+  case $(menu "Presets" "󰊗  Controller Gaming\n󰕮  Default Layout") in
+  *Controller*)
+    # Move Discord to laptop, Gaming to 2nd monitor
+    hyprctl dispatch "hl.dsp.workspace.move({ workspace = 2, monitor = 'eDP-1'})"
+    hyprctl dispatch "hl.dsp.workspace.move({ workspace = 3, monitor = 'DP-2'})"
+    # Focus them so they display on screen
+    hyprctl eval 'hl.dispatch(hl.dsp.focus({ workspace = 2 }))'
+    hyprctl eval 'hl.dispatch(hl.dsp.focus({ workspace = 3 }))'
+    notify-send -u low "Preset Activated" "Controller Gaming Mode"
+    ;;
+  *Default*)
+    # Put everything back to normal baseline
+    hyprctl dispatch "hl.dsp.workspace.move({ workspace = 1, monitor = 'DP-2'})"
+    hyprctl dispatch "hl.dsp.workspace.move({ workspace = 2, monitor = 'DP-2'})"
+    hyprctl dispatch "hl.dsp.workspace.move({ workspace = 3, monitor = 'eDP-1'})"
+    hyprctl dispatch "hl.dsp.workspace.move({ workspace = 4, monitor = 'eDP-1'})"
+    hyprctl dispatch "hl.dsp.workspace.move({ workspace = 5, monitor = 'eDP-1'})"
+    hyprctl dispatch "hl.dsp.workspace.move({ workspace = 6, monitor = 'eDP-1'})"
+    # Focus default active screens
+    hyprctl eval 'hl.dispatch(hl.dsp.focus({ workspace = 1 }))'
+    hyprctl eval 'hl.dispatch(hl.dsp.focus({ workspace = 6 }))'
+    notify-send -u low "Preset Activated" "Default Layout Restored"
+    ;;
+  *) show_workspaces_menu ;;
+  esac
+}
+
+show_workspaces_swap() {
+  local ws1 ws2 mon1 mon2 allowed_ws ws_list
+
+  # Gather list of all currently active workspaces
+  ws_list=$(hyprctl workspaces -j | jq -r '.[].id' | sort -n)
+
+  ws1=$(menu "Select first workspace" "$ws_list")
+  [[ -z $ws1 ]] && { show_workspaces_menu; return; }
+
+  # Identify which monitor the first workspace is currently on
+  mon1=$(hyprctl workspaces -j | jq -r ".[] | select(.id == $ws1) | .monitor")
+
+  # Filter out workspaces on the same monitor; only allow workspaces on other monitors
+  allowed_ws=$(hyprctl workspaces -j | jq -r ".[] | select(.monitor != \"$mon1\") | .id" | sort -n)
+
+  if [[ -z $allowed_ws ]]; then
+    notify-send -u critical "Swap Workspaces" "No active workspaces found on other monitors to swap with."
+    show_workspaces_menu
+    return
+  fi
+
+  ws2=$(menu "Swap workspace $ws1 with" "$allowed_ws")
+  [[ -z $ws2 ]] && { show_workspaces_menu; return; }
+
+  # Identify the monitor of the second workspace
+  mon2=$(hyprctl workspaces -j | jq -r ".[] | select(.id == $ws2) | .monitor")
+
+  # Perform the swap using your exact move syntax
+  hyprctl dispatch "hl.dsp.workspace.move({ workspace = $ws1, monitor = '$mon2'})"
+  hyprctl dispatch "hl.dsp.workspace.move({ workspace = $ws2, monitor = '$mon1'})"
+
+  # Keep focus correct on both screens using your exact focus evaluation syntax
+  hyprctl eval "hl.dispatch(hl.dsp.focus({ workspace = $ws1 }))"
+  hyprctl eval "hl.dispatch(hl.dsp.focus({ workspace = $ws2 }))"
+
+  notify-send -u low "Workspaces Swapped" "WS $ws1 <-> WS $ws2"
+}
+
+show_workspaces_move() {
   local ws
-  ws=$(menu "Workspaces" "1\n2\n3\n4\n5\n6")
+  ws=$(menu "Select Workspace" "1\n2\n3\n4\n5\n6\n7")
   if [[ -n $ws ]]; then
-    show_monitor_menu_for_workspace "$ws"
+    show_monitor_menu_for_workspace_move "$ws"
   else
-    show_main_menu
+    show_workspaces_menu
   fi
 }
 
-show_monitor_menu_for_workspace() {
+show_monitor_menu_for_workspace_move() {
   local workspace="$1"
   local monitor_list monitor_choice monitor_name
 
   monitor_list=$(hyprctl monitors -j | jq -r '.[].name')
-  monitor_choice=$(echo "$monitor_list" | menu "Move workspace $workspace to…" "$(echo "$monitor_list" | tr '\n' '\n')")
+  monitor_choice=$(menu "Move workspace $workspace to…" "$monitor_list")
 
   if [[ -n $monitor_choice ]]; then
     hyprctl dispatch "hl.dsp.workspace.move({ workspace = $workspace, monitor = '$monitor_choice'})"
+    hyprctl eval "hl.dispatch(hl.dsp.focus({ workspace = $workspace }))"
     notify-send -u low "Workspace $workspace" "Moved to $monitor_choice (until reload)"
   else
-    show_workspaces_menu
+    show_workspaces_move
   fi
 }
 
@@ -383,11 +377,11 @@ show_system_menu() {
   case $(menu "System" "  Screensaver\n  Lock\n󰍃  Logout\n󰒲  Suspend\n  Reboot\n󰐥  Shutdown") in
   *Screensaver*) /home/felix/.config/screensaver/omarchy-launch-screensaver ;;
   *Lock*)        hyprlock ;;
-  *Logout*)      hyprctl dispatch exit ;;
+  *Logout*)      confirm && hyprctl dispatch exit ;;
   *Suspend*)     systemctl suspend ;;
-  *Reboot*)      systemctl reboot ;;
-  *Shutdown*)    systemctl poweroff ;;
-  *)      	 show_main_menu ;;
+  *Reboot*)      confirm && systemctl reboot ;;
+  *Shutdown*)    confirm && systemctl poweroff ;;
+  *)             show_main_menu ;;
   esac
 }
 

@@ -193,7 +193,7 @@
     "format-connected": "󰂱",
     "format-no-controller": "",
     "tooltip-format": "Devices connected: {num_connections}",
-    "on-click": "ghostty -e bluetuith"
+    "on-click": "ghostty -e bluetui"
   },
 
   "pulseaudio": {

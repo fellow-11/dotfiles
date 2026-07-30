@@ -1,48 +1,41 @@
 #!/bin/sh
+LOG="/var/log/t2-suspend-fix.log"
+log() { echo "[$(date '+%Y_%m_%d-%H:%M:%S')][resume] $*" >> "$LOG" 2>/dev/null || true; }
 
-# Source common library and hardware config
-if [ -f /usr/local/lib/t2-suspend-fix/t2-common.sh ]; then
-    . /usr/local/lib/t2-suspend-fix/t2-common.sh
-else
-    echo "Error: t2-common.sh not found" >&2
-    exit 1
+log "Starting resume..."
+/usr/bin/modprobe apple_bce 2>/dev/null || true
+log "Loaded apple_bce"
+sleep 1
+
+if [ ! -e /sys/bus/pci/devices/0000:04:00.3/driver ]; then
+    echo "0000:04:00.3" > /sys/bus/pci/drivers/aaudio/bind 2>/dev/null || true
+    log "Rebound audio PCI device"
 fi
 
-# Load hardware configuration
-load_hardware_config
+/usr/bin/modprobe apple_gmux 2>/dev/null || true
+log "Loaded apple_gmux"
+/usr/local/bin/t2-drm-display.sh off
+log "DRM display off"
+/usr/local/bin/t2-drm-display.sh on
+log "DRM display on"
 
-LABEL="resume"
+for dev in 00:14.0 09:00.0 7f:00.0; do
+    if [ ! -e /sys/bus/pci/devices/0000:$dev/driver ]; then
+        echo "0000:$dev" > /sys/bus/pci/drivers/xhci_hcd/bind 2>/dev/null || true
+        log "Rebound xhci_hcd $dev"
+    fi
+done
 
-t2_log "$LABEL" "Starting resume..."
+for mod in appletbdrm hid_appletb_kbd hid_appletb_bl; do
+    /usr/bin/modprobe "$mod" 2>/dev/null || true
+    log "Loaded $mod"
+done
 
-# Load Apple BCE
-if [ "$HAS_APPLE_BCE" = true ]; then
-    load_mod apple_bce
-    /usr/local/bin/t2-wait-lsmod.sh industrialio 10
-fi
+sleep 2
+systemctl restart tiny-dfr 2>/dev/null || true
+log "Restarted tiny-dfr"
 
-# Load WiFi
-load_mod brcmfmac
-load_mod brcmfmac_wcc
+/usr/bin/brightnessctl -sd :white:kbd_backlight set 10% -q 2>/dev/null || true
+/usr/bin/brightnessctl -d gmux_backlight set 10% -q 2>/dev/null || true
 
-start_service NetworkManager
-start_service t2fanrd
-
-# Restart audio
-/usr/local/bin/t2-start-audio.sh
-/usr/local/bin/t2-set-default-audio.sh
-
-# Turn on keyboard backlight
-/usr/local/bin/t2-fix-backlight.sh :white:kbd_backlight 10%
-
-if [ "$HAS_GMUX" = true ]; then
-    # Load Apple GMUX
-    load_mod apple_gmux
-    # Toggle DRM displays
-    /usr/local/bin/t2-drm-display.sh off
-    /usr/local/bin/t2-drm-display.sh on
-    # Correct GMUX backlight
-    /usr/local/bin/t2-fix-backlight.sh gmux_backlight 10%
-fi
-
-t2_log "$LABEL" "Resume complete"
+log "Resume complete"

@@ -1,5 +1,5 @@
 [Unit]
-Description=Suspend script for T2 MacBook
+Description=T2 suspend fix (custom)
 Before=sleep.target
 StopWhenUnneeded=yes
 

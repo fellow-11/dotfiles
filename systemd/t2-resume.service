@@ -1,5 +1,5 @@
 [Unit]
-Description=Resume script for T2 MacBook
+Description=T2 resume fix (custom)
 After=suspend.target hibernate.target hybrid-sleep.target suspend-then-hibernate.target
 
 [Service]
