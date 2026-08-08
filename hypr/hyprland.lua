@@ -62,7 +62,6 @@ hl.on("hyprland.start", function ()
     hl.exec_cmd("hyprpaper")
     hl.exec_cmd("waybar")
     hl.exec_cmd("swayosd-server")
-    hl.exec_cmd("hypridle")
     hl.exec_cmd("hyprlock")
 
     -- Launcher backend
@@ -388,17 +387,9 @@ hl.bind("SUPER + CTRL + V", hl.dsp.exec_cmd("walker -m clipboard"),    { descrip
 hl.bind("SUPER + K", hl.dsp.exec_cmd("/home/felix/.local/bin/keybindings"),     { description = "Show keybindings" })
  
 -- Screenshots
-hl.bind("SUPER + S", hl.dsp.exec_cmd([[
-    FILE=~/Pictures/Screenshots/$(date +%Y-%m-%d_%H-%M-%S).png && \
-    grimblast --freeze save area "$FILE" && \
-    [ "$(notify-send 'Screenshot Captured' 'Click to edit selection' -i "$FILE" --action='default=Edit')" = "default" ] && satty -f "$FILE"
-]]), { description = "Screenshot region" })
- 
-hl.bind("SUPER + SHIFT + S", hl.dsp.exec_cmd([[
-    FILE=~/Pictures/Screenshots/$(date +%Y-%m-%d_%H-%M-%S).png && \
-    grimblast save output "$FILE" && \
-    [ "$(notify-send 'Screen Captured' 'Click to edit capture' -i "$FILE" --action='default=Edit')" = "default" ] && satty -f "$FILE"
-]]), { description = "Screenshot screen" })
+hl.bind("SUPER + S", hl.dsp.exec_cmd("~/.local/bin/screenshot area"), { description = "Screenshot region" })
+hl.bind("SUPER + SHIFT + S", hl.dsp.exec_cmd("~/.local/bin/screenshot screen"), { description = "Screenshot all screens" })
+hl.bind("SUPER + ALT + S", hl.dsp.exec_cmd("~/.local/bin/screenshot active"), { description = "Screenshot active monitor" })
 
 -- Gamemode toggle
 hl.bind("SUPER + F12", hl.dsp.exec_cmd("/home/felix/.config/scripts/gamemode.sh"), { description = "Gamemode toggle" })
@@ -509,3 +500,14 @@ hl.window_rule({
   match = { class = "^(dev.felix.autoclicker)$" },
   float = true,
 })
+
+hl.window_rule({
+    name = "minecraft-pointer-lock",
+    match = { 
+        initial_class = "mcpelauncher-ui-qt", 
+        title = "Minecraft" 
+    },
+    stay_focused = true,
+    confine_pointer = true
+})
+
