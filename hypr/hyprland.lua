@@ -74,6 +74,7 @@ hl.on("hyprland.start", function ()
     hl.exec_cmd("steam")
     hl.exec_cmd("heroic")
     hl.exec_cmd("cider")
+    hl.exec_cmd("easyeffects")
 
 end)
 
@@ -293,6 +294,7 @@ hl.bind("SUPER + SPACE",       hl.dsp.exec_cmd(menu),                           
 hl.bind("SUPER + ALT + SPACE", hl.dsp.exec_cmd("~/.local/bin/sys-menu"),                           { description = "System menu" })
 hl.bind("F6", 		       hl.dsp.exec_cmd("~/.config/scripts/autoclicker-toggle.py --start"), { transparent = true, ignore_mods = true, description = "Start autoclicker (press)" })
 hl.bind("F6", 		       hl.dsp.exec_cmd("~/.config/scripts/autoclicker-toggle.py --stop"),  { release = true, transparent = true, ignore_mods = true, description = "Stop autoclicker (release)" })
+-- hl.bind("F6", 		       hl.dsp.exec_cmd("~/.config/scripts/autoclicker-toggle.py --toggle"), { transparent = true, ignore_mods = true, description = "Start/Stop autoclicker" })
 
 -- Windows
 local closeWindowBind = hl.bind("SUPER + W", hl.dsp.window.close(),        			     { description = "Close window" })
@@ -500,14 +502,3 @@ hl.window_rule({
   match = { class = "^(dev.felix.autoclicker)$" },
   float = true,
 })
-
-hl.window_rule({
-    name = "minecraft-pointer-lock",
-    match = { 
-        initial_class = "mcpelauncher-ui-qt", 
-        title = "Minecraft" 
-    },
-    stay_focused = true,
-    confine_pointer = true
-})
-

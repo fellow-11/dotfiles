@@ -3,12 +3,10 @@
 rm -f ~/.local/state/wireplumber/default-nodes
 systemctl --user restart wireplumber
 
-sleep 2
+sleep 1
 
-if ! wpctl set-default 37 2>/dev/null; then
-    wpctl set-default 38
-fi
+wpctl set-default 115
 
-sleep 2
+sleep 1
 
 systemctl --user restart wireplumber
