@@ -1,0 +1,6 @@
+[sie][DeepFilterNet#0]
+minProcessingThreshold=-15
+postFilterBeta=0.019999999552965164
+
+[sie][DeepFilterNet#1]
+postFilterBeta=0.019999999552965164
