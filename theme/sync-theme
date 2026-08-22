@@ -8,111 +8,112 @@ COLORS="$HOME/.config/theme/colors.sh"
 TEMPLATES="$HOME/.config/theme/templates"
 
 if [[ ! -f "$COLORS" ]]; then
-    echo "Error: $COLORS not found." >&2
-    exit 1
+  echo "Error: $COLORS not found." >&2
+  exit 1
 fi
 
 source "$COLORS"
 
 # ── Helpers ────────────────────────────────────────────────────────────────────
 
-strip() { echo "${1#\#}"; }  # remove leading #
+strip() { echo "${1#\#}"; } # remove leading #
 
 hex_to_rgb() {
-    local hex="${1#\#}"
-    printf "%d %d %d" \
-        "0x${hex:0:2}" \
-        "0x${hex:2:2}" \
-        "0x${hex:4:2}"
+  local hex="${1#\#}"
+  printf "%d %d %d" \
+    "0x${hex:0:2}" \
+    "0x${hex:2:2}" \
+    "0x${hex:4:2}"
 }
 
 render() {
-    local tmpl="$1" out="$2"
-    local content
-    content="$(cat "$tmpl")"
+  local tmpl="$1" out="$2"
+  local content
+  content="$(cat "$tmpl")"
 
-    # Strip versions (for Hyprland Lua 0xff prefix)
-    content="${content//\{\{BG_STRIP\}\}/$(strip "$BG")}"
-    content="${content//\{\{FG_STRIP\}\}/$(strip "$FG")}"
-    content="${content//\{\{ACCENT_STRIP\}\}/$(strip "$ACCENT")}"
-    content="${content//\{\{CURSOR_STRIP\}\}/$(strip "$CURSOR")}"
-    content="${content//\{\{MUTED_STRIP\}\}/$(strip "$MUTED")}"
-    content="${content//\{\{BORDER_STRIP\}\}/$(strip "$BORDER")}"
+  # Strip versions (for Hyprland Lua 0xff prefix)
+  content="${content//\{\{BG_STRIP\}\}/$(strip "$BG")}"
+  content="${content//\{\{FG_STRIP\}\}/$(strip "$FG")}"
+  content="${content//\{\{ACCENT_STRIP\}\}/$(strip "$ACCENT")}"
+  content="${content//\{\{CURSOR_STRIP\}\}/$(strip "$CURSOR")}"
+  content="${content//\{\{MUTED_STRIP\}\}/$(strip "$MUTED")}"
+  content="${content//\{\{BORDER_STRIP\}\}/$(strip "$BORDER")}"
 
-    # Bare hex (no #) for fastfetch color codes
-    content="${content//\{\{ACCENT_HEX\}\}/$(strip "$ACCENT")}"
-    content="${content//\{\{FG_HEX\}\}/$(strip "$FG")}"
-    content="${content//\{\{BG_HEX\}\}/$(strip "$BG")}"
+  # Bare hex (no #) for fastfetch color codes
+  content="${content//\{\{ACCENT_HEX\}\}/$(strip "$ACCENT")}"
+  content="${content//\{\{FG_HEX\}\}/$(strip "$FG")}"
+  content="${content//\{\{BG_HEX\}\}/$(strip "$BG")}"
 
-    # RGB channel splits
-    read -r BG_R BG_G BG_B         <<< "$(hex_to_rgb "$BG")"
-    read -r FG_R FG_G FG_B         <<< "$(hex_to_rgb "$FG")"
-    read -r ACCENT_R ACCENT_G ACCENT_B <<< "$(hex_to_rgb "$ACCENT")"
-    read -r BORDER_R BORDER_G BORDER_B <<< "$(hex_to_rgb "$BORDER")"
+  # RGB channel splits
+  read -r BG_R BG_G BG_B <<<"$(hex_to_rgb "$BG")"
+  read -r FG_R FG_G FG_B <<<"$(hex_to_rgb "$FG")"
+  read -r ACCENT_R ACCENT_G ACCENT_B <<<"$(hex_to_rgb "$ACCENT")"
+  read -r BORDER_R BORDER_G BORDER_B <<<"$(hex_to_rgb "$BORDER")"
 
-    content="${content//\{\{BG_R\}\}/$BG_R}"
-    content="${content//\{\{BG_G\}\}/$BG_G}"
-    content="${content//\{\{BG_B\}\}/$BG_B}"
-    content="${content//\{\{FG_R\}\}/$FG_R}"
-    content="${content//\{\{FG_G\}\}/$FG_G}"
-    content="${content//\{\{FG_B\}\}/$FG_B}"
-    content="${content//\{\{ACCENT_R\}\}/$ACCENT_R}"
-    content="${content//\{\{ACCENT_G\}\}/$ACCENT_G}"
-    content="${content//\{\{ACCENT_B\}\}/$ACCENT_B}"
-    content="${content//\{\{BORDER_R\}\}/$BORDER_R}"
-    content="${content//\{\{BORDER_G\}\}/$BORDER_G}"
-    content="${content//\{\{BORDER_B\}\}/$BORDER_B}"
+  content="${content//\{\{BG_R\}\}/$BG_R}"
+  content="${content//\{\{BG_G\}\}/$BG_G}"
+  content="${content//\{\{BG_B\}\}/$BG_B}"
+  content="${content//\{\{FG_R\}\}/$FG_R}"
+  content="${content//\{\{FG_G\}\}/$FG_G}"
+  content="${content//\{\{FG_B\}\}/$FG_B}"
+  content="${content//\{\{ACCENT_R\}\}/$ACCENT_R}"
+  content="${content//\{\{ACCENT_G\}\}/$ACCENT_G}"
+  content="${content//\{\{ACCENT_B\}\}/$ACCENT_B}"
+  content="${content//\{\{BORDER_R\}\}/$BORDER_R}"
+  content="${content//\{\{BORDER_G\}\}/$BORDER_G}"
+  content="${content//\{\{BORDER_B\}\}/$BORDER_B}"
 
-    # Plain hex values
-    content="${content//\{\{BG\}\}/$BG}"
-    content="${content//\{\{FG\}\}/$FG}"
-    content="${content//\{\{ACCENT\}\}/$ACCENT}"
-    content="${content//\{\{CURSOR\}\}/$CURSOR}"
-    content="${content//\{\{SELECTION_FG\}\}/$SELECTION_FG}"
-    content="${content//\{\{SELECTION_BG\}\}/$SELECTION_BG}"
-    content="${content//\{\{MUTED\}\}/$MUTED}"
-    content="${content//\{\{BORDER\}\}/$BORDER}"
+  # Plain hex values
+  content="${content//\{\{BG\}\}/$BG}"
+  content="${content//\{\{FG\}\}/$FG}"
+  content="${content//\{\{ACCENT\}\}/$ACCENT}"
+  content="${content//\{\{CURSOR\}\}/$CURSOR}"
+  content="${content//\{\{SELECTION_FG\}\}/$SELECTION_FG}"
+  content="${content//\{\{SELECTION_BG\}\}/$SELECTION_BG}"
+  content="${content//\{\{MUTED\}\}/$MUTED}"
+  content="${content//\{\{BORDER\}\}/$BORDER}"
 
-    # Terminal palette
-    for i in {0..15}; do
-        local var="COLOR$i"
-        content="${content//\{\{COLOR$i\}\}/${!var}}"
-    done
+  # Terminal palette
+  for i in {0..15}; do
+    local var="COLOR$i"
+    content="${content//\{\{COLOR$i\}\}/${!var}}"
+  done
 
-    mkdir -p "$(dirname "$out")"
-    printf '%s\n' "$content" > "$out"
-    echo "  ✓ $out"
+  mkdir -p "$(dirname "$out")"
+  printf '%s\n' "$content" >"$out"
+  echo "  ✓ $out"
 }
 
 # ── Render all targets ─────────────────────────────────────────────────────────
 
 echo "Syncing theme..."
 
-render "$TEMPLATES/alacritty-colors.toml"    "$HOME/.config/alacritty/colors.toml"
-render "$TEMPLATES/mako.config"               "$HOME/.config/mako/config"
-render "$TEMPLATES/waybar-colors.css"         "$HOME/.config/waybar/colors.css"
-render "$TEMPLATES/hyprland-colors.lua"       "$HOME/.config/hypr/colors.lua"
-render "$TEMPLATES/hyprlock.conf"             "$HOME/.config/hypr/hyprlock.conf"
-render "$TEMPLATES/wlogout.css"               "$HOME/.config/wlogout/style.css"
-render "$TEMPLATES/ghostty-colors.ghostty"    "$HOME/.config/ghostty/colors.ghostty"
-render "$TEMPLATES/btop.theme"                "$HOME/.config/btop/themes/custom.theme"
-render "$TEMPLATES/fastfetch.jsonc"           "$HOME/.config/fastfetch/config.jsonc"
-render "$TEMPLATES/nvim-custom.lua"           "$HOME/.config/nvim/colors/custom.lua"
-render "$TEMPLATES/fzf-bat.zsh"               "$HOME/.config/theme/fzf-bat.zsh"
-render "$TEMPLATES/bat-custom.tmTheme"        "$(bat --config-dir 2>/dev/null || echo "$HOME/.config/bat")/themes/custom.tmTheme"
-render "$TEMPLATES/cider-cli-colors.css"      "$HOME/.config/sh.cider.genten/themes/cider-cli/colors.css"
+render "$TEMPLATES/alacritty-colors.toml" "$HOME/.config/alacritty/colors.toml"
+render "$TEMPLATES/mako.config" "$HOME/.config/mako/config"
+render "$TEMPLATES/waybar-colors.css" "$HOME/.config/waybar/colors.css"
+render "$TEMPLATES/hyprland-colors.lua" "$HOME/.config/hypr/colors.lua"
+render "$TEMPLATES/hyprlock.conf" "$HOME/.config/hypr/hyprlock.conf"
+render "$TEMPLATES/wlogout.css" "$HOME/.config/wlogout/style.css"
+render "$TEMPLATES/ghostty-colors.ghostty" "$HOME/.config/ghostty/colors.ghostty"
+render "$TEMPLATES/btop.theme" "$HOME/.config/btop/themes/custom.theme"
+render "$TEMPLATES/fastfetch.jsonc" "$HOME/.config/fastfetch/config.jsonc"
+render "$TEMPLATES/nvim-custom.lua" "$HOME/.config/nvim/colors/custom.lua"
+render "$TEMPLATES/nvim-theme-plugin.lua" "$HOME/.config/nvim/lua/plugins/theme.lua"
+render "$TEMPLATES/fzf-bat.zsh" "$HOME/.config/theme/fzf-bat.zsh"
+render "$TEMPLATES/bat-custom.tmTheme" "$(bat --config-dir 2>/dev/null || echo "$HOME/.config/bat")/themes/custom.tmTheme"
+render "$TEMPLATES/cider-cli-colors.css" "$HOME/.config/sh.cider.genten/themes/cider-cli/colors.css"
 render "$TEMPLATES/autoclicker-gui-config.css" "$HOME/.config/autoclicker/gui-config.css"
 
 # nvim init.lua — only write if empty/missing
 if [[ ! -s "$HOME/.config/nvim/init.lua" ]]; then
-    render "$TEMPLATES/nvim-init.lua" "$HOME/.config/nvim/init.lua"
+  render "$TEMPLATES/nvim-init.lua" "$HOME/.config/nvim/init.lua"
 fi
 
 # ── Post-render steps ──────────────────────────────────────────────────────────
 
 # Rebuild bat theme cache
 if command -v bat &>/dev/null; then
-    bat cache --build &>/dev/null && echo "  ✓ bat cache rebuilt"
+  bat cache --build &>/dev/null && echo "  ✓ bat cache rebuilt"
 fi
 
 # ── Reload running apps ────────────────────────────────────────────────────────
@@ -120,24 +121,24 @@ fi
 echo "Reloading apps..."
 
 if pgrep -x waybar &>/dev/null; then
-    pkill -SIGUSR2 waybar && echo "  ✓ waybar reloaded"
+  pkill -SIGUSR2 waybar && echo "  ✓ waybar reloaded"
 fi
 
 if pgrep -x mako &>/dev/null; then
-    makoctl reload && echo "  ✓ mako reloaded"
+  makoctl reload && echo "  ✓ mako reloaded"
 fi
 
 if command -v hyprctl &>/dev/null; then
-    hyprctl reload &>/dev/null && echo "  ✓ hyprland reloaded"
+  hyprctl reload &>/dev/null && echo "  ✓ hyprland reloaded"
 fi
 
 # Update Cider accent color
 if [[ -f "$HOME/.config/sh.cider.genten/spa-config.yml" ]]; then
-    sed -i "s/customAccentColorValue: \"#[0-9a-fA-F]*\"/customAccentColorValue: \"$ACCENT\"/" \
-        "$HOME/.config/sh.cider.genten/spa-config.yml"
-    sed -i "s/useSystemAccentColor: true/useSystemAccentColor: false/" \
-        "$HOME/.config/sh.cider.genten/spa-config.yml"
-    echo "  ✓ cider accent updated"
+  sed -i "s/customAccentColorValue: \"#[0-9a-fA-F]*\"/customAccentColorValue: \"$ACCENT\"/" \
+    "$HOME/.config/sh.cider.genten/spa-config.yml"
+  sed -i "s/useSystemAccentColor: true/useSystemAccentColor: false/" \
+    "$HOME/.config/sh.cider.genten/spa-config.yml"
+  echo "  ✓ cider accent updated"
 fi
 
 echo "Done."

@@ -459,17 +459,12 @@ hl.bind("SUPER + S", hl.dsp.exec_cmd("~/.local/bin/screenshot area"), { descript
 hl.bind(
 	"SUPER + SHIFT + S",
 	hl.dsp.exec_cmd("~/.local/bin/screenshot screen"),
-	{ description = "Screenshot all screens" }
+	{ description = "Screenshot all monitors" }
 )
 hl.bind(
 	"SUPER + ALT + S",
-	hl.dsp.exec_cmd("~/.local/bin/screenshot active"),
+	hl.dsp.exec_cmd("~/.local/bin/screenshot output"),
 	{ description = "Screenshot active monitor" }
-)
-hl.bind(
-	"SUPER + F9",
-	hl.dsp.exec_cmd("/home/felix/.local/bin/screenshot fixed"),
-	{ description = "Screenshot fixed region" }
 )
 
 -- Gamemode toggle
