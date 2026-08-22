@@ -1,6 +1,10 @@
+<div align="center">
+
 # 🏠 My Dotfiles
 
 [**Screenshots**](#-screenshots) • [**Components**](#-components) • [**Theming**](#-theming) • [**T2 MacBook Notes**](#-t2-macbook-notes) • [**Setup**](#-setup)
+
+</div>
 
 ---
 
@@ -22,12 +26,13 @@
 <img src="screenshots/sysmenu1.png" alt="System Menu" width="600"/>
 <img src="screenshots/sysmenu2.png" alt="System Menu - Learn" width="600"/>
 <img src="screenshots/sysmenu3.png" alt="System Menu - Install" width="600"/>
+<img src="screenshots/sysmenu4.png" alt="System Menu - Workspaces" width="600"/>
 
 ### Terminal (Ghostty)
-<img src="screenshots/terminal-ghostty.png" alt="Ghostty" width="600"/>
+<img src="screenshots/ghostty.png" alt="Ghostty" width="600"/>
 
 ### Text Editing (Neovim)
-<img src="screenshots/editor-nvim.png" alt="Neovim" width="600"/>
+<img src="screenshots/nvim.png" alt="Neovim" width="600"/>
 
 ### Waybar
 <img src="screenshots/waybar.png" alt="Waybar" width="600"/>
