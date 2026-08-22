@@ -10,7 +10,7 @@ cp -r ~/.config/waybar/*                 "$DOTFILES/waybar/"
 cp -r ~/.config/walker/*                 "$DOTFILES/walker/"
 cp -r ~/.config/theme/*                  "$DOTFILES/theme/"
 cp -r ~/.config/sh.cider.genten/themes/* "$DOTFILES/theme/cider/" 2>/dev/null
-cp -r ~/.config/btop/*        		 "$DOTFILES/btop/"
+cp -r ~/.config/btop/*                   "$DOTFILES/btop/"
 cp -r ~/.config/nvim/*                   "$DOTFILES/nvim/"        2>/dev/null
 cp -r ~/.config/ghostty/*                "$DOTFILES/ghostty/"     2>/dev/null
 cp -r ~/.config/fastfetch/*              "$DOTFILES/fastfetch/"   2>/dev/null
@@ -25,6 +25,7 @@ cp -r ~/.config/swayosd/*                "$DOTFILES/swayosd/"     2>/dev/null
 cp -r ~/.config/wlogout/*                "$DOTFILES/wlogout/"     2>/dev/null
 cp -r ~/.config/screensaver/*            "$DOTFILES/screensaver/" 2>/dev/null
 cp -r ~/.config/scripts/*                "$DOTFILES/scripts/"     2>/dev/null
+cp -r ~/.config/easyeffects              "$DOTFILES/easyeffects"
 
 # Shell
 cp ~/.zshrc "$DOTFILES/zsh/"
@@ -34,23 +35,17 @@ cp -r ~/.local/bin/*         "$DOTFILES/scripts/" 2>/dev/null
 cp -r ~/.local/share/fonts/* "$DOTFILES/fonts/"   2>/dev/null
 
 # System
-cp /usr/local/bin/t2-suspend.sh      "$DOTFILES/system/"
-cp /usr/local/bin/t2-resume.sh       "$DOTFILES/system/"
-cp /etc/t2-suspend-fix/hardware.conf "$DOTFILES/system/"
-sudo cp /boot/limine.conf            "$DOTFILES/system/"
-sudo chown "$USER:$USER"             "$DOTFILES/system/limine.conf"
-cp -r ~/.config/pipewire/*           "$DOTFILES/pipewire/"
+sudo cp /boot/limine.conf  "$DOTFILES/system/"
+sudo chown "$USER:$USER"   "$DOTFILES/system/limine.conf"
+cp -r ~/.config/pipewire/* "$DOTFILES/pipewire/"
 
 # Systemd
-sudo cp /etc/systemd/sleep.conf                          "$DOTFILES/systemd/"
-sudo cp /etc/systemd/logind.conf                         "$DOTFILES/systemd/"
-sudo cp /etc/systemd/timesyncd.conf                      "$DOTFILES/systemd/"
-sudo cp /etc/systemd/journald.conf                       "$DOTFILES/systemd/"
-sudo cp /etc/systemd/system/t2-suspend.service           "$DOTFILES/systemd/"
-sudo cp /etc/systemd/system/t2-resume.service            "$DOTFILES/systemd/"
-sudo cp /etc/systemd/system/t2-fix-kbd-backlight.service "$DOTFILES/systemd/"
-sudo cp /etc/systemd/system/reset-audio.service    	 "$DOTFILES/systemd/"
-sudo chown -R "$USER:$USER"                              "$DOTFILES/systemd/"
+sudo cp /etc/systemd/sleep.conf               "$DOTFILES/systemd/"
+sudo cp /etc/systemd/logind.conf              "$DOTFILES/systemd/"
+sudo cp /etc/systemd/timesyncd.conf           "$DOTFILES/systemd/"
+sudo cp /etc/systemd/journald.conf            "$DOTFILES/systemd/"
+sudo cp /etc/systemd/system/fix-audio.service "$DOTFILES/systemd/"
+sudo chown -R "$USER:$USER"                   "$DOTFILES/systemd/"
 
 # Wallpapers
 cp -r ~/.local/share/wallpapers/custom-wallpapers/* "$DOTFILES/wallpapers/" 2>/dev/null

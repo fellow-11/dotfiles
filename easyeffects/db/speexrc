@@ -1,0 +1,10 @@
+[sie][Speex#0]
+enableVad=true
+noiseSuppression=-100
+vadProbabilityContinue=95
+vadProbabilityStart=98
+
+[sie][Speex#1]
+enableVad=true
+vadProbabilityContinue=95
+vadProbabilityStart=98

@@ -1,0 +1,26 @@
+[EffectsPipelines]
+processAllOutputs=false
+
+[Presets]
+lastLoadedOutputPreset=Bass Boosted
+
+[StreamInputs]
+inputDevice=alsa_input.pci-0000_04_00.3.BuiltinMic
+plugins=autogain#0,speex#0,deepfilternet#0,pitch#0,autotune#0
+useDefaultInputDevice=false
+visiblePage=pluginsPage
+visiblePlugin=autogain#0
+
+[StreamOutputs]
+blocklist=Zen
+mostUsedPresets=Advanced Auto Gain,Bass Boosted
+outputDevice=bluez_output.02_1A_01_14_DE_73.1
+showBlocklistedApps=true
+usedPresets=Advanced Auto Gain:4,Bass Boosted:3
+
+[Window]
+autostartOnLogin=true
+height=911
+noWindowAfterStarting=true
+visiblePage=inputPage
+width=1516
