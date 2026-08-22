@@ -5,53 +5,50 @@ DOTFILES="$HOME/dotfiles"
 echo "Saving dotfiles..."
 
 # ~/.config dirs
-cp -r ~/.config/hypr/*                   "$DOTFILES/hypr/"
-cp -r ~/.config/waybar/*                 "$DOTFILES/waybar/"
-cp -r ~/.config/walker/*                 "$DOTFILES/walker/"
-cp -r ~/.config/theme/*                  "$DOTFILES/theme/"
+cp -r ~/.config/hypr/* "$DOTFILES/hypr/"
+cp -r ~/.config/waybar/* "$DOTFILES/waybar/"
+cp -r ~/.config/walker/* "$DOTFILES/walker/"
+cp -r ~/.config/theme/* "$DOTFILES/theme/"
 cp -r ~/.config/sh.cider.genten/themes/* "$DOTFILES/theme/cider/" 2>/dev/null
-cp -r ~/.config/btop/*                   "$DOTFILES/btop/"
-cp -r ~/.config/nvim/*                   "$DOTFILES/nvim/"        2>/dev/null
-cp -r ~/.config/ghostty/*                "$DOTFILES/ghostty/"     2>/dev/null
-cp -r ~/.config/fastfetch/*              "$DOTFILES/fastfetch/"   2>/dev/null
-cp -r ~/.config/gtk-3.0/*                "$DOTFILES/gtk-3.0/"     2>/dev/null
-cp -r ~/.config/gtk-4.0/*                "$DOTFILES/gtk-4.0/"     2>/dev/null
-cp -r ~/.config/wireplumber/*            "$DOTFILES/wireplumber/" 2>/dev/null
-cp -r ~/.config/micro/*                  "$DOTFILES/micro/"       2>/dev/null
-cp -r ~/.config/wiremix/*                "$DOTFILES/wiremix/"     2>/dev/null
-cp -r ~/.config/magicpods/*              "$DOTFILES/magicpods/"   2>/dev/null
-cp -r ~/.config/mako/*                   "$DOTFILES/mako/"        2>/dev/null
-cp -r ~/.config/swayosd/*                "$DOTFILES/swayosd/"     2>/dev/null
-cp -r ~/.config/wlogout/*                "$DOTFILES/wlogout/"     2>/dev/null
-cp -r ~/.config/screensaver/*            "$DOTFILES/screensaver/" 2>/dev/null
-cp -r ~/.config/scripts/*                "$DOTFILES/scripts/"     2>/dev/null
-cp -r ~/.config/easyeffects              "$DOTFILES/easyeffects"
+cp -r ~/.config/btop/* "$DOTFILES/btop/"
+cp -r ~/.config/nvim/* "$DOTFILES/nvim/" 2>/dev/null
+cp -r ~/.config/ghostty/* "$DOTFILES/ghostty/" 2>/dev/null
+cp -r ~/.config/fastfetch/* "$DOTFILES/fastfetch/" 2>/dev/null
+cp -r ~/.config/gtk-3.0/* "$DOTFILES/gtk-3.0/" 2>/dev/null
+cp -r ~/.config/gtk-4.0/* "$DOTFILES/gtk-4.0/" 2>/dev/null
+cp -r ~/.config/wireplumber/* "$DOTFILES/wireplumber/" 2>/dev/null
+cp -r ~/.config/micro/* "$DOTFILES/micro/" 2>/dev/null
+cp -r ~/.config/wiremix/* "$DOTFILES/wiremix/" 2>/dev/null
+cp -r ~/.config/magicpods/* "$DOTFILES/magicpods/" 2>/dev/null
+cp -r ~/.config/mako/* "$DOTFILES/mako/" 2>/dev/null
+cp -r ~/.config/swayosd/* "$DOTFILES/swayosd/" 2>/dev/null
+cp -r ~/.config/wlogout/* "$DOTFILES/wlogout/" 2>/dev/null
+cp -r ~/.config/screensaver/* "$DOTFILES/screensaver/" 2>/dev/null
+cp -r ~/.config/scripts/* "$DOTFILES/scripts/" 2>/dev/null
+cp -r ~/.config/easyeffects "$DOTFILES/easyeffects"
 
 # Shell
 cp ~/.zshrc "$DOTFILES/zsh/"
 
 # ~/.local/
-cp -r ~/.local/bin/*         "$DOTFILES/scripts/" 2>/dev/null
-cp -r ~/.local/share/fonts/* "$DOTFILES/fonts/"   2>/dev/null
+cp -r ~/.local/bin/* "$DOTFILES/scripts/" 2>/dev/null
+cp -r ~/.local/share/fonts/* "$DOTFILES/fonts/" 2>/dev/null
 
 # System
-sudo cp /boot/limine.conf  "$DOTFILES/system/"
-sudo chown "$USER:$USER"   "$DOTFILES/system/limine.conf"
+sudo cp /boot/limine.conf "$DOTFILES/system/"
+sudo chown "$USER:$USER" "$DOTFILES/system/limine.conf"
 cp -r ~/.config/pipewire/* "$DOTFILES/pipewire/"
 
 # Systemd
-sudo cp /etc/systemd/sleep.conf               "$DOTFILES/systemd/"
-sudo cp /etc/systemd/logind.conf              "$DOTFILES/systemd/"
-sudo cp /etc/systemd/timesyncd.conf           "$DOTFILES/systemd/"
-sudo cp /etc/systemd/journald.conf            "$DOTFILES/systemd/"
+sudo cp /etc/systemd/sleep.conf "$DOTFILES/systemd/"
+sudo cp /etc/systemd/logind.conf "$DOTFILES/systemd/"
+sudo cp /etc/systemd/timesyncd.conf "$DOTFILES/systemd/"
+sudo cp /etc/systemd/journald.conf "$DOTFILES/systemd/"
 sudo cp /etc/systemd/system/fix-audio.service "$DOTFILES/systemd/"
-sudo chown -R "$USER:$USER"                   "$DOTFILES/systemd/"
+sudo chown -R "$USER:$USER" "$DOTFILES/systemd/"
 
 # Wallpapers
 cp -r ~/.local/share/wallpapers/custom-wallpapers/* "$DOTFILES/wallpapers/" 2>/dev/null
-
-# Screenshots/README
-cp -r ~/dotfiles-screenshots/* "$DOTFILES/screenshots/"
 
 # Commit and push
 cd "$DOTFILES"
