@@ -16,29 +16,29 @@ present_terminal() {
 
 show_main_menu() {
   case $(menu "Go" "󰀻  Apps\n󰧑  Learn\n󰄀  Capture\n󱓞  Toggle\n  Style\n󰒓  Setup\n  Configs\n󰉉  Install\n󰭌  Remove\n  Update\n󱂬  Workspaces\n⏻  System") in
-  *Apps*)    walker -p "Launch…" ;;
-  *Learn*)   show_learn_menu ;;
+  *Apps*) walker -p "Launch…" ;;
+  *Learn*) show_learn_menu ;;
   *Capture*) show_capture_menu ;;
-  *Toggle*)  show_toggle_menu ;;
-  *Style*)   show_style_menu ;;
-  *Setup*)   show_setup_menu ;;
+  *Toggle*) show_toggle_menu ;;
+  *Style*) show_style_menu ;;
+  *Setup*) show_setup_menu ;;
   *Configs*) show_configs_menu ;;
   *Install*) show_install_menu ;;
-  *Remove*)  show_remove_menu ;;
-  *Update*)  show_update_menu ;;
+  *Remove*) show_remove_menu ;;
+  *Update*) show_update_menu ;;
   *Workspaces*) show_workspaces_menu ;;
-  *System*)  show_system_menu ;;
+  *System*) show_system_menu ;;
   esac
 }
 
 show_learn_menu() {
   case $(menu "Learn" "  Keybindings\n  CachyOS Wiki\n  Hyprland Wiki\n󰣇  Arch Wiki\n  Neovim Docs\n󱆃  Bash Manual") in
   *Keybindings*) /home/felix/.local/bin/keybindings ;;
-  *CachyOS*)     xdg-open https://wiki.cachyos.org/ ;;
-  *Hyprland*)    xdg-open https://wiki.hypr.land ;;
-  *Arch*)        xdg-open https://wiki.archlinux.org ;;
-  *Neovim*)      xdg-open https://neovim.io/doc/ ;;
-  *Bash*)        xdg-open https://www.gnu.org/software/bash/manual/ ;;
+  *CachyOS*) xdg-open https://wiki.cachyos.org/ ;;
+  *Hyprland*) xdg-open https://wiki.hypr.land ;;
+  *Arch*) xdg-open https://wiki.archlinux.org ;;
+  *Neovim*) xdg-open https://neovim.io/doc/ ;;
+  *Bash*) xdg-open https://www.gnu.org/software/bash/manual/ ;;
   *) show_main_menu ;;
   esac
 }
@@ -46,9 +46,9 @@ show_learn_menu() {
 show_capture_menu() {
   case $(menu "Capture" "󰹑  Screenshot\n  Screen Recording\n󰈊  Color Picker\n󱄺  OCR Text") in
   *Screenshot*) grimblast copysave area ;;
-  *Recording*)  wf-recorder -f ~/Videos/recording.mp4 ;;
-  *Color*)      hyprpicker -a ;;
-  *OCR*)        grim -g "$(slurp)" - | tesseract stdin stdout | wl-copy ;;
+  *Recording*) wf-recorder -f ~/Videos/recording.mp4 ;;
+  *Color*) hyprpicker -a ;;
+  *OCR*) grim -g "$(slurp)" - | tesseract stdin stdout | wl-copy ;;
   *) show_main_menu ;;
   esac
 }
@@ -57,7 +57,7 @@ show_toggle_menu() {
   case $(menu "Toggle" "󰍜  Waybar\n󱩫  Screen Shader\n󰔟  Idle Timeout\n  Hardware") in
   *Waybar*) pkill -USR1 waybar ;;
   *Shader*) pkill wlsunset || wlsunset -t 4500 ;;
-  *Idle*)   pkill hypridle || hypridle ;;
+  *Idle*) pkill hypridle || hypridle ;;
   *Hardware*) show_hardware_menu ;;
   *) show_main_menu ;;
   esac
@@ -93,11 +93,11 @@ toggle_trackpad() {
 
 show_style_menu() {
   case $(menu "Style" "󰸌  Edit Theme\n󰛖  Font\n󰸉  Background\n󰍜  Waybar Position\n  Config") in
-  "*Edit Theme*")   ghostty -e bash -c 'nvim ~/.config/theme/colors.sh && sync-theme' ;;
-  *Font*)         show_font_menu ;;
-  *Background*)   show_background_menu ;;
-  *Waybar*)       show_waybar_position_menu ;;
-  *Config*)       ghostty -e nvim /home/felix/.config/hypr/hyprland.lua ;;
+  "*Edit Theme*") ghostty -e bash -c 'nvim ~/.config/theme/colors.sh && sync-theme' ;;
+  *Font*) show_font_menu ;;
+  *Background*) show_background_menu ;;
+  *Waybar*) show_waybar_position_menu ;;
+  *Config*) ghostty -e nvim /home/felix/.config/hypr/hyprland.lua ;;
   *) show_main_menu ;;
   esac
 }
@@ -110,7 +110,9 @@ show_font_menu() {
   if [[ -n $chosen ]]; then
     sed -i "s/font-family = .*/font-family = \"$chosen\"/" ~/.config/ghostty/config.ghostty
     sed -i "s/font-family: .*/font-family: '$chosen';/g" ~/.config/waybar/style.css
-    pkill waybar; waybar & disown
+    pkill waybar
+    waybar &
+    disown
     notify-send -u low "Font set to $chosen"
   else
     show_style_menu
@@ -122,7 +124,11 @@ show_background_menu() {
   chosen=$(find ~/.local/share/wallpapers/custom-wallpapers/ -type f 2>/dev/null | walker --dmenu --width 500 --minheight 1 --maxheight 630 -p "Wallpaper…" 2>/dev/null)
   if [[ -n $chosen ]]; then
     sed -i "s|path = .*|path = $chosen|" ~/.config/hypr/hyprpaper.conf
-    hyprctl hyprpaper wallpaper ",$chosen" 2>/dev/null || { pkill hyprpaper; hyprpaper & disown; }
+    hyprctl hyprpaper wallpaper ",$chosen" 2>/dev/null || {
+      pkill hyprpaper
+      hyprpaper &
+      disown
+    }
     notify-send -u low "Wallpaper set"
   else
     show_style_menu
@@ -133,18 +139,24 @@ show_waybar_position_menu() {
   case $(menu "Waybar Position" "󰁝  Top\n󰁅  Bottom") in
   *Top*)
     sed -i 's/"position": "bottom"/"position": "top"/' ~/.config/waybar/config.jsonc
-    pkill waybar; waybar & disown ;;
+    pkill waybar
+    waybar &
+    disown
+    ;;
   *Bottom*)
     sed -i 's/"position": "top"/"position": "bottom"/' ~/.config/waybar/config.jsonc
-    pkill waybar; waybar & disown ;;
+    pkill waybar
+    waybar &
+    disown
+    ;;
   *) show_style_menu ;;
   esac
 }
 
 show_setup_menu() {
   case $(menu "Setup" "  Audio\n  Wi-Fi\n󰂯  Bluetooth\n󰈆  Default Apps") in
-  *Audio*)   ghostty -e pulsemixer ;;
-  *Wi-Fi*)   ghostty -e nmtui ;;
+  *Audio*) ghostty -e pulsemixer ;;
+  *Wi-Fi*) ghostty -e nmtui ;;
   *Bluetooth*) ghostty -e bluetuith ;;
   *Default*) ghostty -e nvim ~/.config/mimeapps.list ;;
   *) show_main_menu ;;
@@ -154,11 +166,11 @@ show_setup_menu() {
 show_configs_menu() {
   case $(menu "Configs" "  Hyprland\n󰍜  Walker\n󰍜  Waybar\n󰎟  Mako\n  Ghostty\n󰮫  Sys Menu\n  Dotfiles") in
   *Hyprland*) ghostty -e nvim ~/.config/hypr/hyprland.lua ;;
-  *Walker*)   ghostty -e nvim ~/.config/walker/config.toml ;;
-  *Waybar*)   ghostty -e nvim ~/.config/waybar/config.jsonc ;;
-  *Mako*)     ghostty -e nvim ~/.config/mako/config ;;
-  *Ghostty*)  ghostty -e nvim ~/.config/ghostty/config.ghostty ;;
-  *Sys*)      ghostty -e nvim ~/.local/bin/sys-menu ;;
+  *Walker*) ghostty -e nvim ~/.config/walker/config.toml ;;
+  *Waybar*) ghostty -e nvim ~/.config/waybar/config.jsonc ;;
+  *Mako*) ghostty -e nvim ~/.config/mako/config ;;
+  *Ghostty*) ghostty -e nvim ~/.config/ghostty/config.ghostty ;;
+  *Sys*) ghostty -e nvim ~/.local/bin/sys-menu ;;
   *Dotfiles*) show_dotfiles_menu ;;
   *) show_main_menu ;;
   esac
@@ -174,12 +186,12 @@ show_dotfiles_menu() {
 
 show_install_menu() {
   case $(menu "Install" "󰣇  Package\n󰣇  AUR\n󰖟  Browser\n  Terminal\n󰵮  Development\n󰖟  Web App") in
-  *Package*)     show_pkg_install ;;
-  *AUR*)         show_aur_install ;;
-  *Browser*)     show_install_browser_menu ;;
-  *Terminal*)    show_install_terminal_menu ;;
+  *Package*) show_pkg_install ;;
+  *AUR*) show_aur_install ;;
+  *Browser*) show_install_browser_menu ;;
+  *Terminal*) show_install_terminal_menu ;;
   *Development*) show_install_dev_menu ;;
-  *"Web App"*)   install_webapp ;;
+  *"Web App"*) install_webapp ;;
   *) show_main_menu ;;
   esac
 }
@@ -187,9 +199,15 @@ show_install_menu() {
 install_webapp() {
   local name url slug domain profile_dir icon_dir icon_path
   name=$(menu "Web App Name" "")
-  [[ -z $name ]] && { show_install_menu; return; }
+  [[ -z $name ]] && {
+    show_install_menu
+    return
+  }
   url=$(menu "Web App URL" "")
-  [[ -z $url ]] && { show_install_menu; return; }
+  [[ -z $url ]] && {
+    show_install_menu
+    return
+  }
   [[ $url != http://* && $url != https://* ]] && url="https://$url"
   slug=$(echo "$name" | tr "[:upper:] " "[:lower:]-" | tr -cd "[:alnum:]-")
   domain=$(echo "$url" | sed -E "s#^https?://##; s#/.*##")
@@ -198,7 +216,7 @@ install_webapp() {
   icon_path="${icon_dir}/${slug}.png"
   mkdir -p "$profile_dir" "$icon_dir"
   curl -sL "https://www.google.com/s2/favicons?sz=128&domain=${domain}" -o "$icon_path"
-  cat > "/home/felix/.local/share/applications/webapp-${slug}.desktop" << DESKTOP
+  cat >"/home/felix/.local/share/applications/webapp-${slug}.desktop" <<DESKTOP
 [Desktop Entry]
 Name=$name
 Exec=chromium --app="$url" --user-data-dir="$profile_dir" --class=webapp-${slug}
@@ -248,9 +266,9 @@ show_aur_install() {
 
 show_install_browser_menu() {
   case $(menu "Install Browser" "󰖟  Zen\n󰈹  Firefox\n  Chrome") in
-  *Zen*)     present_terminal "yay -S zen-browser-bin" ;;
+  *Zen*) present_terminal "yay -S zen-browser-bin" ;;
   *Firefox*) present_terminal "sudo pacman -S firefox" ;;
-  *Chrome*)  present_terminal "yay -S google-chrome" ;;
+  *Chrome*) present_terminal "yay -S google-chrome" ;;
   *) show_install_menu ;;
   esac
 }
@@ -258,18 +276,18 @@ show_install_browser_menu() {
 show_install_terminal_menu() {
   case $(menu "Install Terminal" "  Ghostty\n  Kitty\n  Foot") in
   *Ghostty*) present_terminal "yay -S ghostty" ;;
-  *Kitty*)   present_terminal "sudo pacman -S kitty" ;;
-  *Foot*)    present_terminal "sudo pacman -S foot" ;;
+  *Kitty*) present_terminal "sudo pacman -S kitty" ;;
+  *Foot*) present_terminal "sudo pacman -S foot" ;;
   *) show_install_menu ;;
   esac
 }
 
 show_install_dev_menu() {
   case $(menu "Install Dev" "  Node.js\n  Python\n  Rust\n󰟓  Go\n  Docker") in
-  *Node*)   present_terminal "sudo pacman -S nodejs npm" ;;
+  *Node*) present_terminal "sudo pacman -S nodejs npm" ;;
   *Python*) present_terminal "sudo pacman -S python python-pipx" ;;
-  *Rust*)   present_terminal "sudo pacman -S rustup && rustup default stable" ;;
-  *Go*)     present_terminal "sudo pacman -S go" ;;
+  *Rust*) present_terminal "sudo pacman -S rustup && rustup default stable" ;;
+  *Go*) present_terminal "sudo pacman -S go" ;;
   *Docker*) present_terminal "sudo pacman -S docker docker-compose && sudo systemctl enable --now docker" ;;
   *) show_install_menu ;;
   esac
@@ -277,7 +295,7 @@ show_install_dev_menu() {
 
 show_remove_menu() {
   case $(menu "Remove" "  Package\n󰖟  Web App") in
-  *Package*)   remove_pkg ;;
+  *Package*) remove_pkg ;;
   *"Web App"*) remove_webapp ;;
   *) show_main_menu ;;
   esac
@@ -311,7 +329,10 @@ remove_webapp() {
   fi
   opts=$(for f in "${files[@]}"; do grep "^Name=" "$f" | sed "s/^Name=//"; done)
   chosen=$(menu "Remove Web App" "$opts")
-  [[ -z $chosen ]] && { show_remove_menu; return; }
+  [[ -z $chosen ]] && {
+    show_remove_menu
+    return
+  }
   for f in "${files[@]}"; do
     if [[ $(grep "^Name=" "$f" | sed "s/^Name=//") == "$chosen" ]]; then
       local wm_slug
@@ -352,8 +373,8 @@ ws_id_from_label() {
 }
 
 declare -A MONITOR_NAMES=(
-  [eDP-1]="Laptop"
-  [DP-2]="Monitor"
+  [eDP - 1]="Laptop"
+  [DP - 2]="Monitor"
 )
 
 monitor_label() {
@@ -366,11 +387,11 @@ monitor_name_from_label() {
 }
 
 show_workspaces_menu() {
- case $(menu "Workspaces" "󰒓  Presets\n󰓡  Swap Workspaces\n󰆾  Move Workspace") in
+  case $(menu "Workspaces" "󰒓  Presets\n󰓡  Swap Workspaces\n󰆾  Move Workspace") in
   *Presets*) show_workspaces_presets ;;
-  *Swap*)    show_workspaces_swap ;;
-  *Move*)    show_workspaces_move ;;
-  *)         show_main_menu ;;
+  *Swap*) show_workspaces_swap ;;
+  *Move*) show_workspaces_move ;;
+  *) show_main_menu ;;
   esac
 }
 
@@ -409,7 +430,10 @@ show_workspaces_swap() {
   label_list=$(for id in $ws_list; do ws_label "$id"; done)
 
   ws1_choice=$(menu "Select first workspace" "$label_list")
-  [[ -z $ws1_choice ]] && { show_workspaces_menu; return; }
+  [[ -z $ws1_choice ]] && {
+    show_workspaces_menu
+    return
+  }
   ws1=$(ws_id_from_label "$ws1_choice")
 
   mon1=$(hyprctl workspaces -j | jq -r ".[] | select(.id == $ws1) | .monitor")
@@ -424,7 +448,10 @@ show_workspaces_swap() {
 
   label_list=$(for id in $allowed_ws; do ws_label "$id"; done)
   ws2_choice=$(menu "Swap $(ws_label "$ws1") with" "$label_list")
-  [[ -z $ws2_choice ]] && { show_workspaces_menu; return; }
+  [[ -z $ws2_choice ]] && {
+    show_workspaces_menu
+    return
+  }
   ws2=$(ws_id_from_label "$ws2_choice")
 
   mon2=$(hyprctl workspaces -j | jq -r ".[] | select(.id == $ws2) | .monitor")
@@ -472,12 +499,12 @@ show_monitor_menu_for_workspace_move() {
 show_system_menu() {
   case $(menu "System" "  Screensaver\n  Lock\n󰍃  Logout\n󰒲  Suspend\n  Reboot\n󰐥  Shutdown") in
   *Screensaver*) /home/felix/.config/screensaver/omarchy-launch-screensaver ;;
-  *Lock*)        hyprlock ;;
-  *Logout*)      confirm && hyprctl dispatch exit ;;
-  *Suspend*)     systemctl suspend ;;
-  *Reboot*)      confirm && systemctl reboot ;;
-  *Shutdown*)    confirm && systemctl poweroff ;;
-  *)             show_main_menu ;;
+  *Lock*) hyprlock ;;
+  *Logout*) confirm && hyprctl dispatch exit ;;
+  *Suspend*) systemctl suspend ;;
+  *Reboot*) confirm && systemctl reboot ;;
+  *Shutdown*) confirm && systemctl poweroff ;;
+  *) show_main_menu ;;
   esac
 }
 

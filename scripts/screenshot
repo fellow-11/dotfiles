@@ -3,23 +3,24 @@
 # Usage: screenshot <area|screen|active|window|output>
 MODE="$1"
 if [ -z "$MODE" ]; then
-    notify-send "Screenshot" "No mode specified" -u critical
-    exit 1
+  notify-send "Screenshot" "No mode specified" -u critical
+  exit 1
 fi
 DIR="/home/felix/Pictures/Screenshots"
 mkdir -p "$DIR"
 FILE="$DIR/screenshot-$(date +%Y-%m-%d_%H-%M-%S).png"
 case "$MODE" in
-    area)   TITLE="Screenshot Captured" ;;
-    screen) TITLE="Screen Captured" ;;
-    active) TITLE="Active Monitor Captured" ;;
-    window) TITLE="Window Captured" ;;
-    output) TITLE="Output Captured" ;;
-    *)
-        notify-send "Screenshot" "Unknown mode: $MODE" -u critical
-        exit 1
-        ;;
+area) TITLE="Screenshot Captured" ;;
+screen) TITLE="Screen Captured" ;;
+active) TITLE="Active Monitor Captured" ;;
+window) TITLE="Window Captured" ;;
+output) TITLE="Output Captured" ;;
+*)
+  notify-send "Screenshot" "Unknown mode: $MODE" -u critical
+  exit 1
+  ;;
 esac
+
 grimblast --freeze copysave "$MODE" "$FILE" || exit 1
 ACTION=$(notify-send "$TITLE" "Click to edit capture" -i "$FILE" --action='default=Edit')
 [ "$ACTION" = "default" ] && satty -f "$FILE" --copy-command 'wl-copy'
