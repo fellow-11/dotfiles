@@ -1,0 +1,7 @@
+/* Font: Geist Mono */
+@import url('https://fonts.googleapis.com/css2?family=Geist+Mono:ital,wght@0,100..900;1,100..900&display=swap');
+
+html {
+  --fontFamily: 'Geist Mono', var(--fontFamilyFallback) !important;
+  --fontFamilyLyrics: 'Geist Mono', var(--fontFamilyFallback) !important;
+}

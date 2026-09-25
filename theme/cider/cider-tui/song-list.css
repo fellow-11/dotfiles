@@ -1,0 +1,60 @@
+/* ## Song List (applies to Library, Album, Playlist, etc.) */
+
+/* Tighter rows */
+[sfc-name="LibrarySongListItem"],
+[sfc-name="AlbumTrack"],
+[sfc-name="PlaylistTrack"],
+[sfc-name="RichAlbumGridTrack"],
+[sfc-name="ListItem"],
+[sfc-name="ListItemScaffold"] {
+  min-height: 28px;
+  height: 28px;
+  padding-top: 2px;
+  padding-bottom: 2px;
+  font-size: 0.8rem;
+}
+
+/* Row hover */
+[sfc-name="LibrarySongListItem"]:hover,
+[sfc-name="AlbumTrack"]:hover,
+[sfc-name="PlaylistTrack"]:hover,
+[sfc-name="RichAlbumGridTrack"]:hover {
+  background: var(--tracklistAltRowColor) !important;
+}
+
+/* Column separators */
+.library-song-list-item > *,
+.track-list-item > *,
+[sfc-name="LibrarySongListItem"] > *,
+[sfc-name="AlbumTrack"] > *,
+[sfc-name="PlaylistTrack"] > * {
+  border-right: 1px solid #2a2a2a;
+  padding-right: 8px;
+}
+[sfc-name="RichAlbumGridTrack"] > * {
+  border-right: 1px solid #2a2a2a;
+    padding-left: 4px;
+}
+[sfc-name="LibrarySongListItem"] > *:last-child,
+[sfc-name="AlbumTrack"] > *:last-child,
+[sfc-name="PlaylistTrack"] > *:last-child,
+[sfc-name="RichAlbumGridTrack"] > *:last-child {
+  border-right: none;
+}
+
+/* Opaque **Library** column header row */
+.header-container {
+  --original-material: var(--systemStandardThinMaterialSover);
+}
+.header-frow {
+  --systemStandardThinMaterialSover: color(from var(--original-material) srgb r g b / 1) !important;
+}
+
+/* Hide album art in **Playlist** rows */
+[sfc-name="PlaylistTrack"] .track-artwork--image {
+  opacity: 0 !important;
+  pointer-events: none;
+}
+[sfc-name="PlaylistTrack"] .track-artwork--lockup {
+  background: transparent !important;
+}

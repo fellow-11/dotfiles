@@ -1,0 +1,15 @@
+:root { --tui-accent: #00e089; --tui-border: #3a3a3a; }
+::selection {
+  background: var(--tui-accent);
+  color: #000;
+}
+input.volume-range::-webkit-slider-thumb {
+  background: var(--tui-accent) !important;
+}
+input.volume-range::-webkit-slider-runnable-track {
+  background: repeating-linear-gradient(
+    90deg,
+    var(--tui-border) 0px, var(--tui-border) 3px,
+    transparent 3px, transparent 6px
+  ) !important;
+}

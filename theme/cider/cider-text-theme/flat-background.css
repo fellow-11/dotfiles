@@ -1,0 +1,10 @@
+:root {
+  --tui-bg: #0d0d0d;
+  --tui-shell-bg: rgb(13, 13, 13);
+}
+html, body {
+  background-color: var(--tui-bg) !important;
+}
+[sfc-name="QPage"] {
+  background-color: var(--tui-shell-bg) !important;
+}

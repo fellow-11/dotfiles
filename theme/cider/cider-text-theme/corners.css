@@ -1,0 +1,16 @@
+[sfc-name="MediaItemArtwork"]::after,
+* {
+  border-radius: 0 !important;
+}
+.powerswoosh.is-framed-card::before {
+  --itemRadius: 0px;
+}
+.powerswoosh::before {
+  border-bottom-left-radius: 0px;
+  border-bottom-right-radius: 0px;
+  border-top-left-radius: 0px;
+  border-top-right-radius: 0px;
+}
+input.volume-range::-webkit-slider-thumb {
+  border-radius: 0 !important;
+}

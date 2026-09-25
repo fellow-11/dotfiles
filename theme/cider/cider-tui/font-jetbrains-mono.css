@@ -1,0 +1,7 @@
+/* Font: JetBrains Mono */
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap');
+
+html {
+  --fontFamily: 'JetBrains Mono', var(--fontFamilyFallback) !important;
+  --fontFamilyLyrics: 'JetBrains Mono', var(--fontFamilyFallback) !important;
+}

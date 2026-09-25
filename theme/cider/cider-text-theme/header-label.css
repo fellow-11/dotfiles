@@ -1,0 +1,17 @@
+:root { --tui-accent: #00e089; --tui-border: #3a3a3a; --tui-border-width: 1px; }
+.header-container {
+  --original-material: var(--systemStandardThinMaterialSover);
+  border-bottom: var(--tui-border-width) solid var(--tui-border) !important;
+  position: relative;
+}
+.header-frow {
+  --systemStandardThinMaterialSover: color(from var(--original-material) srgb r g b / 1) !important;
+}
+.header-container::before {
+  content: "┌─[ cider-tui ]─────────────";
+  display: block;
+  color: var(--tui-accent);
+  font-size: 0.7rem;
+  padding-bottom: 4px;
+  white-space: pre;
+}

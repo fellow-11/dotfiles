@@ -1,0 +1,57 @@
+:root {
+  --tui-border: #3a3a3a;
+  --tui-border-width: 1px;
+  --tui-row-height: 28px;
+  --tui-row-font-size: 0.8rem;
+}
+[sfc-name="LibrarySongListItem"],
+[sfc-name="AlbumTrack"],
+[sfc-name="PlaylistTrack"],
+[sfc-name="RichAlbumGridTrack"],
+[sfc-name="ListItem"],
+[sfc-name="ListItemScaffold"] {
+  min-height: var(--tui-row-height);
+  height: var(--tui-row-height);
+  padding-top: 2px;
+  padding-bottom: 2px;
+  font-size: var(--tui-row-font-size);
+}
+[sfc-name="LibrarySongListItem"]:hover,
+[sfc-name="AlbumTrack"]:hover,
+[sfc-name="PlaylistTrack"]:hover,
+[sfc-name="RichAlbumGridTrack"]:hover {
+  background: var(--tracklistAltRowColor) !important;
+}
+[sfc-name="PlaylistTrack"] .track-artwork--image {
+  opacity: 0 !important;
+  pointer-events: none;
+}
+[sfc-name="PlaylistTrack"] .track-artwork--lockup {
+  background: transparent !important;
+}
+
+/* Header row — same flat background as the rows below, no separate tint */
+.header-container {
+  background: transparent !important;
+}
+
+/* Kill alternating row striping — every row same flat background */
+.frow.alt-row {
+  background: transparent !important;
+}
+
+/* Selected/now-playing row — flatten to match everything else */
+.frow.selected {
+  background: transparent !important;
+  border: none !important;
+}
+
+/* Force every row's background fully transparent, regardless of state (alt-row, hover-remnant, etc.) */
+.frow {
+  background-color: rgba(0, 0, 0, 0) !important;
+}
+
+/* Remove per-row separator borders */
+.frow.library-song-item {
+  border-bottom: none !important;
+}

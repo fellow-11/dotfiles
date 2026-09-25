@@ -1,0 +1,9 @@
+* {
+  --mats-glazeBackground: unset;
+  --mats-glazeOpacity: 0;
+}
+.chrome-button:before,
+.nav-flipper:before {
+  --mats-glazeBackground: unset;
+  --mats-glazeOpacity: 0;
+}

@@ -51,21 +51,14 @@ hl.on("hyprland.start", function()
 	--   hl.exec_cmd("nm-applet")
 	--   hl.exec_cmd("waybar & hyprpaper & firefox")
 
-	-- System services
-	hl.exec_cmd(
-		"dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=Hyprland && systemctl --user start hyprland-session.target"
-	)
-	hl.exec_cmd("kbuildsycoca6")
-
 	-- Desktop environment
-	hl.exec_cmd("hyprpaper")
-	hl.exec_cmd("waybar")
 	hl.exec_cmd("swayosd-server")
 	hl.exec_cmd("hyprlock")
+	hl.exec_cmd("waybar")
+	hl.exec_cmd("hyprpaper")
 
-	-- Launcher backend
+	-- Background Services
 	hl.exec_cmd("elephant")
-	hl.exec_cmd("sleep 2 && walker --gapplication-service")
 
 	-- Apps
 	hl.exec_cmd("discord")
@@ -73,7 +66,6 @@ hl.on("hyprland.start", function()
 	hl.exec_cmd("steam")
 	hl.exec_cmd("heroic")
 	hl.exec_cmd("cider")
-	hl.exec_cmd("easyeffects")
 end)
 
 -------------------------------

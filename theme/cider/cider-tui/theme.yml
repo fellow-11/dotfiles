@@ -1,0 +1,29 @@
+name: Cider-TUI
+stylesheets:
+  - file: corners.css
+    name: Square Corners
+    description: Makes all corners square
+  - file: no-glaze.css
+    name: Remove Glaze
+    description: Removes Cider's "Glaze"
+  - file: no-shadows.css
+    name: Remove Shadows
+    description: Removes pop-up shadows and etc.
+  - file: song-list.css
+    name: Song List Redesign
+    description: Redesigns song lists to look like a TUI (applies to Library, Album, Playlist, etc.)
+  - file: font-jetbrains-mono.css
+    name: "Font: JetBrains Mono"
+    description: Sets UI font to JetBrains Mono
+  - file: font-fira-code.css
+    name: "Font: Fira Code"
+    description: Sets UI font to Fira Code
+  - file: font-cascadia-code.css
+    name: "Font: Cascadia Code"
+    description: Sets UI font to Cascadia Code
+  - file: font-geist-mono.css
+    name: "Font: Geist Mono"
+    description: Sets UI font to Geist Mono
+  - file: font-ibm-plex-mono.css
+    name: "Font: IBM Plex Mono"
+    description: Sets UI font to IBM Plex Mono

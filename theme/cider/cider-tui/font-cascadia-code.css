@@ -1,0 +1,7 @@
+/* Font: Cascadia Code */
+@import url('https://fonts.googleapis.com/css2?family=Cascadia+Code:ital,wght@0,200..700;1,200..700&display=swap');
+
+html {
+  --fontFamily: 'Cascadia Code', var(--fontFamilyFallback) !important;
+  --fontFamilyLyrics: 'Cascadia Code', var(--fontFamilyFallback) !important;
+}

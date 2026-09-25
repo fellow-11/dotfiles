@@ -1,0 +1,32 @@
+name: Cider-Text-Theme
+stylesheets:
+  - file: font.css
+    name: Font
+    description: JetBrains Mono everywhere
+  - file: corners.css
+    name: Square Corners
+    description: Removes all border-radius
+  - file: no-glaze.css
+    name: Remove Glaze
+    description: Strips glaze background/opacity globally
+  - file: no-shadows.css
+    name: Remove Shadows
+    description: Strips box-shadow globally
+  - file: song-list.css
+    name: Song List
+    description: TUI-style tighter rows and column borders
+  - file: header-label.css
+    name: Header Label
+    description: Bracket border and ASCII label above library header
+  - file: sidebar-box.css
+    name: Sidebar Box
+    description: Bordered box and label around the sidebar
+  - file: accent-color.css
+    name: Accent Color
+    description: Green accent on selection, volume slider
+  - file: scrollbars.css
+    name: Scrollbars
+    description: Thin square scrollbars
+  - file: flat-background.css
+    name: Flat Background
+    description: Forces solid background color on html/body

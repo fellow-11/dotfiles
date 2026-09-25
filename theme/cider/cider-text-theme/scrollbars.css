@@ -1,0 +1,8 @@
+:root { --tui-border: #3a3a3a; --tui-border-hover: #555; }
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: var(--tui-border);
+  border-radius: 0 !important;
+}
+::-webkit-scrollbar-thumb:hover { background: var(--tui-border-hover); }

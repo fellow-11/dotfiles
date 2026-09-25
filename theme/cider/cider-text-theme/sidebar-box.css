@@ -1,0 +1,238 @@
+:root {
+  --tui-border: #393939;
+  --tui-bg: #0d0d0d;
+  --tui-label-size: 0.65rem;
+  --tui-hover-transition: 0.2s ease;
+}
+
+/* ---- Shared: header boxes (Pages/Library/Playlists) ---- */
+.sidebar-apple-top,
+.sidebar-apple-top + .am-expansion-item,
+.am-expansion-item:has(.sidebar-playlist-action-btn) {
+  position: relative;
+  border: 1px solid var(--tui-border) !important;
+  padding-top: 12px !important;
+  opacity: 1 !important;
+  transition: border-color var(--tui-hover-transition) !important;
+}
+.sidebar-apple-top + .am-expansion-item,
+.am-expansion-item:has(.sidebar-playlist-action-btn) {
+  border-bottom: none !important;
+  margin-top: 12px !important;
+  background: transparent !important;
+  min-height: 0 !important;
+  height: auto !important;
+}
+
+/* ---- Shared: labels (Pages/Library/Playlists) ---- */
+.sidebar-apple-top::before,
+.sidebar-apple-top + .am-expansion-item .sidebar-label,
+.am-expansion-item:has(.sidebar-playlist-action-btn) .sidebar-label {
+  position: absolute;
+  top: -9px;
+  left: 12px;
+  font-size: var(--tui-label-size);
+  color: var(--tui-border);
+  background: var(--tui-bg) !important;
+  opacity: 1 !important;
+  padding: 0 4px;
+  z-index: 10;
+  transition: color var(--tui-hover-transition) !important;
+}
+.sidebar-apple-top::before {
+  content: "Pages";
+}
+
+/* ---- Shared: content boxes (Library/Playlists) ---- */
+.sidebar-apple-top + .am-expansion-item + .expansion-content,
+.am-expansion-item:has(.sidebar-playlist-action-btn) + .expansion-content {
+  border: 1px solid var(--tui-border) !important;
+  border-top: none !important;
+  margin: -3px 0 0 0 !important;
+  padding-top: 0 !important;
+  opacity: 1 !important;
+  transition: border-color var(--tui-hover-transition) !important;
+}
+
+/* ---- Expand arrow (both rows) — strip native pill, mask border ---- */
+.expand-button {
+  position: absolute;
+  top: -1px;
+  right: 8px;
+  transform: translateY(-50%);
+  min-width: 20px !important;
+  padding-left: 6px !important;
+  height: var(--tui-label-size) !important;
+  line-height: var(--tui-label-size) !important;
+  color: var(--tui-border) !important;
+  opacity: 1 !important;
+  z-index: 10;
+  transition: color var(--tui-hover-transition) !important;
+}
+.expand-button,
+.expand-button::before,
+.expand-button::after,
+.expand-button:hover {
+  background: var(--tui-bg) !important;
+  box-shadow: none !important;
+  border: none !important;
+  border-radius: 0 !important;
+}
+
+/* ---- "..." button (Playlists only) ---- */
+.sidebar-playlist-action-btn {
+  position: absolute;
+  top: -1px;
+  right: 32px;
+  transform: translateY(-50%);
+  height: var(--tui-label-size) !important;
+  min-width: 20px !important;
+  min-height: 0 !important;
+  padding: 0 2px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  color: var(--tui-border) !important;
+  opacity: 1 !important;
+  z-index: 10;
+  transition: color var(--tui-hover-transition) !important;
+}
+.sidebar-playlist-action-btn,
+.sidebar-playlist-action-btn:hover {
+  background: var(--tui-bg) !important;
+}
+.sidebar-playlist-action-btn svg,
+.sidebar-playlist-action-btn .nucleo-icon {
+  transform: translateY(-3px);
+}
+
+/* ---- Hover: header and content light up together, whichever one is hovered ---- */
+.sidebar-apple-top:hover,
+.sidebar-apple-top + .am-expansion-item:hover,
+.sidebar-apple-top + .am-expansion-item:has(+ .expansion-content:hover),
+.am-expansion-item:has(.sidebar-playlist-action-btn):hover,
+.am-expansion-item:has(.sidebar-playlist-action-btn):has(+ .expansion-content:hover) {
+  border-color: var(--keyColor) !important;
+}
+.sidebar-apple-top + .am-expansion-item:hover + .expansion-content,
+.sidebar-apple-top + .am-expansion-item + .expansion-content:hover,
+.am-expansion-item:has(.sidebar-playlist-action-btn):hover + .expansion-content,
+.am-expansion-item:has(.sidebar-playlist-action-btn) + .expansion-content:hover {
+  border-color: var(--keyColor) !important;
+}
+.sidebar-apple-top:hover::before,
+.sidebar-apple-top + .am-expansion-item:hover .sidebar-label,
+.sidebar-apple-top + .am-expansion-item:has(+ .expansion-content:hover) .sidebar-label,
+.am-expansion-item:has(.sidebar-playlist-action-btn):hover .sidebar-label,
+.am-expansion-item:has(.sidebar-playlist-action-btn):has(+ .expansion-content:hover) .sidebar-label {
+  color: var(--keyColor) !important;
+}
+.sidebar-apple-top:hover .expand-button,
+.am-expansion-item:hover .expand-button,
+.am-expansion-item:hover .sidebar-playlist-action-btn {
+  color: var(--keyColor) !important;
+}
+.sidebar-apple-top + .am-expansion-item:has(+ .expansion-content:hover) .expand-button,
+.am-expansion-item:has(.sidebar-playlist-action-btn):has(+ .expansion-content:hover) .expand-button,
+.am-expansion-item:has(.sidebar-playlist-action-btn):has(+ .expansion-content:hover) .sidebar-playlist-action-btn {
+  color: var(--keyColor) !important;
+}
+
+/* ---- Main content box — wraps every page via the stable QPage element ---- */
+[sfc-name="QPage"] {
+  position: relative;
+  padding: 6px !important;
+  border: 1px solid var(--tui-border) !important;
+  margin-top: 14px !important;
+  margin-left: 14px !important;
+  width: calc(100% - 30px) !important;
+  box-sizing: border-box !important;
+  opacity: 1 !important;
+  z-index: 5 !important;
+  transition: border-color var(--tui-hover-transition) !important;
+}
+[sfc-name="QPage"]::before {
+  content: "Main";
+  position: absolute;
+  top: -9px;
+  left: 12px;
+  font-size: var(--tui-label-size);
+  color: var(--tui-border);
+  background: var(--tui-bg) !important;
+  opacity: 1 !important;
+  padding: 0 4px;
+  z-index: 10;
+  transition: color var(--tui-hover-transition) !important;
+}
+[sfc-name="QPage"]:hover {
+  border-color: var(--keyColor) !important;
+}
+[sfc-name="QPage"]:hover::before {
+  color: var(--keyColor) !important;
+}
+
+/* ---- Player bar box ---- */
+.lcdplayer-top.lcdPlayer {
+  position: relative;
+  overflow: visible !important;   /* new — was clipping its own ::before label */
+  outline: 1px solid var(--tui-border) !important;
+  outline-offset: -6px !important;
+  opacity: 1 !important;
+  transition: outline-color var(--tui-hover-transition) !important;
+}
+.lcdplayer-top.lcdPlayer::before {
+  content: "Playing";
+  position: absolute;   /* was: fixed */
+  bottom: 41px;           /* was: 47px — now relative to .lcdplayer-top itself, tune from 0 */
+  left: 12px;            /* was: 24px — tune from 0 */
+  font-size: var(--tui-label-size);
+  color: var(--tui-border);
+  background: var(--tui-bg) !important;
+  opacity: 1 !important;
+  padding: 0 4px;
+  z-index: 999;
+  transition: color var(--tui-hover-transition) !important;
+}
+.lcdplayer-top.lcdPlayer:hover {
+  outline-color: var(--keyColor) !important;
+}
+.lcdplayer-top.lcdPlayer:hover::before {
+  color: var(--keyColor) !important;
+}
+.lcd-player-glass {
+  padding: 10px 12px !important;
+  box-sizing: border-box !important;
+}
+
+/* Main box — persistent bottom border, pinned to viewport regardless of scroll/content height */
+[sfc-name="QPage"]::after {
+  content: "" !important;
+  position: fixed !important;
+  bottom: 0px !important;
+  left: 14px !important;
+  right: 17px !important;
+  border-bottom: 1px solid var(--tui-border) !important;
+  z-index: 999 !important;
+  transition: border-color var(--tui-hover-transition) !important;
+}
+[sfc-name="QPage"]:hover::after {
+  border-bottom-color: var(--keyColor) !important;
+}
+
+.sidebar-scroll-content {
+  mask-image: linear-gradient(to bottom, black calc(100% - 24px), transparent 100%) !important;
+  -webkit-mask-image: linear-gradient(to bottom, black calc(100% - 24px), transparent 100%) !important;
+}
+
+[sfc-name="LibrarySongListItem"]:last-child,
+[sfc-name="AlbumTrack"]:last-child,
+[sfc-name="PlaylistTrack"]:last-child,
+[sfc-name="RichAlbumGridTrack"]:last-child {
+  border-bottom: 1px solid var(--tui-border) !important;
+}
+
+.tracks-container.tracks-container,
+.tracks-container.full-height {
+  height: auto !important;
+  flex: none !important;
+}
